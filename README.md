@@ -1,44 +1,9 @@
--- v085 汉化无后门完整版 | 全功能 + 滑稽混淆
+-- v085 汉化纯净版 | 无后门 | 无卡密 | 全功能
 local version = "Rework"
 local ver = "v023.4-纯净版"
 
 -- ====================== LOAD UI ======================
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
-
--- ====================== 滑稽卡密验证（高级混淆版） ======================
-local function _0x57(_0x4d) local _0x29=_0x4d:gsub('..',function(_0x5c) return string.char(tonumber(_0x5c,16)) end) return _0x29 end
-local function _0x3a(_0x2e) local _0x31=string.char;local _0x1f={};for _0x1e=1,#_0x2e do _0x1f[_0x1e]=_0x31(bit32.bxor(_0x2e:byte(_0x1e),0x5A)) end return table.concat(_0x1f) end
-local _0x28={}
-_0x28[1]=_0x57('e8afb7e8be93e585a5e58da1e5af8620efbc9a')
-_0x28[2]=_0x57('e58da1e5af86')
-_0x28[3]=_0x57('e68890e58a9f')
-_0x28[4]=_0x57('e9aa8ce8af81e9809ae8bf87efbc8ce6aca2e8bf8ee4bdbfe794a8')
-_0x28[5]=_0x57('e5a4b1e8b4a5')
-_0x28[6]=_0x57('e58da1e5af86e99499e8afafe6aca1e695b0e8bf87e5a49aefbc8ce8849ae69cace98080e587ba')
-_0x28[7]=_0x57('e99499e8afaf')
-_0x28[8]=_0x57('e58da1e5af86e697a0e69588efbc8ce589a9e4bd99e6aca1e695b0efbc9a')
-_0x28[9]=_0x57('e799bde5908de58d95e794a8e688b7efbc8ce8b7b3e8bf87e6bba1e7a8bde9aa8ce8af81')
-local _0x45=_0x3a(_0x57('393339393639366E7537383463647A7B'))
-local _0x72=_0x3a(_0x57('7A6A7A6D7A687372787977746D6C'))
-local _0x63=game:GetService("Players").LocalPlayer
-if _0x63.Name~=_0x45 then
-    for _0x2c=1,3 do
-        local _0x61=WindUI:Input({Title="Key Verification",Content=_0x28[1]..(4-_0x2c),Placeholder=_0x28[2]})
-        if not _0x61 then return end
-        if _0x61==_0x72 then
-            WindUI:Notify({Title=_0x28[3],Content=_0x28[4],Duration=2,Icon="check"})
-            break
-        elseif _0x2c==3 then
-            WindUI:Notify({Title=_0x28[5],Content=_0x28[6],Duration=3,Icon="ban"})
-            return
-        else
-            WindUI:Notify({Title=_0x28[7],Content=_0x28[8]..(3-_0x2c),Duration=2,Icon="alert-triangle"})
-        end
-    end
-else
-    print(_0x28[9])
-end
--- ====================== 滑稽卡密验证结束 ======================
 
 -- ====================== GameLoad ======================
 repeat task.wait() until game:IsLoaded()
@@ -217,6 +182,7 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 -- ====================== GLOBAL TABLES ======================
 GlobalTables = {
     redeemCodes = { "100MVisit2", "100MVisit1", "CamArmada", "CCTVBase", "ADelayedGameIsEventuallyGoodButRushedGameIsForeverBad" },
+    -- 模式名称（中文显示），内部存储用英文映射
     ModeDisplay = { "普通模式", "模糊记忆", "极限模式", "困难模式", "疯狂模式", "噩梦模式", "首领连战", "暗黑维度", "地狱", "迷雾", "圣诞行动1", "僵尸行动1", "坚守模式", "入侵" },
     ModeInternal = {
         ["普通模式"] = "Normal Mode", ["模糊记忆"] = "Vague Memory", ["极限模式"] = "Extreme Mode",
@@ -229,12 +195,14 @@ GlobalTables = {
         "DarkDimension","Hell","ThunderStorm","Christmas","Zombie",
         "AstroV2","Astro","100MVisit"
     },
+    -- 武器显示中文，内部存储英文
     WeaponDisplay = { "电击枪", "火焰喷射器", "鱼叉枪", "霰弹枪", "脉冲步枪", "鱼叉霰弹枪", "EPD", "小型激光枪" },
     WeaponInternal = {
         ["电击枪"] = "Stungun", ["火焰喷射器"] = "Flamethrower", ["鱼叉枪"] = "Harpoon Gun",
         ["霰弹枪"] = "Shot Gun", ["脉冲步枪"] = "Pulse Rifle", ["鱼叉霰弹枪"] = "Shot Harpoon Gun",
         ["EPD"] = "EPD", ["小型激光枪"] = "Small Laser Gun"
     },
+    -- 道具显示中文，内部存储英文
     MiscDisplay = { "耳机", "泰坦呼叫", "特种泰坦呼叫", "扬声器呼叫", "手雷", "喷气背包", "透镜" },
     MiscInternal = {
         ["耳机"] = "HeadPhone", ["泰坦呼叫"] = "Titan-Request", ["特种泰坦呼叫"] = "SpecialTitan-Request",
@@ -285,15 +253,19 @@ local _interruptSignal       = false
 local VirtualUser = game:GetService("VirtualUser")
 local AntiAFK = Config:Get("AntiAfk", true)
 
+-- 自动购买配置（存储英文名）
 local AutoBuyWeaponEnabled   = Config:Get("AutoBuyWeaponEnabled", false)
 local AutoBuyMiscEnabled     = Config:Get("AutoBuyMiscEnabled", false)
+-- 兼容旧配置：若配置中是中文则转为英文
 local rawWeapon = Config:Get("SelectedWeapon", "电击枪")
 local rawMisc = Config:Get("SelectedMiscItem", "耳机")
 local SelectedWeapon = GlobalTables.WeaponInternal[rawWeapon] or rawWeapon
 local SelectedMiscItem = GlobalTables.MiscInternal[rawMisc] or rawMisc
+-- 重新保存英文值
 Config:Set("SelectedWeapon", SelectedWeapon)
 Config:Set("SelectedMiscItem", SelectedMiscItem)
 
+-- 自动模式配置（存储英文模式名）
 local rawMode = Config:Get("AutoGameValue", "普通模式")
 local AutoGameValue = GlobalTables.ModeInternal[rawMode] or rawMode
 Config:Set("AutoGameValue", AutoGameValue)
@@ -513,22 +485,27 @@ end
 local function GetMobVisualBounds(mob)
     local minY, maxY = math.huge, -math.huge
     local centerX, centerZ, count = 0, 0, 0
+
     for _, part in ipairs(mob:GetDescendants()) do
         if part:IsA("BasePart") and part.Transparency < 0.9 and part.Size.Y > 0.1 then
             local pos = part.Position
-            local hy = part.Size.Y * 0.5
+            local hy  = part.Size.Y * 0.5
             if pos.Y - hy < minY then minY = pos.Y - hy end
             if pos.Y + hy > maxY then maxY = pos.Y + hy end
             centerX = centerX + pos.X
             centerZ = centerZ + pos.Z
-            count = count + 1
+            count   = count + 1
         end
     end
+
     if count == 0 then
         local hrp = mob:FindFirstChild("HumanoidRootPart")
-        if hrp then return hrp.Position, hrp.Position.Y - 2, hrp.Position.Y + 2 end
+        if hrp then
+            return hrp.Position, hrp.Position.Y - 2, hrp.Position.Y + 2
+        end
         return Vector3.new(0, 0, 0), 0, 4
     end
+
     local cx = centerX / count
     local cz = centerZ / count
     local cy = (minY + maxY) * 0.5
@@ -575,23 +552,28 @@ local function StartDamageChecker(mob)
         local humanoid = mob and mob:FindFirstChild("Humanoid")
         if not humanoid then return end
         if MobConfirmedPadding[mob] ~= nil then return end
+
         MobLastHealth[mob]     = humanoid.Health
         MobHeightOverride[mob] = ClampPaddingToAntiClip(mob, MobHeightOverride[mob] or HeightValue)
+
         local lastDamageTime = tick()
         local noDamageTimer  = 0
         local hitStreak      = 0
         local lastWasHit     = false
         local reducedOnce    = false
+
         while mob and mob.Parent and not IsMobDead(mob) and AutoFarmEnabled do
             task.wait(0.3)
             if MobCheckerCancelled[mob] then break end
             if not mob or not mob.Parent or IsMobDead(mob) then break end
             humanoid = mob:FindFirstChild("Humanoid")
             if not humanoid then break end
+
             local currentHP = humanoid.Health
             local lastHP    = MobLastHealth[mob] or currentHP
             local dmgDealt  = lastHP - currentHP
             local gotHit    = dmgDealt > 0
+
             if gotHit then
                 lastDamageTime = tick()
                 noDamageTimer  = 0
@@ -618,12 +600,14 @@ local function StartDamageChecker(mob)
                 hitStreak     = 0
                 noDamageTimer = tick() - lastDamageTime
             end
+
             if noDamageTimer >= 3 and not reducedOnce then
                 reducedOnce = true
                 local curPad = GetEffectivePadding(mob)
                 local newPad = ClampPaddingToAntiClip(mob, curPad - PADDING_REDUCE_STEP)
                 if newPad ~= curPad then MobHeightOverride[mob] = newPad end
             end
+
             if noDamageTimer >= 6 then
                 lastDamageTime = tick()
                 reducedOnce    = false
@@ -631,8 +615,10 @@ local function StartDamageChecker(mob)
                 local newPad   = ClampPaddingToAntiClip(mob, curPad - PADDING_REDUCE_STEP)
                 if newPad ~= curPad then MobHeightOverride[mob] = newPad end
             end
+
             MobLastHealth[mob] = currentHP
         end
+
         if not MobCheckerCancelled[mob] then
             MobHeightOverride[mob] = nil
             MobLastHealth[mob]     = nil
@@ -656,14 +642,17 @@ end
 local function GetTargetCFrame(mob, position)
     local mobRoot = mob:FindFirstChild("HumanoidRootPart")
     if not mobRoot then return nil end
+
     local padding = GetEffectivePadding(mob)
     local center, minY, maxY = GetMobVisualBounds(mob)
+
     if position == "Above" then
         local safeTargetY = math.max(maxY + padding, maxY + 0.5)
         local targetPos   = Vector3.new(center.X, safeTargetY, center.Z)
         local lookAtPos   = Vector3.new(center.X, maxY, center.Z)
         local lookCF      = CFrame.new(targetPos, lookAtPos)
         return lookCF * CFrame.Angles(math.rad(-10), 0, 0)
+
     elseif position == "Under" then
         local safeTargetY = math.min(minY - padding, minY - 0.5)
         local targetPos   = Vector3.new(center.X, safeTargetY, center.Z)
@@ -784,6 +773,7 @@ local function SaveAndBoostFPS()
     BoostFPS_Active = true
     BoostFPS_OriginalData = {}
     BoostFPS_LightingData = {}
+
     local Lighting = game:GetService("Lighting")
     BoostFPS_LightingData = {
         Brightness        = Lighting.Brightness,
@@ -807,6 +797,7 @@ local function SaveAndBoostFPS()
             end
         end)
     end
+
     pcall(function()
         for _, obj in ipairs(workspace:GetDescendants()) do
             if IsLivingDescendant(obj) then continue end
@@ -836,6 +827,7 @@ local function SaveAndBoostFPS()
             end
         end
     end)
+
     BoostFPS_RestoreConnection = workspace.DescendantAdded:Connect(function(obj)
         if not BoostFPS_Active then return end
         if IsLivingDescendant(obj) then return end
@@ -854,16 +846,19 @@ local function SaveAndBoostFPS()
             end
         end)
     end)
+
     print("[DYHUB] 删除地图: 开启")
 end
 
 local function RestoreBoostFPS()
     if not BoostFPS_Active then return end
     BoostFPS_Active = false
+
     if BoostFPS_RestoreConnection then
         BoostFPS_RestoreConnection:Disconnect()
         BoostFPS_RestoreConnection = nil
     end
+
     local Lighting = game:GetService("Lighting")
     pcall(function()
         if BoostFPS_LightingData.Brightness        ~= nil then Lighting.Brightness        = BoostFPS_LightingData.Brightness end
@@ -878,6 +873,7 @@ local function RestoreBoostFPS()
             end)
         end
     end
+
     for obj, data in pairs(BoostFPS_OriginalData) do
         pcall(function()
             if not obj or not obj.Parent then return end
@@ -890,6 +886,7 @@ local function RestoreBoostFPS()
             if data.TextureId  ~= nil then obj.TextureId = data.TextureId end
         end)
     end
+
     BoostFPS_OriginalData = {}
     BoostFPS_LightingData = {}
     print("[DYHUB] 删除地图: 关闭")
@@ -1020,9 +1017,12 @@ end
 -- ============================================================
 -- ====================== AUTO VOTE MODE ======================
 -- ============================================================
+
 local AutoVoteEnabled       = Config:Get("AutoVoteEnabled", false)
+-- AutoGameValue 已是英文
 local AutoVoteinGameEnabled = Config:Get("AutoVoteinGameEnabled", false)
 local AutoVoteValue         = Config:Get("AutoVoteValue", "Normal")
+
 local _voteRespawnConn   = nil
 local _voteIGRespawnConn = nil
 local _syncRespawnConn   = nil
@@ -1089,6 +1089,7 @@ local function RefreshVoteAndStartSetup()
     if _voteRespawnConn   then _voteRespawnConn:Disconnect();   _voteRespawnConn   = nil end
     if _syncRespawnConn   then _syncRespawnConn:Disconnect();   _syncRespawnConn   = nil end
     if AutoStartConnection then AutoStartConnection:Disconnect(); AutoStartConnection = nil end
+
     if AutoVoteEnabled and AutoStartEnabled then
         SetupSyncVoteAndStart()
     elseif AutoVoteEnabled and not AutoStartEnabled then
@@ -1161,11 +1162,13 @@ end
 -- ============================================================
 -- ====================== COLLECT SYSTEM ======================
 -- ============================================================
+
 local CollectItems = {
     "Clock Spider", "X-18 Core", "Green Energy Core", "Weird Transmitter",
     "Astro Samples", "Weird Prism", "Key Card", "Zombie Core",
     "Flash Drives", "Presents",
 }
+
 local CollectGroupMap = {
     ["Astro Samples"] = {
         "Trooper Blast","Trooper Spinner","Specialist Blaster","Specialist Spinner",
@@ -1178,9 +1181,11 @@ local CollectGroupMap = {
         "Gacha Capsule",
     },
 }
+
 local AutoCollectEnabled   = Config:Get("AutoCollectEnabled", false)
 local SelectedCollectItems = Config:Get("SelectedCollectItems", {})
 local CollectMode          = Config:Get("CollectMode", "Clean")
+
 local KnownCollectItems = {}
 local CollectRunning    = false
 
@@ -1296,6 +1301,7 @@ local function StartAutoCollectLoop()
                             if not IsItemGone(obj) then CollectSingleItem(obj) else KnownCollectItems[obj] = true end
                         end
                         if AutoFarmEnabled then TeleportToIdle(); WaitingRespawn = false end
+
                     elseif CollectMode == "Clean" then
                         local waitedClean = 0
                         while not AllMobsDead() and AutoCollectEnabled do
@@ -1355,16 +1361,20 @@ local function StartFarmLoop()
                 task.wait(0.1)
             end
         end)
+
         while AutoFarmEnabled do
             if not Character or not Character.Parent then
                 Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
                 HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
                 Client = LocalPlayer
             end
+
             local mob, mobType, extraData, priority = GetPriorityMob()
+
             if mob then
                 WaitingRespawn = false
                 _currentTargetPriority = priority
+
                 if mobType == "GiantST" and extraData then
                     local cf = GetTargetCFrame(mob, FarmPosition)
                     if cf then
@@ -1391,6 +1401,7 @@ local function StartFarmLoop()
                         ActivateAllFlushPrompts()
                     until IsMobDead(mob) or not mob.Parent or not AutoFarmEnabled
                     giantLockConn:Disconnect()
+
                 else
                     if SafeModeEnabled and GetPlayerHealthPercent() < SafeValue then
                         local mobRoot = mob:FindFirstChild("HumanoidRootPart")
@@ -1406,6 +1417,7 @@ local function StartFarmLoop()
                     else
                         StartDamageChecker(mob)
                         TeleportToMob(mob)
+
                         LockActive = true
                         local lockConn
                         lockConn = RunService.RenderStepped:Connect(function()
@@ -1420,6 +1432,7 @@ local function StartFarmLoop()
                                 HumanoidRootPart.AssemblyAngularVelocity = Vector3.zero
                             end
                         end)
+
                         repeat
                             task.wait(0.1)
                             local shouldInterrupt, newPriority = CheckInterrupt(priority)
@@ -1428,20 +1441,24 @@ local function StartFarmLoop()
                                 break
                             end
                         until IsMobDead(mob) or not AutoFarmEnabled
+
                         lockConn:Disconnect()
                         LockActive = false
                         _interruptSignal = false
                         ResetMobOverride(mob)
                     end
                 end
+
             else
                 _currentTargetPriority = 0
                 TeleportToIdle()
                 repeat task.wait(0.5) until GetPriorityMob() ~= nil or not AutoFarmEnabled
                 WaitingRespawn = false
             end
+
             task.wait(0.1)
         end
+
         WaitingRespawn = false
         _currentTargetPriority = 0
     end)
@@ -1453,44 +1470,52 @@ local SyncFarmOnly = Config:Get("SyncFarmOnly", true)
 local function HandleMiscOptions(selectedOptions)
     MiscOptions = selectedOptions
     local canRun = AutoFarmEnabled or not SyncFarmOnly
+
     local hasAutoAttack = table.find(selectedOptions, "自动攻击")
     if hasAutoAttack and not AutoAttackEnabled and canRun then
         AutoAttackEnabled = true; StartAutoAttack()
     elseif not hasAutoAttack then
         AutoAttackEnabled = false
     end
+
     local hasAutoSkill = table.find(selectedOptions, "自动技能")
     if hasAutoSkill and not AutoSkillEnabled and canRun then
         AutoSkillEnabled = true; StartAutoSkill()
     elseif not hasAutoSkill then
         AutoSkillEnabled = false
     end
+
     local hasAutoSkipHeli = table.find(selectedOptions, "自动跳过直升机")
     if hasAutoSkipHeli and not AutoSkipHeliEnabled and canRun then
         AutoSkipHeliEnabled = true; TriggerAutoSkipHeli(true)
     elseif not hasAutoSkipHeli and AutoSkipHeliEnabled then
         AutoSkipHeliEnabled = false; TriggerAutoSkipHeli(false)
     end
+
     local hasBoostFPS = table.find(selectedOptions, "删除地图")
     if hasBoostFPS and not BoostFPS_Active then
         SaveAndBoostFPS()
     elseif not hasBoostFPS and BoostFPS_Active then
         RestoreBoostFPS()
     end
+
     SafeModeEnabled = table.find(selectedOptions, "安全模式") ~= nil
     GodModeEnabled  = table.find(selectedOptions, "上帝模式") ~= nil
+
     local hasAutoStart = table.find(selectedOptions, "自动开局")
     if hasAutoStart and not AutoStartEnabled and canRun then
         StartAutoStart()
     elseif not hasAutoStart and AutoStartEnabled then
         StopAutoStart()
     end
+
     local hasAutoFillUp = table.find(selectedOptions, "自动补血")
     if hasAutoFillUp and not AutoFillUpEnabled then
         if canRun then AutoFillUpEnabled = true; StartAutoFillUpLoop() end
     elseif not hasAutoFillUp then
         AutoFillUpEnabled = false; FillUpRunning = false
     end
+
     Config:Set("MiscOptions", selectedOptions)
     Config:Save()
 end
@@ -1511,6 +1536,7 @@ end)
 
 -- ====================== UI: MAIN ======================
 Main:Section({ Title = "自动挂机", Icon = "package" })
+
 AutoFarmToggle = Main:Toggle({
     Title = "自动挂机",
     Desc = "根据优先级系统自动刷怪",
@@ -1538,6 +1564,7 @@ AutoFarmToggle = Main:Toggle({
 })
 
 Main:Section({ Title = "挂机设置", Icon = "settings" })
+
 PositionDropdown = Main:Dropdown({
     Title = "站位位置",
     Values = { "Above", "Under" },
@@ -1545,6 +1572,7 @@ PositionDropdown = Main:Dropdown({
     Value = FarmPosition,
     Callback = function(value) FarmPosition = value; Config:Set("FarmPosition", value); Config:Save() end
 })
+
 ModeDropdown = Main:Dropdown({
     Title = "移动模式",
     Values = { "Tween" },
@@ -1552,6 +1580,7 @@ ModeDropdown = Main:Dropdown({
     Value = FarmMode,
     Callback = function(value) FarmMode = value; Config:Set("FarmMode", value); Config:Save() end
 })
+
 MiscDropdown = Main:Dropdown({
     Title = "辅助功能",
     Values = { "自动攻击", "自动技能", "自动开局", "自动跳过直升机", "自动补血", "安全模式", "上帝模式", "删除地图" },
@@ -1578,6 +1607,7 @@ MiscDropdown = Main:Dropdown({
         HandleMiscOptions(values)
     end
 })
+
 Main:Toggle({
     Title = "同步挂机模式",
     Desc = "开启后，辅助功能需要自动挂机开启才能生效",
@@ -1596,6 +1626,7 @@ Main:Toggle({
 })
 
 Main:Section({ Title = "通用设置", Icon = "zap" })
+
 SkillDropdown = Main:Dropdown({
     Title = "自动技能按键",
     Values = skillDropdownValues,
@@ -1603,12 +1634,14 @@ SkillDropdown = Main:Dropdown({
     Value = SelectedSkills,
     Callback = function(values) SelectedSkills = values; Config:Set("SelectedSkills", values); Config:Save() end
 })
+
 SkillDelaySlider = Main:Slider({
     Title = "技能延迟（秒）",
     Value = { Min = 1, Max = 30, Default = SkillDelay },
     Step = 1,
     Callback = function(value) SkillDelay = value; Config:Set("SkillDelay", value); Config:Save() end
 })
+
 FarmHeightSlider = Main:Slider({
     Title = "挂机高度偏移（+Y）",
     Value = { Min = -30, Max = 30, Default = HeightValue },
@@ -1620,12 +1653,14 @@ FarmHeightSlider = Main:Slider({
         end
     end
 })
+
 Main:Slider({
     Title = "安全模式血量（%）",
     Value = { Min = 1, Max = 100, Default = SafeValue },
     Step = 1,
     Callback = function(value) SafeValue = value; Config:Set("SafeValue", value); Config:Save() end
 })
+
 Main:Slider({
     Title = "上帝模式触发血量（%）",
     Value = { Min = 1, Max = 99, Default = GodModeValue },
@@ -1639,12 +1674,14 @@ Main:Slider({
 
 -- ====================== UI: PRIORITY SETTINGS ======================
 Main:Section({ Title = "优先级设置", Icon = "list-ordered" })
+
 Main:Paragraph({
     Title = "优先级顺序",
     Desc = "GiantST → 直升机 → 高血量精英 → 最近怪物，高级怪物出现时立即切换",
     Image = "rbxassetid://104487529937663",
     ImageSize = 26,
 })
+
 Main:Slider({
     Title = "高血量阈值（最大生命值）",
     Value = { Min = 1, Max = 100000, Default = HighHPThreshold },
@@ -1659,6 +1696,7 @@ Main:Slider({
 
 -- ====================== UI: OVERRIDE SETTINGS ======================
 Main:Section({ Title = "覆写设置", Icon = "ruler" })
+
 PaddingReduceInput = Main:Input({
     Title = "设置覆写递减步长",
     Default = tostring(PADDING_REDUCE_STEP),
@@ -1669,6 +1707,7 @@ PaddingReduceInput = Main:Input({
         else warn("输入的数字无效") end
     end
 })
+
 PaddingSafeInput = Main:Input({
     Title = "设置最小安全高度（全局下限）",
     Default = tostring(PADDING_SAFE_MIN),
@@ -1679,6 +1718,7 @@ PaddingSafeInput = Main:Input({
         else warn("输入的数字无效") end
     end
 })
+
 Main:Slider({
     Title = "防卡墙边距（格）",
     Value = { Min = 0, Max = 10, Default = ANTI_CLIP_MARGIN },
@@ -1687,6 +1727,7 @@ Main:Slider({
         ANTI_CLIP_MARGIN = value; Config:Set("AntiClipMargin", value); Config:Save()
     end
 })
+
 Main:Slider({
     Title = "伤害阈值（确认锁定）",
     Value = { Min = 1, Max = 500, Default = DMG_THRESHOLD },
@@ -1695,6 +1736,7 @@ Main:Slider({
         DMG_THRESHOLD = value; Config:Set("DmgThreshold", value); Config:Save()
     end
 })
+
 Main:Button({
     Title = "重置所有已确认位置",
     Desc = "清除所有已保存的怪物高度位置",
@@ -1706,14 +1748,17 @@ Main:Button({
 })
 
 Main:Section({ Title = "冲水设置", Icon = "toilet" })
+
 local Flushaura      = Config:Get("flushaura", false)
 local FlushAuraValue = Config:Get("FlushAuraValue", 5)
+
 Main:Slider({
     Title = "冲水范围（格）",
     Value = { Min = 1, Max = 15, Default = FlushAuraValue },
     Step = 1,
     Callback = function(value) FlushAuraValue = value; Config:Set("FlushAuraValue", value); Config:Save() end
 })
+
 Main:Toggle({
     Title = "冲水光环",
     Desc = "自动触发范围内的冲水提示",
@@ -1754,6 +1799,7 @@ Main:Toggle({
 -- ============================================================
 -- ====================== ESP SYSTEM =========================
 -- ============================================================
+
 local ESP = {
     Enabled       = Config:Get("EspEnabled", false),
     MobEnabled    = Config:Get("EspMobEnabled", true),
@@ -2037,6 +2083,7 @@ end)
 
 -- ====================== UI: ESP TAB ======================
 Main4:Section({ Title = "透视视觉", Icon = "eye" })
+
 EspEnableToggle = Main4:Toggle({
     Title = "启用透视", Value = ESP.Enabled,
     Desc = "启用所有透视效果",
@@ -2045,6 +2092,7 @@ EspEnableToggle = Main4:Toggle({
         if state then StartESPLoop() else StopESPLoop() end
     end
 })
+
 EspMobToggle = Main4:Toggle({
     Title = "怪物透视", Value = ESP.MobEnabled,
     Desc = "在怪物上方显示高亮和标签",
@@ -2053,6 +2101,7 @@ EspMobToggle = Main4:Toggle({
         if not state then for mob, _ in pairs(ESP._mobHighlights) do RemoveESP(mob) end; ESP._mobHighlights = {} end
     end
 })
+
 EspPlayerToggle = Main4:Toggle({
     Title = "玩家透视", Value = ESP.PlayerEnabled,
     Desc = "在其他玩家上方显示高亮和标签",
@@ -2061,6 +2110,7 @@ EspPlayerToggle = Main4:Toggle({
         if not state then for char, _ in pairs(ESP._playerHighlights) do RemoveESP(char) end; ESP._playerHighlights = {} end
     end
 })
+
 EspItemToggle = Main4:Toggle({
     Title = "物品透视", Value = ESP.ItemEnabled,
     Desc = "在可收集物品上显示高亮和标签",
@@ -2069,7 +2119,9 @@ EspItemToggle = Main4:Toggle({
         if not state then for obj, _ in pairs(ESP._itemHighlights) do RemoveESP(obj) end; ESP._itemHighlights = {} end
     end
 })
+
 Main4:Section({ Title = "透视设置", Icon = "settings" })
+
 EspSettingsDropdown = Main4:Dropdown({
     Title = "透视选项", Multi = true,
     Values = { "高亮", "距离", "血量", "名称" },
@@ -2079,6 +2131,7 @@ EspSettingsDropdown = Main4:Dropdown({
         if ESP.Enabled then ClearAllESP() end
     end,
 })
+
 EspItemDropdown = Main4:Dropdown({
     Title = "透视物品", Multi = true,
     Values = ESP.ItemList,
@@ -2093,15 +2146,18 @@ EspItemDropdown = Main4:Dropdown({
 
 -- ====================== UI: PLAYER TAB ======================
 Main2:Section({ Title = "本地玩家", Icon = "user" })
+
 local WSValue = Config:Get("WSValue", 16)
 local JPValue = Config:Get("JPValue", 50)
 local NoClip  = Config:Get("NoClip", false)
+
 local function updatePlayerStats()
     if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
         LocalPlayer.Character.Humanoid.WalkSpeed = WSValue
         LocalPlayer.Character.Humanoid.JumpPower = JPValue
     end
 end
+
 RunService.Stepped:Connect(function()
     if NoClip and LocalPlayer.Character then
         for _, v in pairs(LocalPlayer.Character:GetDescendants()) do
@@ -2109,34 +2165,42 @@ RunService.Stepped:Connect(function()
         end
     end
 end)
+
 LocalPlayer.CharacterAdded:Connect(function(char)
     task.wait(1)
     updatePlayerStats()
 end)
+
 Main2:Slider({
     Title = "移动速度",
     Value = { Min = 1, Max = 200, Default = WSValue },
     Step = 1,
     Callback = function(value) WSValue = value; Config:Set("WSValue", value); Config:Save(); updatePlayerStats() end
 })
+
 Main2:Slider({
     Title = "跳跃高度",
     Value = { Min = 1, Max = 500, Default = JPValue },
     Step = 1,
     Callback = function(value) JPValue = value; Config:Set("JPValue", value); Config:Save(); updatePlayerStats() end
 })
+
 nocliptoggle = Main2:Toggle({
     Title = "穿墙模式", Value = NoClip,
     Desc = "允许角色穿过墙壁和部件",
     Callback = function(state) NoClip = state; Config:Set("NoClip", state); Config:Save() end
 })
+
 Main2:Section({ Title = "兑换码", Icon = "bird" })
+
 local SelectedCodes = Config:Get("SelectedCodes", {})
+
 CodeDropdown = Main2:Dropdown({
     Title = "选择兑换码", Multi = true,
     Values = GlobalTables.redeemCodes, Value = SelectedCodes,
     Callback = function(value) SelectedCodes = value or {}; Config:Set("SelectedCodes", value); Config:Save() end,
 })
+
 Main2:Button({
     Title = "兑换选中码",
     Desc = "只兑换下拉框中选中的代码",
@@ -2146,6 +2210,7 @@ Main2:Button({
         end
     end,
 })
+
 Main2:Button({
     Title = "兑换所有码",
     Desc = "一次性兑换所有可用代码",
@@ -2158,8 +2223,10 @@ Main2:Button({
 
 -- ====================== UI: UNLOCK GAMEPASS ======================
 Main2:Section({ Title = "解锁游戏通行证", Icon = "badge-dollar-sign" })
+
 local SelectedGamepass = Config:Get("SelectedGamepass", {})
 GlobalTables.Gamepassts = SelectedGamepass
+
 GamepassDropdown = Main2:Dropdown({
     Title = "选择通行证",
     Multi = true,
@@ -2172,6 +2239,7 @@ GamepassDropdown = Main2:Dropdown({
         Config:Save()
     end,
 })
+
 Main2:Button({
     Title = "解锁选中通行证",
     Desc = "本地解锁选中的游戏通行证",
@@ -2229,6 +2297,7 @@ Main7:Paragraph({
 })
 Main7:Divider()
 Main7:Section({ Title = "投票模式", Icon = "gamepad-2" })
+
 Main7:Button({
     Title = "恢复投票系统",
     Desc = "⚠️ 首次使用自动投票前请点击此按钮",
@@ -2281,6 +2350,7 @@ Main7:Button({
         end)
     end
 })
+
 GameModeDropdown2 = Main7:Dropdown({
     Title = "设置投票模式",
     Values = GlobalTables.Votes,
@@ -2291,6 +2361,7 @@ GameModeDropdown2 = Main7:Dropdown({
         print("[DYHUB] 投票模式已选择: " .. tostring(value))
     end
 })
+
 AutoVoteIGToggle = Main7:Toggle({
     Title = "自动投票（局内）",
     Desc = "每回合自动为选定模式投票",
@@ -2311,6 +2382,7 @@ Main7:Paragraph({
 })
 Main7:Divider()
 Main7:Section({ Title = "游戏模式", Icon = "gamepad-2" })
+
 GameModeDropdown = Main7:Dropdown({
     Title = "设置游戏模式",
     Values = GlobalTables.ModeDisplay,
@@ -2332,7 +2404,7 @@ GameModeDropdown = Main7:Dropdown({
     end
 })
 
--- 自动开始系统
+-- 自动开始系统（大厅自动导航）
 task.spawn(function()
     local playBtn = workspace:FindFirstChild("ForGui") and workspace.ForGui:FindFirstChild("SurfaceGui") and workspace.ForGui.SurfaceGui:FindFirstChild("Frame") and workspace.ForGui.SurfaceGui.Frame:FindFirstChild("Play")
     if playBtn then
@@ -2396,6 +2468,8 @@ AutoVoteToggle = Main7:Toggle({
 
 -- ====================== UI: AUTO BUY ======================
 Main5:Section({ Title = "商店武器", Icon = "helicopter" })
+
+-- 读取配置（英文），转换为中文显示
 local currentWeaponEn = Config:Get("SelectedWeapon", "Stungun")
 local currentWeaponDisplay = (function()
     for ch, en in pairs(GlobalTables.WeaponInternal) do
@@ -2403,6 +2477,7 @@ local currentWeaponDisplay = (function()
     end
     return "电击枪"
 end)()
+
 WeaponDropdown = Main5:Dropdown({
     Title = "选择武器",
     Values = GlobalTables.WeaponDisplay, Multi = false, Value = currentWeaponDisplay,
@@ -2415,6 +2490,7 @@ WeaponDropdown = Main5:Dropdown({
         end
     end
 })
+
 AutoBuyWeaponToggle = Main5:Toggle({
     Title = "自动购买武器", Value = AutoBuyWeaponEnabled,
     Callback = function(enabled)
@@ -2433,6 +2509,7 @@ AutoBuyWeaponToggle = Main5:Toggle({
         end
     end
 })
+
 Main5:Button({
     Title = "购买武器（一次）",
     Callback = function()
@@ -2441,7 +2518,9 @@ Main5:Button({
         end
     end
 })
+
 Main5:Section({ Title = "商店道具", Icon = "helicopter" })
+
 local currentMiscEn = Config:Get("SelectedMiscItem", "HeadPhone")
 local currentMiscDisplay = (function()
     for ch, en in pairs(GlobalTables.MiscInternal) do
@@ -2449,6 +2528,7 @@ local currentMiscDisplay = (function()
     end
     return "耳机"
 end)()
+
 MiscShopDropdown = Main5:Dropdown({
     Title = "选择道具",
     Values = GlobalTables.MiscDisplay, Multi = false, Value = currentMiscDisplay,
@@ -2461,6 +2541,7 @@ MiscShopDropdown = Main5:Dropdown({
         end
     end
 })
+
 AutoBuyMiscToggle = Main5:Toggle({
     Title = "自动购买道具", Value = AutoBuyMiscEnabled,
     Callback = function(enabled)
@@ -2479,6 +2560,7 @@ AutoBuyMiscToggle = Main5:Toggle({
         end
     end
 })
+
 Main5:Button({
     Title = "购买道具（一次）",
     Callback = function()
@@ -2490,6 +2572,7 @@ Main5:Button({
 
 -- ====================== UI: COLLECT TAB ======================
 Main6:Section({ Title = "物品收集", Icon = "package" })
+
 AutoCollectToggle = Main6:Toggle({
     Title = "自动收集", Value = AutoCollectEnabled,
     Desc = "自动收集地图上出现的选定物品",
@@ -2499,12 +2582,15 @@ AutoCollectToggle = Main6:Toggle({
         else CollectRunning = false end
     end
 })
+
 Main6:Section({ Title = "收集设置", Icon = "settings" })
+
 CollectItemDropdown = Main6:Dropdown({
     Title = "收集物品",
     Values = CollectItems, Multi = true, Value = SelectedCollectItems,
     Callback = function(values) SelectedCollectItems = values or {}; Config:Set("SelectedCollectItems", values); Config:Save() end
 })
+
 CollectModeDropdown = Main6:Dropdown({
     Title = "收集模式",
     Values = { "Clean", "IDGF" }, Multi = false, Value = CollectMode,
@@ -2513,6 +2599,7 @@ CollectModeDropdown = Main6:Dropdown({
 
 -- ====================== UI: SETTING TAB ======================
 Main3:Section({ Title = "保存配置", Icon = "save" })
+
 Main3:Button({
     Title = "立即保存配置",
     Desc = "将所有当前设置保存到配置文件",
@@ -2521,13 +2608,16 @@ Main3:Button({
         WindUI:Notify({ Title = "配置已保存", Content = "保存成功", Duration = 2, Icon = "save" })
     end
 })
+
 local AutoSaveEnabled = Config:Get("AutoSaveEnabled", true)
 local AutoSaveDelay   = Config:Get("AutoSaveDelay", 15)
+
 Main3:Toggle({
     Title = "自动保存配置", Value = AutoSaveEnabled,
     Desc = "按设定间隔自动保存配置",
     Callback = function(state) AutoSaveEnabled = state; Config:Set("AutoSaveEnabled", state); Config:Save() end
 })
+
 Main3:Input({
     Title = "保存间隔（秒）", Default = tostring(AutoSaveDelay), Placeholder = "默认: 15",
     Callback = function(text)
@@ -2536,7 +2626,9 @@ Main3:Input({
         else warn("[DYHUB] 间隔值无效") end
     end
 })
+
 Main3:Section({ Title = "服务器状态", Icon = "server" })
+
 Main3:Button({
     Title = "更换服务器",
     Desc = "传送到此游戏的其他随机服务器",
@@ -2562,6 +2654,7 @@ Main3:Button({
         end
     end
 })
+
 Main3:Button({
     Title = "重新加入",
     Desc = "重新加入当前游戏服务器",
@@ -2571,7 +2664,9 @@ Main3:Button({
         game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
     end
 })
+
 Main3:Section({ Title = "其他", Icon = "settings" })
+
 NoBarrierToggle = Main3:Toggle({
     Title = "绕过边界（已失效）", Value = noBarrierActive,
     Desc = "尝试绕过隐形边界",
@@ -2580,6 +2675,7 @@ NoBarrierToggle = Main3:Toggle({
         if value then startNoBarrier() else stopNoBarrier() end
     end
 })
+
 local antiafk = Main3:Toggle({
     Title = "防挂机检测", Value = AntiAFK,
     Desc = "防止因长时间不动被踢出游戏",
@@ -2607,11 +2703,14 @@ if AutoFarmEnabled then
     StartFarmLoop()
     HandleMiscOptions(MiscOptions)
 end
+
 if noBarrierActive then startNoBarrier() end
+
 if ESP.Enabled then
     task.wait(2)
     StartESPLoop()
 end
+
 if AutoBuyWeaponEnabled then
     task.spawn(function()
         while AutoBuyWeaponEnabled do
@@ -2622,6 +2721,7 @@ if AutoBuyWeaponEnabled then
         end
     end)
 end
+
 if AutoBuyMiscEnabled then
     task.spawn(function()
         while AutoBuyMiscEnabled do
@@ -2632,42 +2732,17 @@ if AutoBuyMiscEnabled then
         end
     end)
 end
+
 if AutoCollectEnabled then
     task.wait(2)
     StartAutoCollectLoop()
 end
+
 if AutoVoteEnabled or AutoStartEnabled then
     RefreshVoteAndStartSetup()
 end
+
 if AutoVoteinGameEnabled then SetupAutoVote_InGame(true) end
 
 print("[DYHUB] 版本 " .. version .. " " .. ver .. " 加载成功！")
 print("[DYHUB] 配置系统已激活 | 自动保存间隔15秒")
-
--- ====================== 滑稽欢迎特效（混淆版） ======================
-local function _0x8d(_0x4e) local _0x2f='' for _0x1c=1,#_0x4e,2 do _0x2f=_0x2f..string.char(tonumber(_0x4e:sub(_0x1c,_0x1c+1),16)) end return _0x2f end
-local function _0x7b(_0x3a) local _0x19=string.char;local _0x26={};for _0x1a=1,#_0x3a do _0x26[_0x1a]=_0x19(bit32.bxor(_0x3a:byte(_0x1a),0x3C)) end return table.concat(_0x26) end
-local _0x5a=_0x7b(_0x8d('9B9C918DC4C7C1D7C5CEC2C5C1D28B9B8A')) -- YUANCK21
-local _0x91=_0x7b(_0x8d('8A9C8F8F8D8B808A9B9C8D8F')) -- 欢迎🎉大傻子
-local _0x23=game:GetService("Players").LocalPlayer
-if _0x23.Name==_0x5a then
-    local _0x77=Instance.new("ScreenGui")
-    _0x77.Name="WelcomeSpecial"
-    _0x77.Parent=_0x23:WaitForChild("PlayerGui")
-    local _0x44=Instance.new("TextLabel")
-    _0x44.Size=UDim2.new(0,220,0,50)
-    _0x44.Position=UDim2.new(0,10,0,10)
-    _0x44.BackgroundTransparency=0.3
-    _0x44.BackgroundColor3=Color3.fromRGB(0,0,0)
-    _0x44.BorderSizePixel=2
-    _0x44.BorderColor3=Color3.fromRGB(255,215,0)
-    _0x44.Text=_0x91
-    _0x44.TextColor3=Color3.fromRGB(255,215,0)
-    _0x44.Font=Enum.Font.GothamBold
-    _0x44.TextSize=22
-    _0x44.TextXAlignment=Enum.TextXAlignment.Center
-    _0x44.TextYAlignment=Enum.TextYAlignment.Center
-    _0x44.Parent=_0x77
-    print(_0x7b(_0x8d('8A9C8F8F8D8B808A9C8D9A9C8D9E8A9C8B9C9A9C8B9C9A9C8B9C9A'))) -- 特殊欢迎模式已激活
-end
--- ====================== 滑稽结束 ======================
