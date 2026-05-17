@@ -1,6 +1,7 @@
--- v085 最终完整版 | 作者：神 | 无后门 | 全功能 + 天文币刷取 | 忍者兼容
+-- v085 汉化无后门完整版 | 基于原版 stbb.lua 完整修改
+-- 修改：UI 全中文，内部存储/通信使用英文
 local version = "Rework"
-local ver = "v023.4-最终版"
+local ver = "v023.4-纯净版"
 
 -- ====================== LOAD UI ======================
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
@@ -69,16 +70,26 @@ function CustomConfig:Get(key, default)
 end
 
 function CustomConfig:Save()
-    pcall(function()
+    local success, err = pcall(function()
         writefile(self.ConfigPath, HttpService:JSONEncode(self.ConfigData))
     end)
+    if success then warn("[DYHUB] Config saved!") else warn("[DYHUB] Save failed:", err) end
 end
 
 function CustomConfig:Load()
     if isfile(self.ConfigPath) then
-        local ok, res = pcall(function() return HttpService:JSONDecode(readfile(self.ConfigPath)) end)
-        if ok and type(res) == "table" then self.ConfigData = res else self.ConfigData = {} end
+        local success, result = pcall(function()
+            return HttpService:JSONDecode(readfile(self.ConfigPath))
+        end)
+        if success and type(result) == "table" then
+            self.ConfigData = result
+            print("[DYHUB] Config loaded!")
+        else
+            warn("[DYHUB] Failed to load config, using defaults")
+            self.ConfigData = {}
+        end
     else
+        print("[DYHUB] No config found, creating new one")
         self.ConfigData = {}
     end
 end
@@ -95,15 +106,18 @@ end
 local Config = CustomConfig.new()
 Config:AutoSave(15)
 
--- ====================== WINDOW ======================
+-- ====================== WINDOW 2 ======================
 local Players = game:GetService("Players")
+
+-- 已删除 Premium 验证代码，直接设置为免费版
 local userversion = "免费版"
 
+-- ====================== WINDOW ======================
 local Window = WindUI:CreateWindow({
-    Title = "神",
+    Title = "DYHUB",
     IconThemed = true,
-    Icon = "rbxassetid://93661445926652",
-    Author = "stbb",
+    Icon = "rbxassetid://104487529937663",
+    Author = "STBB | " .. userversion,
     Folder = "DYHUB",
     Size = UDim2.fromOffset(550, 380),
     Transparent = true,
@@ -128,15 +142,15 @@ Window:EditOpenButton({
 
 -- ====================== TABS ======================
 local Info   = Window:Tab({ Title = "信息", Icon = "info" })
-Window:Divider()
+MainDivider  = Window:Divider()
 local Main   = Window:Tab({ Title = "核心", Icon = "rocket" })
 local Main4  = Window:Tab({ Title = "透视", Icon = "eye" })
 local Main2  = Window:Tab({ Title = "玩家", Icon = "user" })
-Window:Divider()
+MainDivider1 = Window:Divider()
 local Main5  = Window:Tab({ Title = "商店", Icon = "shopping-cart" })
 local Main6  = Window:Tab({ Title = "收集", Icon = "hand" })
 local Main7  = Window:Tab({ Title = "模式", Icon = "gamepad-2" })
-Window:Divider()
+MainDivider2 = Window:Divider()
 local Main3  = Window:Tab({ Title = "设置", Icon = "settings" })
 Window:SelectTab(1)
 
@@ -144,15 +158,15 @@ Window:SelectTab(1)
 Info:Section({ Title = "最近更新", TextXAlignment = "Center", TextSize = 17 })
 Info:Divider()
 Info:Paragraph({
-    Title = "更新: 2026/05/17",
-    Desc = "- [新增] 优先级系统\n- [新增] 恢复投票系统\n- [新增] 上帝模式\n- [新增] 解锁通行证\n- [新增] 天文币自动刷取\n- [修复] 怪物高度覆写\n- [优化] 删除地图",
-    Image = "rbxassetid://93661445926652",
+    Title = "更新: 2026/05/16",
+    Desc = "- [新增] 优先级系统\n- [新增] 恢复投票系统\n- [新增] 上帝模式\n- [新增] 解锁通行证\n- [修复] 怪物高度覆写\n- [修复] 透视核心\n- [优化] 删除地图",
+    Image = "rbxassetid://104487529937663",
     ImageSize = 30,
 })
 Info:Divider()
 Info:Section({ Title = "DYHUB 信息", TextXAlignment = "Center", TextSize = 17 })
 Info:Divider()
-Info:Paragraph({ Title = "纯净版", Desc = "无后门 | 中文界面 | 完整功能", Image = "rbxassetid://93661445926652", ImageSize = 30 })
+Info:Paragraph({ Title = "纯净版", Desc = "无后门 | 中文界面 | 完整功能", Image = "rbxassetid://104487529937663", ImageSize = 30 })
 
 -- ====================== SERVICES ======================
 local TweenService       = game:GetService("TweenService")
@@ -169,6 +183,7 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 -- ====================== GLOBAL TABLES ======================
 GlobalTables = {
     redeemCodes = { "100MVisit2", "100MVisit1", "CamArmada", "CCTVBase", "ADelayedGameIsEventuallyGoodButRushedGameIsForeverBad" },
+    -- 模式名称（中文显示），内部存储用英文映射
     ModeDisplay = { "普通模式", "模糊记忆", "极限模式", "困难模式", "疯狂模式", "噩梦模式", "首领连战", "暗黑维度", "地狱", "迷雾", "圣诞行动1", "僵尸行动1", "坚守模式", "入侵" },
     ModeInternal = {
         ["普通模式"] = "Normal Mode", ["模糊记忆"] = "Vague Memory", ["极限模式"] = "Extreme Mode",
@@ -176,13 +191,19 @@ GlobalTables = {
         ["首领连战"] = "Boss Rush", ["暗黑维度"] = "Dark Dimension", ["地狱"] = "Hell", ["迷雾"] = "Mist",
         ["圣诞行动1"] = "Christmas Act 1", ["僵尸行动1"] = "Zombie Act 1", ["坚守模式"] = "Holdout", ["入侵"] = "Invasion"
     },
-    Votes = { "Normal","VeryHard","Hard","Insane","Nightmare","BossRush","DarkDimension","Hell","ThunderStorm","Christmas","Zombie","AstroV2","Astro","100MVisit" },
+    Votes = {
+        "Normal","VeryHard","Hard","Insane","Nightmare","BossRush",
+        "DarkDimension","Hell","ThunderStorm","Christmas","Zombie",
+        "AstroV2","Astro","100MVisit"
+    },
+    -- 武器显示中文，内部存储英文
     WeaponDisplay = { "电击枪", "火焰喷射器", "鱼叉枪", "霰弹枪", "脉冲步枪", "鱼叉霰弹枪", "EPD", "小型激光枪" },
     WeaponInternal = {
         ["电击枪"] = "Stungun", ["火焰喷射器"] = "Flamethrower", ["鱼叉枪"] = "Harpoon Gun",
         ["霰弹枪"] = "Shot Gun", ["脉冲步枪"] = "Pulse Rifle", ["鱼叉霰弹枪"] = "Shot Harpoon Gun",
         ["EPD"] = "EPD", ["小型激光枪"] = "Small Laser Gun"
     },
+    -- 道具显示中文，内部存储英文
     MiscDisplay = { "耳机", "泰坦呼叫", "特种泰坦呼叫", "扬声器呼叫", "手雷", "喷气背包", "透镜" },
     MiscInternal = {
         ["耳机"] = "HeadPhone", ["泰坦呼叫"] = "Titan-Request", ["特种泰坦呼叫"] = "SpecialTitan-Request",
@@ -236,13 +257,16 @@ local AntiAFK = Config:Get("AntiAfk", true)
 -- 自动购买配置（存储英文名）
 local AutoBuyWeaponEnabled   = Config:Get("AutoBuyWeaponEnabled", false)
 local AutoBuyMiscEnabled     = Config:Get("AutoBuyMiscEnabled", false)
+-- 兼容旧配置：若配置中是中文则转为英文
 local rawWeapon = Config:Get("SelectedWeapon", "电击枪")
 local rawMisc = Config:Get("SelectedMiscItem", "耳机")
 local SelectedWeapon = GlobalTables.WeaponInternal[rawWeapon] or rawWeapon
 local SelectedMiscItem = GlobalTables.MiscInternal[rawMisc] or rawMisc
+-- 重新保存英文值
 Config:Set("SelectedWeapon", SelectedWeapon)
 Config:Set("SelectedMiscItem", SelectedMiscItem)
 
+-- 自动模式配置（存储英文模式名）
 local rawMode = Config:Get("AutoGameValue", "普通模式")
 local AutoGameValue = GlobalTables.ModeInternal[rawMode] or rawMode
 Config:Set("AutoGameValue", AutoGameValue)
@@ -462,6 +486,7 @@ end
 local function GetMobVisualBounds(mob)
     local minY, maxY = math.huge, -math.huge
     local centerX, centerZ, count = 0, 0, 0
+
     for _, part in ipairs(mob:GetDescendants()) do
         if part:IsA("BasePart") and part.Transparency < 0.9 and part.Size.Y > 0.1 then
             local pos = part.Position
@@ -473,6 +498,7 @@ local function GetMobVisualBounds(mob)
             count   = count + 1
         end
     end
+
     if count == 0 then
         local hrp = mob:FindFirstChild("HumanoidRootPart")
         if hrp then
@@ -480,6 +506,7 @@ local function GetMobVisualBounds(mob)
         end
         return Vector3.new(0, 0, 0), 0, 4
     end
+
     local cx = centerX / count
     local cz = centerZ / count
     local cy = (minY + maxY) * 0.5
@@ -993,6 +1020,7 @@ end
 -- ============================================================
 
 local AutoVoteEnabled       = Config:Get("AutoVoteEnabled", false)
+-- AutoGameValue 已是英文
 local AutoVoteinGameEnabled = Config:Get("AutoVoteinGameEnabled", false)
 local AutoVoteValue         = Config:Get("AutoVoteValue", "Normal")
 
@@ -1645,173 +1673,13 @@ Main:Slider({
     end
 })
 
--- ====================== 天文币自动刷取 ======================
-local AstroFarmRunning = false
-local AstroOrbitConn = nil
-local AstroStrikeRunning = false
-local AstroForcePos = false
-local AstroAngle = 0
-local AstroGameDuration = 960
-local AstroFlyRadius = 300
-local AstroFlySpeed = 2
-local AstroStrikePos = Vector3.new(-23.34, -0.19, 0.34)
-local AstroTPTarget = CFrame.new(-23.34, 3, 0.34)
-local AstroFlyCenter = Vector3.new(0, 250, 0)
-
-local function AstroToggleOrbit(state)
-    if AstroOrbitConn then AstroOrbitConn:Disconnect(); AstroOrbitConn = nil end
-    if state then AstroAngle = 0; AstroForcePos = false end
-    local char = LocalPlayer.Character
-    if not state or not char or not char:FindFirstChild("HumanoidRootPart") then
-        if char and char:FindFirstChild("Humanoid") then char.Humanoid.PlatformStand = false end
-        return
-    end
-    char.Humanoid.PlatformStand = true
-    AstroOrbitConn = RunService.Stepped:Connect(function(_, dt)
-        if AstroForcePos then
-            AstroAngle = (AstroAngle + AstroFlySpeed * dt) % (math.pi * 2)
-            return
-        end
-        AstroAngle = (AstroAngle + AstroFlySpeed * dt) % (math.pi * 2)
-        local pos = AstroFlyCenter + Vector3.new(math.cos(AstroAngle) * AstroFlyRadius, 0, math.sin(AstroAngle) * AstroFlyRadius)
-        char.HumanoidRootPart.CFrame = CFrame.new(pos, AstroFlyCenter)
-        char.HumanoidRootPart.Velocity = Vector3.zero
-        char.HumanoidRootPart.RotVelocity = Vector3.zero
-    end)
-end
-
-local function AstroToggleStrike(state)
-    if AstroStrikeRunning == state then return end
-    AstroStrikeRunning = state
-    if state then
-        task.spawn(function()
-            while AstroStrikeRunning do
-                local r = ReplicatedStorage:FindFirstChild("VillanArcAirStrike")
-                if r then r:FireServer(AstroStrikePos) end
-                task.wait(1)
-            end
-        end)
-    end
-end
-
-local function AstroForceTP(cf)
-    AstroForcePos = true
-    local start = tick()
-    local conn = RunService.Heartbeat:Connect(function()
-        if tick() - start > 1.5 then
-            conn:Disconnect()
-            AstroForcePos = false
-            return
-        end
-        local char = LocalPlayer.Character
-        if char and char:FindFirstChild("HumanoidRootPart") then
-            char.HumanoidRootPart.CFrame = cf
-            char.HumanoidRootPart.Velocity = Vector3.zero
-        end
-    end)
-end
-
-local function AstroExecutePrepare(voteParam)
-    local vote = ReplicatedStorage:FindFirstChild("Vote")
-    local getReady = ReplicatedStorage:FindFirstChild("GetReadyRemote")
-    if vote then vote:FireServer(voteParam) end
-    task.wait(0.3)
-    if getReady then getReady:FireServer("3", true) end
-    task.wait(0.3)
-    if getReady then getReady:FireServer("1", true) end
-end
-
-local function AstroWaitForCharacter()
-    local player = LocalPlayer
-    if not player.Character or not player.Character:FindFirstChild("Humanoid") or player.Character.Humanoid.Health <= 0 then
-        player.CharacterAdded:Wait()
-    end
-    task.wait(1)
-    local getReady = ReplicatedStorage:FindFirstChild("GetReadyRemote")
-    if getReady then
-        getReady:FireServer("3", true); task.wait(1.25)
-        getReady:FireServer("3", false); task.wait(0.67)
-        getReady:FireServer("2", true); task.wait(1.25)
-        getReady:FireServer("2", false); task.wait(0.67)
-        getReady:FireServer("1", true)
-    end
-end
-
-local function AstroFarmLoop()
-    while AstroFarmRunning do
-        AstroWaitForCharacter()
-        AstroExecutePrepare("AstroV2")
-        local waitSec = 8
-        for i = waitSec, 1, -1 do if not AstroFarmRunning then break end task.wait(1) end
-        if not AstroFarmRunning then break end
-        local player = LocalPlayer
-        while AstroFarmRunning and (not player.Character or not player.Character:FindFirstChild("HumanoidRootPart")) do task.wait(0.5) end
-        if not AstroFarmRunning then break end
-        AstroToggleOrbit(true)
-        AstroToggleStrike(true)
-        for i = 1, AstroGameDuration do if not AstroFarmRunning then break end task.wait(1) end
-        AstroToggleOrbit(false)
-        AstroToggleStrike(false)
-        AstroForceTP(AstroTPTarget)
-        task.wait(2)
-    end
-    AstroToggleOrbit(false)
-    AstroToggleStrike(false)
-end
-
-local function StartAstroFarm()
-    if AstroFarmRunning then return end
-    AstroFarmRunning = true
-    task.spawn(AstroFarmLoop)
-end
-
-local function StopAstroFarm()
-    AstroFarmRunning = false
-    AstroToggleOrbit(false)
-    AstroToggleStrike(false)
-end
-
-Main:Section({ Title = "天文币刷取", Icon = "star" })
-Main:Toggle({
-    Title = "自动刷天文币 (AstroV2)",
-    Desc = "循环进入 AstroV2 地图，自动飞行 + 空袭，结束后自动重置",
-    Value = false,
-    Callback = function(state)
-        if state then
-            StartAstroFarm()
-            WindUI:Notify({ Title = "天文币刷取", Content = "已开启，请确保在大厅", Duration = 3, Icon = "star" })
-        else
-            StopAstroFarm()
-            WindUI:Notify({ Title = "天文币刷取", Content = "已关闭", Duration = 2, Icon = "square" })
-        end
-    end
-})
-Main:Slider({
-    Title = "刷取单局时间（秒）",
-    Value = { Min = 600, Max = 1200, Default = AstroGameDuration },
-    Step = 30,
-    Callback = function(value) AstroGameDuration = value end
-})
-Main:Slider({
-    Title = "飞行环绕半径",
-    Value = { Min = 100, Max = 600, Default = AstroFlyRadius },
-    Step = 50,
-    Callback = function(value) AstroFlyRadius = value end
-})
-Main:Slider({
-    Title = "飞行速度",
-    Value = { Min = 1, Max = 10, Default = AstroFlySpeed },
-    Step = 0.5,
-    Callback = function(value) AstroFlySpeed = value end
-})
-
 -- ====================== UI: PRIORITY SETTINGS ======================
 Main:Section({ Title = "优先级设置", Icon = "list-ordered" })
 
 Main:Paragraph({
     Title = "优先级顺序",
     Desc = "GiantST → 直升机 → 高血量精英 → 最近怪物，高级怪物出现时立即切换",
-    Image = "rbxassetid://93661445926652",
+    Image = "rbxassetid://104487529937663",
     ImageSize = 26,
 })
 
@@ -1880,7 +1748,6 @@ Main:Button({
     end
 })
 
--- ====================== UI: 冲水设置 ======================
 Main:Section({ Title = "冲水设置", Icon = "toilet" })
 
 local Flushaura      = Config:Get("flushaura", false)
@@ -2426,7 +2293,7 @@ Main7:Divider()
 Main7:Paragraph({
     Title = "自动投票: 游戏模式",
     Desc = "- [步骤1] 点击恢复投票系统\n- [步骤2] 在大厅中（游戏内）等待\n- [步骤3] 设置自动投票并等待",
-    Image = "rbxassetid://93661445926652",
+    Image = "rbxassetid://104487529937663",
     ImageSize = 30,
 })
 Main7:Divider()
@@ -2511,7 +2378,7 @@ Main7:Divider()
 Main7:Paragraph({
     Title = "休闲模式: 任务选择",
     Desc = "- [步骤1] 在大厅中（不在游戏内）\n- [步骤2] 点击开始并进入经典模式选择界面\n- [步骤3] 选择休闲模式并完成传送\n- [步骤4] 运行脚本",
-    Image = "rbxassetid://93661445926652",
+    Image = "rbxassetid://104487529937663",
     ImageSize = 30,
 })
 Main7:Divider()
@@ -2603,6 +2470,7 @@ AutoVoteToggle = Main7:Toggle({
 -- ====================== UI: AUTO BUY ======================
 Main5:Section({ Title = "商店武器", Icon = "helicopter" })
 
+-- 读取配置（英文），转换为中文显示
 local currentWeaponEn = Config:Get("SelectedWeapon", "Stungun")
 local currentWeaponDisplay = (function()
     for ch, en in pairs(GlobalTables.WeaponInternal) do
@@ -2830,34 +2698,6 @@ local antiafk = Main3:Toggle({
     end
 })
 
--- ====================== 重置所有脚本按钮 ======================
-Main3:Button({
-    Title = "重置所有脚本",
-    Desc = "清除所有配置、停止所有功能、恢复默认设置（需要重新运行脚本）",
-    Callback = function()
-        -- 停止所有循环
-        AutoFarmEnabled = false
-        AstroFarmRunning = false
-        AstroToggleOrbit(false)
-        AstroToggleStrike(false)
-        if orbitConn then orbitConn:Disconnect() end
-        if noBarrierConnection then noBarrierConnection:Disconnect() end
-        if ESPConnection then ESPConnection:Disconnect() end
-        -- 删除配置文件
-        pcall(function()
-            if isfolder(ConfigFolder) then
-                delfolder(ConfigFolder)
-            end
-        end)
-        WindUI:Notify({
-            Title = "重置完成",
-            Content = "所有配置已清除，请手动重新运行脚本",
-            Duration = 5,
-            Icon = "refresh-cw"
-        })
-    end
-})
-
 -- ====================== 自动启动 ======================
 if AutoFarmEnabled then
     task.wait(2)
@@ -2904,6 +2744,210 @@ if AutoVoteEnabled or AutoStartEnabled then
 end
 
 if AutoVoteinGameEnabled then SetupAutoVote_InGame(true) end
+-- ====================== 天文币刷取模块（集成到主脚本，不创建新窗口） ======================
+-- 依赖主脚本中已有的：Main, WindUI, LocalPlayer, ReplicatedStorage, RunService, IdlePosition（可选）
+-- 不使用 IdlePosition，而是使用突袭坐标作为传送点
 
+-- ========== 模块变量 ==========
+local AstroFarmRunning = false
+local AstroOrbitConn = nil
+local AstroStrikeRunning = false
+local AstroForcePos = false
+local AstroAngle = 0
+local AstroGameDuration = 960        -- 单局最大等待时间（秒）
+local AstroFlyRadius = 300           -- 飞行半径
+local AstroFlySpeed = 2              -- 飞行速度
+local AstroStrikePos = Vector3.new(-23.34, -0.19, 0.34)
+local AstroFlyCenter = Vector3.new(0, 250, 0)
+local TELEPORT_CF = CFrame.new(-23.34, -0.19, 0.34)   -- 传送点（突袭坐标）
+
+-- ========== UI 检测函数（使用主脚本已有的 pg，如果没有则获取） ==========
+local function IsInLobby()
+    local pg = LocalPlayer:FindFirstChild("PlayerGui")
+    if not pg then return false end
+    local lobby = pg:FindFirstChild("Lobby")
+    return lobby and lobby.Enabled == true
+end
+
+local function HasVoteUI()
+    local pg = LocalPlayer:FindFirstChild("PlayerGui")
+    if not pg then return false end
+    for _, v in ipairs(pg:GetDescendants()) do
+        if v:IsA("GuiObject") and v.Visible then
+            local name = v.Name:lower()
+            if name:find("vote") or name:find("map") or name:find("choose") then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+-- ========== 投票与准备（完全复刻原脚本方式） ==========
+local function VoteAndPrepare()
+    local vote = ReplicatedStorage:FindFirstChild("Vote")
+    local getReady = ReplicatedStorage:FindFirstChild("GetReadyRemote")
+    if vote then vote:FireServer("AstroV2") end
+    task.wait(0.3)
+    if getReady then getReady:FireServer("3", true) end
+    task.wait(0.3)
+    if getReady then getReady:FireServer("1", true) end
+end
+
+-- ========== 飞行模块（围绕地图中心，使用 Heartbeat 兼容忍者） ==========
+local function StartOrbit()
+    if AstroOrbitConn then AstroOrbitConn:Disconnect() end
+    local char = LocalPlayer.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+    char.Humanoid.PlatformStand = true
+    AstroAngle = 0
+    AstroForcePos = false
+    AstroOrbitConn = RunService.Heartbeat:Connect(function(dt)
+        if AstroForcePos then
+            AstroAngle = (AstroAngle + AstroFlySpeed * dt) % (math.pi * 2)
+            return
+        end
+        AstroAngle = (AstroAngle + AstroFlySpeed * dt) % (math.pi * 2)
+        local pos = AstroFlyCenter + Vector3.new(math.cos(AstroAngle) * AstroFlyRadius, 0, math.sin(AstroAngle) * AstroFlyRadius)
+        local hrp = char.HumanoidRootPart
+        hrp.CFrame = CFrame.new(pos, AstroFlyCenter)
+        hrp.Velocity = Vector3.zero
+        hrp.RotVelocity = Vector3.zero
+    end)
+end
+
+local function StopOrbit()
+    if AstroOrbitConn then AstroOrbitConn:Disconnect(); AstroOrbitConn = nil end
+    local char = LocalPlayer.Character
+    if char and char:FindFirstChild("Humanoid") then
+        char.Humanoid.PlatformStand = false
+    end
+end
+
+-- ========== 突袭模块（原样，加保护） ==========
+local function StartStrike()
+    if AstroStrikeRunning then return end
+    AstroStrikeRunning = true
+    task.spawn(function()
+        while AstroStrikeRunning do
+            pcall(function()
+                local remote = ReplicatedStorage:FindFirstChild("VillanArcAirStrike")
+                if remote and remote:IsA("RemoteEvent") then
+                    remote:FireServer(AstroStrikePos)
+                end
+            end)
+            task.wait(1)
+        end
+    end)
+end
+
+local function StopStrike()
+    AstroStrikeRunning = false
+end
+
+-- ========== 传送至突袭坐标（短暂锁定位置） ==========
+local function TeleportToStrikePos()
+    AstroForcePos = true
+    local start = tick()
+    local conn = RunService.Heartbeat:Connect(function()
+        if tick() - start > 1.5 then
+            conn:Disconnect()
+            AstroForcePos = false
+            return
+        end
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = TELEPORT_CF
+            char.HumanoidRootPart.Velocity = Vector3.zero
+        end
+    end)
+end
+
+-- ========== 主循环 ==========
+local function AstroFarmLoop()
+    while AstroFarmRunning do
+        -- 1. 等待大厅（Lobby UI 或投票 UI 出现）
+        repeat task.wait(1) until IsInLobby() or HasVoteUI()
+        
+        -- 2. 投票并准备
+        VoteAndPrepare()
+        
+        -- 3. 等待进入地图：投票 UI 消失 + 角色加载完成
+        repeat
+            task.wait(0.5)
+        until (not HasVoteUI()) and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        task.wait(2)   -- 额外稳定
+        
+        -- 4. 开启飞行和突袭
+        StartOrbit()
+        StartStrike()
+        
+        -- 5. 等待游戏结束（最大超时，若中途回到大厅则提前结束）
+        local startTime = tick()
+        while AstroFarmRunning and (tick() - startTime) < AstroGameDuration do
+            task.wait(2)
+            if IsInLobby() or HasVoteUI() then
+                break
+            end
+        end
+        
+        -- 6. 停止飞行和突袭
+        StopOrbit()
+        StopStrike()
+        
+        -- 7. 传送到突袭坐标
+        TeleportToStrikePos()
+        task.wait(2)
+    end
+end
+
+local function StartAstroFarm()
+    if AstroFarmRunning then return end
+    AstroFarmRunning = true
+    task.spawn(AstroFarmLoop)
+end
+
+local function StopAstroFarm()
+    AstroFarmRunning = false
+    StopOrbit()
+    StopStrike()
+end
+
+-- ========== 添加 UI 控件到主脚本的 Main Tab（不创建新窗口） ==========
+Main:Section({ Title = "天文币刷取", Icon = "star" })
+Main:Toggle({
+    Title = "自动刷天文币 (AstroV2)",
+    Desc = "基于 UI 检测，进入地图后开始飞行+突袭，结束后传送到突袭坐标",
+    Value = false,
+    Callback = function(state)
+        if state then
+            StartAstroFarm()
+            WindUI:Notify({ Title = "天文币刷取", Content = "已开启，请确保在大厅", Duration = 3, Icon = "star" })
+        else
+            StopAstroFarm()
+            WindUI:Notify({ Title = "天文币刷取", Content = "已关闭", Duration = 2, Icon = "square" })
+        end
+    end
+})
+Main:Slider({
+    Title = "单局最大等待时间（秒）",
+    Value = { Min = 600, Max = 1200, Default = AstroGameDuration },
+    Step = 30,
+    Callback = function(v) AstroGameDuration = v end
+})
+Main:Slider({
+    Title = "飞行半径",
+    Value = { Min = 100, Max = 600, Default = AstroFlyRadius },
+    Step = 50,
+    Callback = function(v) AstroFlyRadius = v end
+})
+Main:Slider({
+    Title = "飞行速度",
+    Value = { Min = 1, Max = 10, Default = AstroFlySpeed },
+    Step = 0.5,
+    Callback = function(v) AstroFlySpeed = v end
+})
+
+print("[天文币模块] 已集成到主脚本，使用 UI 检测 + 突袭坐标传送")
 print("[DYHUB] 版本 " .. version .. " " .. ver .. " 加载成功！")
 print("[DYHUB] 配置系统已激活 | 自动保存间隔15秒")
