@@ -116,7 +116,7 @@ local userversion = "免费版"
 local Window = WindUI:CreateWindow({
     Title = "DYHUB",
     IconThemed = true,
-    Icon = "rbxassetid://104487529937663",
+    Icon = "rbxassetid://93661445926652/",
     Author = "STBB | " .. userversion,
     Folder = "DYHUB",
     Size = UDim2.fromOffset(550, 380),
@@ -1627,7 +1627,20 @@ Main:Toggle({
 })
 
 Main:Section({ Title = "通用设置", Icon = "zap" })
-
+Main:Toggle({
+    Title = "自动刷天文币 (AstroV2)",
+    Desc = "基于 UI 检测，自动循环刷天文币",
+    Value = false,
+    Callback = function(state)
+        if state then
+            StartAstroFarm()
+            WindUI:Notify({ Title = "天文币", Content = "已开启", Duration = 2 })
+        else
+            StopAstroFarm()
+            WindUI:Notify({ Title = "天文币", Content = "已停止", Duration = 2 })
+        end
+    end
+})
 SkillDropdown = Main:Dropdown({
     Title = "自动技能按键",
     Values = skillDropdownValues,
@@ -2747,232 +2760,133 @@ if AutoVoteinGameEnabled then SetupAutoVote_InGame(true) end
 
 print("[DYHUB] 版本 " .. version .. " " .. ver .. " 加载成功！")
 print("[DYHUB] 配置系统已激活 | 自动保存间隔15秒")
--- ====================== 天文币刷取脚本（WindUI 版，独立运行） ======================
--- 依赖 WindUI 库（会自动下载），无其他依赖
+-- ====================== 天文币刷取模块（供 UI 开关调用） ======================
+do
+    local running = false
+    local orbitConn = nil
+    local strikeRunning = false
+    local forcePos = false
+    local angle = 0
+    local maxDuration = Config:Get("AstroGameDuration", 960) or 960
+    local flyRadius = Config:Get("AstroFlyRadius", 300) or 300
+    local flySpeed = Config:Get("AstroFlySpeed", 2) or 2
+    local strikePos = Vector3.new(-23.34, -0.19, 0.34)
+    local flyCenter = Vector3.new(0, 250, 0)
+    local lobbyCFrame = CFrame.new(-23.3435822, 67, 0.341766357)
 
-local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
-repeat task.wait() until game:IsLoaded()
-
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RunService = game:GetService("RunService")
-local LocalPlayer = Players.LocalPlayer
-
--- 参数
-local running = false
-local maxDuration = 960
-local flyRadius = 300
-local flySpeed = 2
-local strikePos = Vector3.new(-23.34, -0.19, 0.34)
-local flyCenter = Vector3.new(0, 250, 0)
-local lobbyCFrame = CFrame.new(-23.3435822, 67, 0.341766357)
-
--- UI 检测
-local function IsInLobby()
-    local pg = LocalPlayer:FindFirstChild("PlayerGui")
-    if not pg then return false end
-    local lobby = pg:FindFirstChild("Lobby")
-    return lobby and lobby.Enabled == true
-end
-
-local function HasVoteUI()
-    local pg = LocalPlayer:FindFirstChild("PlayerGui")
-    if not pg then return false end
-    for _, v in ipairs(pg:GetDescendants()) do
-        if v:IsA("GuiObject") and v.Visible then
-            local name = v.Name:lower()
-            if name:find("vote") or name:find("map") or name:find("choose") then
-                return true
+    local function IsInLobby()
+        local pg = LocalPlayer:FindFirstChild("PlayerGui")
+        if not pg then return false end
+        local lobby = pg:FindFirstChild("Lobby")
+        return lobby and lobby.Enabled == true
+    end
+    local function HasVoteUI()
+        local pg = LocalPlayer:FindFirstChild("PlayerGui")
+        if not pg then return false end
+        for _, v in ipairs(pg:GetDescendants()) do
+            if v:IsA("GuiObject") and v.Visible then
+                local name = v.Name:lower()
+                if name:find("vote") or name:find("map") or name:find("choose") then
+                    return true
+                end
             end
         end
+        return false
     end
-    return false
-end
-
--- 投票准备
-local function VoteAndPrepare()
-    local vote = ReplicatedStorage:FindFirstChild("Vote")
-    local getReady = ReplicatedStorage:FindFirstChild("GetReadyRemote")
-    if vote then pcall(function() vote:FireServer("AstroV2") end) end
-    task.wait(0.3)
-    if getReady then pcall(function() getReady:FireServer("3", true) end) end
-    task.wait(0.3)
-    if getReady then pcall(function() getReady:FireServer("1", true) end) end
-end
-
--- 飞行
-local orbitConn = nil
-local forcePos = false
-local angle = 0
-
-local function StartOrbit()
-    if orbitConn then orbitConn:Disconnect() end
-    local char = LocalPlayer.Character
-    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
-    char.Humanoid.PlatformStand = true
-    angle = 0
-    forcePos = false
-    orbitConn = RunService.Heartbeat:Connect(function(dt)
-        if forcePos then
-            angle = (angle + flySpeed * dt) % (math.pi * 2)
-            return
-        end
-        angle = (angle + flySpeed * dt) % (math.pi * 2)
-        local pos = flyCenter + Vector3.new(math.cos(angle) * flyRadius, 0, math.sin(angle) * flyRadius)
-        local hrp = char.HumanoidRootPart
-        hrp.CFrame = CFrame.new(pos, flyCenter)
-        hrp.Velocity = Vector3.zero
-        hrp.RotVelocity = Vector3.zero
-    end)
-end
-
-local function StopOrbit()
-    if orbitConn then orbitConn:Disconnect(); orbitConn = nil end
-    local char = LocalPlayer.Character
-    if char and char:FindFirstChild("Humanoid") then
-        char.Humanoid.PlatformStand = false
+    local function VoteAndPrepare()
+        local vote = ReplicatedStorage:FindFirstChild("Vote")
+        local getReady = ReplicatedStorage:FindFirstChild("GetReadyRemote")
+        if vote then pcall(function() vote:FireServer("AstroV2") end) end
+        task.wait(0.3)
+        if getReady then pcall(function() getReady:FireServer("3", true) end) end
+        task.wait(0.3)
+        if getReady then pcall(function() getReady:FireServer("1", true) end) end
     end
-end
-
--- 突袭
-local strikeRunning = false
-
-local function StartStrike()
-    if strikeRunning then return end
-    strikeRunning = true
-    task.spawn(function()
-        while strikeRunning do
-            pcall(function()
-                local remote = ReplicatedStorage:FindFirstChild("VillanArcAirStrike")
-                if remote then remote:FireServer(strikePos) end
-            end)
-            task.wait(1)
-        end
-    end)
-end
-
-local function StopStrike()
-    strikeRunning = false
-end
-
--- 传送回大厅
-local function TeleportToLobby()
-    forcePos = true
-    local start = tick()
-    local conn = RunService.Heartbeat:Connect(function()
-        if tick() - start > 1.5 then
-            conn:Disconnect()
-            forcePos = false
-            return
-        end
+    local function StartOrbit()
+        if orbitConn then orbitConn:Disconnect() end
         local char = LocalPlayer.Character
-        if char and char:FindFirstChild("HumanoidRootPart") then
-            char.HumanoidRootPart.CFrame = lobbyCFrame
-            char.HumanoidRootPart.Velocity = Vector3.zero
-        end
-    end)
-end
-
--- 主循环
-local function MainLoop()
-    while running do
-        -- 等待大厅 UI（超时保护）
-        local waitTime = 0
-        repeat
-            task.wait(1)
-            waitTime = waitTime + 1
-            if waitTime > 60 then
-                running = false
-                WindUI:Notify({ Title = "错误", Content = "等待大厅超时", Duration = 3 })
+        if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+        char.Humanoid.PlatformStand = true
+        angle = 0
+        forcePos = false
+        orbitConn = RunService.Heartbeat:Connect(function(dt)
+            if forcePos then
+                angle = (angle + flySpeed * dt) % (math.pi * 2)
                 return
             end
-        until IsInLobby() or HasVoteUI()
-        
-        VoteAndPrepare()
-        
-        waitTime = 0
-        repeat
-            task.wait(0.5)
-            waitTime = waitTime + 0.5
-            if waitTime > 30 then
-                TeleportToLobby()
-                break
-            end
-        until (not HasVoteUI()) and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        
-        if waitTime > 30 then
-            task.wait(2)
-            goto continue
-        end
-        
-        task.wait(2)
-        StartOrbit()
-        StartStrike()
-        
-        local startTime = tick()
-        while running and (tick() - startTime) < maxDuration do
-            task.wait(2)
-            if IsInLobby() or HasVoteUI() then
-                break
-            end
-        end
-        
-        StopOrbit()
-        StopStrike()
-        TeleportToLobby()
-        
-        -- 等待 UI 确认回到大厅
-        repeat task.wait(1) until IsInLobby() or HasVoteUI()
-        task.wait(2)
-        
-        ::continue::
+            angle = (angle + flySpeed * dt) % (math.pi * 2)
+            local pos = flyCenter + Vector3.new(math.cos(angle) * flyRadius, 0, math.sin(angle) * flyRadius)
+            local hrp = char.HumanoidRootPart
+            hrp.CFrame = CFrame.new(pos, flyCenter)
+            hrp.Velocity = Vector3.zero
+            hrp.RotVelocity = Vector3.zero
+        end)
     end
-end
-
--- 创建 WindUI 窗口
-local Window = WindUI:CreateWindow({
-    Title = "天文币刷取器",
-    Author = "UI检测版",
-    Size = UDim2.fromOffset(450, 400),
-    Theme = "Dark"
-})
-
-local Tab = Window:Tab({ Title = "控制", Icon = "rocket" })
-Tab:Section({ Title = "刷取设置", Icon = "settings" })
-Tab:Toggle({
-    Title = "自动刷天文币 (AstroV2)",
-    Desc = "基于UI检测，自动循环",
-    Value = false,
-    Callback = function(state)
-        if state then
-            running = true
-            task.spawn(MainLoop)
-            WindUI:Notify({ Title = "刷币开启", Content = "请确保在大厅", Duration = 3 })
-        else
-            running = false
+    local function StopOrbit()
+        if orbitConn then orbitConn:Disconnect(); orbitConn = nil end
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChild("Humanoid") then char.Humanoid.PlatformStand = false end
+    end
+    local function StartStrike()
+        if strikeRunning then return end
+        strikeRunning = true
+        task.spawn(function()
+            while strikeRunning do
+                pcall(function()
+                    local remote = ReplicatedStorage:FindFirstChild("VillanArcAirStrike")
+                    if remote and remote:IsA("RemoteEvent") then remote:FireServer(strikePos) end
+                end)
+                task.wait(1)
+            end
+        end)
+    end
+    local function StopStrike()
+        strikeRunning = false
+    end
+    local function TeleportToLobby()
+        forcePos = true
+        local start = tick()
+        local conn = RunService.Heartbeat:Connect(function()
+            if tick() - start > 1.5 then
+                conn:Disconnect()
+                forcePos = false
+                return
+            end
+            local char = LocalPlayer.Character
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                char.HumanoidRootPart.CFrame = lobbyCFrame
+                char.HumanoidRootPart.Velocity = Vector3.zero
+            end
+        end)
+    end
+    local function AstroLoop()
+        while running do
+            repeat task.wait(1) until IsInLobby() or HasVoteUI()
+            VoteAndPrepare()
+            repeat task.wait(0.5) until (not HasVoteUI()) and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            task.wait(2)
+            StartOrbit()
+            StartStrike()
+            local startTime = tick()
+            while running and (tick() - startTime) < maxDuration do
+                task.wait(2)
+                if IsInLobby() or HasVoteUI() then break end
+            end
             StopOrbit()
             StopStrike()
-            WindUI:Notify({ Title = "刷币关闭", Duration = 2 })
+            TeleportToLobby()
+            repeat task.wait(1) until IsInLobby() or HasVoteUI()
+            task.wait(2)
         end
     end
-})
-Tab:Slider({
-    Title = "单局最大时间（秒）",
-    Value = { Min = 600, Max = 1200, Default = maxDuration },
-    Step = 30,
-    Callback = function(v) maxDuration = v end
-})
-Tab:Slider({
-    Title = "飞行半径",
-    Value = { Min = 100, Max = 600, Default = flyRadius },
-    Step = 50,
-    Callback = function(v) flyRadius = v end
-})
-Tab:Slider({
-    Title = "飞行速度",
-    Value = { Min = 1, Max = 10, Default = flySpeed },
-    Step = 0.5,
-    Callback = function(v) flySpeed = v end
-})
-
-WindUI:Notify({ Title = "脚本已加载", Content = "点击开关开始刷币", Duration = 3 })
+    function StartAstroFarm()
+        if running then return end
+        running = true
+        task.spawn(AstroLoop)
+    end
+    function StopAstroFarm()
+        running = false
+        StopOrbit()
+        StopStrike()
+    end
+end
