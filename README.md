@@ -1,6 +1,6 @@
--- v085 汉化纯净版 | 无后门 | 无卡密 | 全功能
+-- v085 最终版 | 作者：神 | 无后门 | 全功能 + 天文币刷取
 local version = "Rework"
-local ver = "v023.4-纯净版"
+local ver = "v023.4-最终版"
 
 -- ====================== LOAD UI ======================
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
@@ -69,26 +69,16 @@ function CustomConfig:Get(key, default)
 end
 
 function CustomConfig:Save()
-    local success, err = pcall(function()
+    pcall(function()
         writefile(self.ConfigPath, HttpService:JSONEncode(self.ConfigData))
     end)
-    if success then warn("[DYHUB] Config saved!") else warn("[DYHUB] Save failed:", err) end
 end
 
 function CustomConfig:Load()
     if isfile(self.ConfigPath) then
-        local success, result = pcall(function()
-            return HttpService:JSONDecode(readfile(self.ConfigPath))
-        end)
-        if success and type(result) == "table" then
-            self.ConfigData = result
-            print("[DYHUB] Config loaded!")
-        else
-            warn("[DYHUB] Failed to load config, using defaults")
-            self.ConfigData = {}
-        end
+        local ok, res = pcall(function() return HttpService:JSONDecode(readfile(self.ConfigPath)) end)
+        if ok and type(res) == "table" then self.ConfigData = res else self.ConfigData = {} end
     else
-        print("[DYHUB] No config found, creating new one")
         self.ConfigData = {}
     end
 end
@@ -105,18 +95,15 @@ end
 local Config = CustomConfig.new()
 Config:AutoSave(15)
 
--- ====================== WINDOW 2 ======================
+-- ====================== WINDOW ======================
 local Players = game:GetService("Players")
-
--- 已删除 Premium 验证代码，直接设置为免费版
 local userversion = "免费版"
 
--- ====================== WINDOW ======================
 local Window = WindUI:CreateWindow({
-    Title = "DYHUB",
+    Title = "神",
     IconThemed = true,
-    Icon = "rbxassetid://104487529937663",
-    Author = "STBB | " .. userversion,
+    Icon = "rbxassetid://93661445926652",
+    Author = "神",
     Folder = "DYHUB",
     Size = UDim2.fromOffset(550, 380),
     Transparent = true,
@@ -141,15 +128,15 @@ Window:EditOpenButton({
 
 -- ====================== TABS ======================
 local Info   = Window:Tab({ Title = "信息", Icon = "info" })
-MainDivider  = Window:Divider()
+Window:Divider()
 local Main   = Window:Tab({ Title = "核心", Icon = "rocket" })
 local Main4  = Window:Tab({ Title = "透视", Icon = "eye" })
 local Main2  = Window:Tab({ Title = "玩家", Icon = "user" })
-MainDivider1 = Window:Divider()
+Window:Divider()
 local Main5  = Window:Tab({ Title = "商店", Icon = "shopping-cart" })
 local Main6  = Window:Tab({ Title = "收集", Icon = "hand" })
 local Main7  = Window:Tab({ Title = "模式", Icon = "gamepad-2" })
-MainDivider2 = Window:Divider()
+Window:Divider()
 local Main3  = Window:Tab({ Title = "设置", Icon = "settings" })
 Window:SelectTab(1)
 
@@ -157,15 +144,15 @@ Window:SelectTab(1)
 Info:Section({ Title = "最近更新", TextXAlignment = "Center", TextSize = 17 })
 Info:Divider()
 Info:Paragraph({
-    Title = "更新: 2026/05/16",
-    Desc = "- [新增] 优先级系统\n- [新增] 恢复投票系统\n- [新增] 上帝模式\n- [新增] 解锁通行证\n- [修复] 怪物高度覆写\n- [修复] 透视核心\n- [优化] 删除地图",
-    Image = "rbxassetid://104487529937663",
+    Title = "更新: 2026/05/17",
+    Desc = "- [新增] 优先级系统\n- [新增] 恢复投票系统\n- [新增] 上帝模式\n- [新增] 解锁通行证\n- [新增] 天文币自动刷取\n- [修复] 怪物高度覆写\n- [优化] 删除地图",
+    Image = "rbxassetid://93661445926652",
     ImageSize = 30,
 })
 Info:Divider()
 Info:Section({ Title = "DYHUB 信息", TextXAlignment = "Center", TextSize = 17 })
 Info:Divider()
-Info:Paragraph({ Title = "纯净版", Desc = "无后门 | 中文界面 | 完整功能", Image = "rbxassetid://104487529937663", ImageSize = 30 })
+Info:Paragraph({ Title = "纯净版", Desc = "无后门 | 中文界面 | 完整功能", Image = "rbxassetid://93661445926652", ImageSize = 30 })
 
 -- ====================== SERVICES ======================
 local TweenService       = game:GetService("TweenService")
@@ -182,7 +169,6 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 -- ====================== GLOBAL TABLES ======================
 GlobalTables = {
     redeemCodes = { "100MVisit2", "100MVisit1", "CamArmada", "CCTVBase", "ADelayedGameIsEventuallyGoodButRushedGameIsForeverBad" },
-    -- 模式名称（中文显示），内部存储用英文映射
     ModeDisplay = { "普通模式", "模糊记忆", "极限模式", "困难模式", "疯狂模式", "噩梦模式", "首领连战", "暗黑维度", "地狱", "迷雾", "圣诞行动1", "僵尸行动1", "坚守模式", "入侵" },
     ModeInternal = {
         ["普通模式"] = "Normal Mode", ["模糊记忆"] = "Vague Memory", ["极限模式"] = "Extreme Mode",
@@ -190,19 +176,13 @@ GlobalTables = {
         ["首领连战"] = "Boss Rush", ["暗黑维度"] = "Dark Dimension", ["地狱"] = "Hell", ["迷雾"] = "Mist",
         ["圣诞行动1"] = "Christmas Act 1", ["僵尸行动1"] = "Zombie Act 1", ["坚守模式"] = "Holdout", ["入侵"] = "Invasion"
     },
-    Votes = {
-        "Normal","VeryHard","Hard","Insane","Nightmare","BossRush",
-        "DarkDimension","Hell","ThunderStorm","Christmas","Zombie",
-        "AstroV2","Astro","100MVisit"
-    },
-    -- 武器显示中文，内部存储英文
+    Votes = { "Normal","VeryHard","Hard","Insane","Nightmare","BossRush","DarkDimension","Hell","ThunderStorm","Christmas","Zombie","AstroV2","Astro","100MVisit" },
     WeaponDisplay = { "电击枪", "火焰喷射器", "鱼叉枪", "霰弹枪", "脉冲步枪", "鱼叉霰弹枪", "EPD", "小型激光枪" },
     WeaponInternal = {
         ["电击枪"] = "Stungun", ["火焰喷射器"] = "Flamethrower", ["鱼叉枪"] = "Harpoon Gun",
         ["霰弹枪"] = "Shot Gun", ["脉冲步枪"] = "Pulse Rifle", ["鱼叉霰弹枪"] = "Shot Harpoon Gun",
         ["EPD"] = "EPD", ["小型激光枪"] = "Small Laser Gun"
     },
-    -- 道具显示中文，内部存储英文
     MiscDisplay = { "耳机", "泰坦呼叫", "特种泰坦呼叫", "扬声器呼叫", "手雷", "喷气背包", "透镜" },
     MiscInternal = {
         ["耳机"] = "HeadPhone", ["泰坦呼叫"] = "Titan-Request", ["特种泰坦呼叫"] = "SpecialTitan-Request",
@@ -256,16 +236,13 @@ local AntiAFK = Config:Get("AntiAfk", true)
 -- 自动购买配置（存储英文名）
 local AutoBuyWeaponEnabled   = Config:Get("AutoBuyWeaponEnabled", false)
 local AutoBuyMiscEnabled     = Config:Get("AutoBuyMiscEnabled", false)
--- 兼容旧配置：若配置中是中文则转为英文
 local rawWeapon = Config:Get("SelectedWeapon", "电击枪")
 local rawMisc = Config:Get("SelectedMiscItem", "耳机")
 local SelectedWeapon = GlobalTables.WeaponInternal[rawWeapon] or rawWeapon
 local SelectedMiscItem = GlobalTables.MiscInternal[rawMisc] or rawMisc
--- 重新保存英文值
 Config:Set("SelectedWeapon", SelectedWeapon)
 Config:Set("SelectedMiscItem", SelectedMiscItem)
 
--- 自动模式配置（存储英文模式名）
 local rawMode = Config:Get("AutoGameValue", "普通模式")
 local AutoGameValue = GlobalTables.ModeInternal[rawMode] or rawMode
 Config:Set("AutoGameValue", AutoGameValue)
@@ -485,27 +462,22 @@ end
 local function GetMobVisualBounds(mob)
     local minY, maxY = math.huge, -math.huge
     local centerX, centerZ, count = 0, 0, 0
-
     for _, part in ipairs(mob:GetDescendants()) do
         if part:IsA("BasePart") and part.Transparency < 0.9 and part.Size.Y > 0.1 then
             local pos = part.Position
-            local hy  = part.Size.Y * 0.5
+            local hy = part.Size.Y * 0.5
             if pos.Y - hy < minY then minY = pos.Y - hy end
             if pos.Y + hy > maxY then maxY = pos.Y + hy end
             centerX = centerX + pos.X
             centerZ = centerZ + pos.Z
-            count   = count + 1
+            count = count + 1
         end
     end
-
     if count == 0 then
         local hrp = mob:FindFirstChild("HumanoidRootPart")
-        if hrp then
-            return hrp.Position, hrp.Position.Y - 2, hrp.Position.Y + 2
-        end
+        if hrp then return hrp.Position, hrp.Position.Y - 2, hrp.Position.Y + 2 end
         return Vector3.new(0, 0, 0), 0, 4
     end
-
     local cx = centerX / count
     local cz = centerZ / count
     local cy = (minY + maxY) * 0.5
@@ -760,9 +732,7 @@ local function IsLivingDescendant(obj)
         current = current.Parent
     end
     return false
-end
-
--- ====================== Delete Map SYSTEM ======================
+end-- ====================== Delete Map SYSTEM ======================
 local BoostFPS_OriginalData = {}
 local BoostFPS_Active = false
 local BoostFPS_RestoreConnection = nil
@@ -1019,7 +989,6 @@ end
 -- ============================================================
 
 local AutoVoteEnabled       = Config:Get("AutoVoteEnabled", false)
--- AutoGameValue 已是英文
 local AutoVoteinGameEnabled = Config:Get("AutoVoteinGameEnabled", false)
 local AutoVoteValue         = Config:Get("AutoVoteValue", "Normal")
 
@@ -1532,9 +1501,7 @@ LocalPlayer.CharacterAdded:Connect(function(char)
     local cam = workspace.CurrentCamera
     cam.CameraSubject = HumanoidRootPart
     cam.CameraType    = Enum.CameraType.Custom
-end)
-
--- ====================== UI: MAIN ======================
+end)-- ====================== UI: MAIN ======================
 Main:Section({ Title = "自动挂机", Icon = "package" })
 
 AutoFarmToggle = Main:Toggle({
@@ -1672,13 +1639,189 @@ Main:Slider({
     end
 })
 
+-- ====================== 天文币自动刷取（新增开关） ======================
+local AstroFarmRunning = false
+local AstroOrbitConn = nil
+local AstroStrikeRunning = false
+local AstroForcePos = false
+local AstroAngle = 0
+local AstroGameDuration = 960
+local AstroFlyRadius = 300
+local AstroFlySpeed = 2
+local AstroStrikePos = Vector3.new(-23.34, -0.19, 0.34)
+local AstroTPTarget = CFrame.new(-23.34, 3, 0.34)
+local AstroFlyCenter = Vector3.new(0, 250, 0)
+
+local function AstroToggleOrbit(state)
+    if AstroOrbitConn then AstroOrbitConn:Disconnect(); AstroOrbitConn = nil end
+    if state then AstroAngle = 0; AstroForcePos = false end
+    local char = LocalPlayer.Character
+    if not state or not char or not char:FindFirstChild("HumanoidRootPart") then
+        if char and char:FindFirstChild("Humanoid") then char.Humanoid.PlatformStand = false end
+        return
+    end
+    char.Humanoid.PlatformStand = true
+    AstroOrbitConn = RunService.Stepped:Connect(function(_, dt)
+        if AstroForcePos then
+            AstroAngle = (AstroAngle + AstroFlySpeed * dt) % (math.pi * 2)
+            return
+        end
+        AstroAngle = (AstroAngle + AstroFlySpeed * dt) % (math.pi * 2)
+        local pos = AstroFlyCenter + Vector3.new(math.cos(AstroAngle) * AstroFlyRadius, 0, math.sin(AstroAngle) * AstroFlyRadius)
+        char.HumanoidRootPart.CFrame = CFrame.new(pos, AstroFlyCenter)
+        char.HumanoidRootPart.Velocity = Vector3.zero
+        char.HumanoidRootPart.RotVelocity = Vector3.zero
+    end)
+end
+
+local function AstroToggleStrike(state)
+    if AstroStrikeRunning == state then return end
+    AstroStrikeRunning = state
+    if state then
+        task.spawn(function()
+            while AstroStrikeRunning do
+                local r = ReplicatedStorage:FindFirstChild("VillanArcAirStrike")
+                if r then r:FireServer(AstroStrikePos) end
+                task.wait(1)
+            end
+        end)
+    end
+end
+
+local function AstroForceTP(cf)
+    AstroForcePos = true
+    local start = tick()
+    local conn = RunService.Heartbeat:Connect(function()
+        if tick() - start > 1.5 then
+            conn:Disconnect()
+            AstroForcePos = false
+            return
+        end
+        local char = LocalPlayer.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            char.HumanoidRootPart.CFrame = cf
+            char.HumanoidRootPart.Velocity = Vector3.zero
+        end
+    end)
+end
+
+local function AstroExecutePrepare(voteParam)
+    local vote = ReplicatedStorage:FindFirstChild("Vote")
+    local getReady = ReplicatedStorage:FindFirstChild("GetReadyRemote")
+    if vote then vote:FireServer(voteParam) end
+    task.wait(0.3)
+    if getReady then getReady:FireServer("3", true) end
+    task.wait(0.3)
+    if getReady then getReady:FireServer("1", true) end
+end
+
+local function AstroMeasurePing()
+    local t0 = tick()
+    pcall(function() return game:HttpGet("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Shanghai") end)
+    local t1 = tick()
+    pcall(function() return game:HttpGet("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Shanghai") end)
+    local t2 = tick()
+    return math.floor((t2 - t1 + t1 - t0) * 500)
+end
+
+local function AstroCalcWait()
+    local ping = AstroMeasurePing()
+    local ratio = math.clamp(ping / 500, 0, 1)
+    return 5 + (10 - 5) * ratio
+end
+
+local function AstroWaitForCharacter()
+    local player = LocalPlayer
+    if not player.Character or not player.Character:FindFirstChild("Humanoid") or player.Character.Humanoid.Health <= 0 then
+        player.CharacterAdded:Wait()
+    end
+    task.wait(1)
+    -- 恢复投票系统
+    local getReady = ReplicatedStorage:FindFirstChild("GetReadyRemote")
+    if getReady then
+        getReady:FireServer("3", true); task.wait(1.25)
+        getReady:FireServer("3", false); task.wait(0.67)
+        getReady:FireServer("2", true); task.wait(1.25)
+        getReady:FireServer("2", false); task.wait(0.67)
+        getReady:FireServer("1", true)
+    end
+end
+
+local function AstroFarmLoop()
+    while AstroFarmRunning do
+        AstroWaitForCharacter()
+        AstroExecutePrepare("AstroV2")
+        local waitSec = math.floor(AstroCalcWait() + 0.5)
+        for i = waitSec, 1, -1 do if not AstroFarmRunning then break end task.wait(1) end
+        if not AstroFarmRunning then break end
+        local player = LocalPlayer
+        while AstroFarmRunning and (not player.Character or not player.Character:FindFirstChild("HumanoidRootPart")) do task.wait(0.5) end
+        if not AstroFarmRunning then break end
+        AstroToggleOrbit(true)
+        AstroToggleStrike(true)
+        for i = 1, AstroGameDuration do if not AstroFarmRunning then break end task.wait(1) end
+        AstroToggleOrbit(false)
+        AstroToggleStrike(false)
+        AstroForceTP(AstroTPTarget)
+        task.wait(2)
+    end
+    AstroToggleOrbit(false)
+    AstroToggleStrike(false)
+end
+
+local function StartAstroFarm()
+    if AstroFarmRunning then return end
+    AstroFarmRunning = true
+    task.spawn(AstroFarmLoop)
+end
+
+local function StopAstroFarm()
+    AstroFarmRunning = false
+    AstroToggleOrbit(false)
+    AstroToggleStrike(false)
+end
+
+Main:Section({ Title = "天文币刷取", Icon = "star" })
+Main:Toggle({
+    Title = "自动刷天文币 (AstroV2)",
+    Desc = "循环进入 AstroV2 地图，自动飞行 + 空袭，结束后自动重置",
+    Value = false,
+    Callback = function(state)
+        if state then
+            StartAstroFarm()
+            WindUI:Notify({ Title = "天文币刷取", Content = "已开启，请确保在大厅", Duration = 3, Icon = "star" })
+        else
+            StopAstroFarm()
+            WindUI:Notify({ Title = "天文币刷取", Content = "已关闭", Duration = 2, Icon = "square" })
+        end
+    end
+})
+Main:Slider({
+    Title = "刷取单局时间（秒）",
+    Value = { Min = 600, Max = 1200, Default = AstroGameDuration },
+    Step = 30,
+    Callback = function(value) AstroGameDuration = value end
+})
+Main:Slider({
+    Title = "飞行环绕半径",
+    Value = { Min = 100, Max = 600, Default = AstroFlyRadius },
+    Step = 50,
+    Callback = function(value) AstroFlyRadius = value end
+})
+Main:Slider({
+    Title = "飞行速度",
+    Value = { Min = 1, Max = 10, Default = AstroFlySpeed },
+    Step = 0.5,
+    Callback = function(value) AstroFlySpeed = value end
+})
+
 -- ====================== UI: PRIORITY SETTINGS ======================
 Main:Section({ Title = "优先级设置", Icon = "list-ordered" })
 
 Main:Paragraph({
     Title = "优先级顺序",
     Desc = "GiantST → 直升机 → 高血量精英 → 最近怪物，高级怪物出现时立即切换",
-    Image = "rbxassetid://104487529937663",
+    Image = "rbxassetid://93661445926652",
     ImageSize = 26,
 })
 
@@ -1769,7 +1912,7 @@ Main:Toggle({
             task.spawn(function()
                 while Flushaura do
                     pcall(function()
-                        local char = game.Players.LocalPlayer.Character
+                        local char = LocalPlayer.Character
                         if not char then return end
                         local root = char:FindFirstChild("HumanoidRootPart")
                         if not root then return end
@@ -2292,7 +2435,7 @@ Main7:Divider()
 Main7:Paragraph({
     Title = "自动投票: 游戏模式",
     Desc = "- [步骤1] 点击恢复投票系统\n- [步骤2] 在大厅中（游戏内）等待\n- [步骤3] 设置自动投票并等待",
-    Image = "rbxassetid://104487529937663",
+    Image = "rbxassetid://93661445926652",
     ImageSize = 30,
 })
 Main7:Divider()
@@ -2377,7 +2520,7 @@ Main7:Divider()
 Main7:Paragraph({
     Title = "休闲模式: 任务选择",
     Desc = "- [步骤1] 在大厅中（不在游戏内）\n- [步骤2] 点击开始并进入经典模式选择界面\n- [步骤3] 选择休闲模式并完成传送\n- [步骤4] 运行脚本",
-    Image = "rbxassetid://104487529937663",
+    Image = "rbxassetid://93661445926652",
     ImageSize = 30,
 })
 Main7:Divider()
@@ -2469,7 +2612,6 @@ AutoVoteToggle = Main7:Toggle({
 -- ====================== UI: AUTO BUY ======================
 Main5:Section({ Title = "商店武器", Icon = "helicopter" })
 
--- 读取配置（英文），转换为中文显示
 local currentWeaponEn = Config:Get("SelectedWeapon", "Stungun")
 local currentWeaponDisplay = (function()
     for ch, en in pairs(GlobalTables.WeaponInternal) do
@@ -2694,6 +2836,34 @@ local antiafk = Main3:Toggle({
                 end
             end)
         end
+    end
+})
+
+-- ====================== 重置所有脚本按钮 ======================
+Main3:Button({
+    Title = "重置所有脚本",
+    Desc = "清除所有配置、停止所有功能、恢复默认设置（需要重新运行脚本）",
+    Callback = function()
+        -- 停止所有循环
+        AutoFarmEnabled = false
+        AstroFarmRunning = false
+        AstroToggleOrbit(false)
+        AstroToggleStrike(false)
+        if orbitConn then orbitConn:Disconnect() end
+        if noBarrierConnection then noBarrierConnection:Disconnect() end
+        if ESPConnection then ESPConnection:Disconnect() end
+        -- 删除配置文件
+        pcall(function()
+            if isfolder(ConfigFolder) then
+                delfolder(ConfigFolder)
+            end
+        end)
+        WindUI:Notify({
+            Title = "重置完成",
+            Content = "所有配置已清除，请手动重新运行脚本",
+            Duration = 5,
+            Icon = "refresh-cw"
+        })
     end
 })
 
