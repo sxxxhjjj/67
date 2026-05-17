@@ -1,4 +1,4 @@
--- v085 最终版 | 作者：神 | 无后门 | 全功能 + 天文币刷取
+-- v085 最终完整版 | 作者：神 | 无后门 | 全功能 + 天文币刷取 | 忍者兼容
 local version = "Rework"
 local ver = "v023.4-最终版"
 
@@ -103,7 +103,7 @@ local Window = WindUI:CreateWindow({
     Title = "神",
     IconThemed = true,
     Icon = "rbxassetid://93661445926652",
-    Author = "神",
+    Author = "stbb",
     Folder = "DYHUB",
     Size = UDim2.fromOffset(550, 380),
     Transparent = true,
@@ -465,17 +465,19 @@ local function GetMobVisualBounds(mob)
     for _, part in ipairs(mob:GetDescendants()) do
         if part:IsA("BasePart") and part.Transparency < 0.9 and part.Size.Y > 0.1 then
             local pos = part.Position
-            local hy = part.Size.Y * 0.5
+            local hy  = part.Size.Y * 0.5
             if pos.Y - hy < minY then minY = pos.Y - hy end
             if pos.Y + hy > maxY then maxY = pos.Y + hy end
             centerX = centerX + pos.X
             centerZ = centerZ + pos.Z
-            count = count + 1
+            count   = count + 1
         end
     end
     if count == 0 then
         local hrp = mob:FindFirstChild("HumanoidRootPart")
-        if hrp then return hrp.Position, hrp.Position.Y - 2, hrp.Position.Y + 2 end
+        if hrp then
+            return hrp.Position, hrp.Position.Y - 2, hrp.Position.Y + 2
+        end
         return Vector3.new(0, 0, 0), 0, 4
     end
     local cx = centerX / count
@@ -732,7 +734,9 @@ local function IsLivingDescendant(obj)
         current = current.Parent
     end
     return false
-end-- ====================== Delete Map SYSTEM ======================
+end
+
+-- ====================== Delete Map SYSTEM ======================
 local BoostFPS_OriginalData = {}
 local BoostFPS_Active = false
 local BoostFPS_RestoreConnection = nil
@@ -1501,7 +1505,9 @@ LocalPlayer.CharacterAdded:Connect(function(char)
     local cam = workspace.CurrentCamera
     cam.CameraSubject = HumanoidRootPart
     cam.CameraType    = Enum.CameraType.Custom
-end)-- ====================== UI: MAIN ======================
+end)
+
+-- ====================== UI: MAIN ======================
 Main:Section({ Title = "自动挂机", Icon = "package" })
 
 AutoFarmToggle = Main:Toggle({
@@ -1639,7 +1645,7 @@ Main:Slider({
     end
 })
 
--- ====================== 天文币自动刷取（新增开关） ======================
+-- ====================== 天文币自动刷取 ======================
 local AstroFarmRunning = false
 local AstroOrbitConn = nil
 local AstroStrikeRunning = false
@@ -1715,28 +1721,12 @@ local function AstroExecutePrepare(voteParam)
     if getReady then getReady:FireServer("1", true) end
 end
 
-local function AstroMeasurePing()
-    local t0 = tick()
-    pcall(function() return game:HttpGet("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Shanghai") end)
-    local t1 = tick()
-    pcall(function() return game:HttpGet("https://timeapi.io/api/Time/current/zone?timeZone=Asia/Shanghai") end)
-    local t2 = tick()
-    return math.floor((t2 - t1 + t1 - t0) * 500)
-end
-
-local function AstroCalcWait()
-    local ping = AstroMeasurePing()
-    local ratio = math.clamp(ping / 500, 0, 1)
-    return 5 + (10 - 5) * ratio
-end
-
 local function AstroWaitForCharacter()
     local player = LocalPlayer
     if not player.Character or not player.Character:FindFirstChild("Humanoid") or player.Character.Humanoid.Health <= 0 then
         player.CharacterAdded:Wait()
     end
     task.wait(1)
-    -- 恢复投票系统
     local getReady = ReplicatedStorage:FindFirstChild("GetReadyRemote")
     if getReady then
         getReady:FireServer("3", true); task.wait(1.25)
@@ -1751,7 +1741,7 @@ local function AstroFarmLoop()
     while AstroFarmRunning do
         AstroWaitForCharacter()
         AstroExecutePrepare("AstroV2")
-        local waitSec = math.floor(AstroCalcWait() + 0.5)
+        local waitSec = 8
         for i = waitSec, 1, -1 do if not AstroFarmRunning then break end task.wait(1) end
         if not AstroFarmRunning then break end
         local player = LocalPlayer
@@ -1890,6 +1880,7 @@ Main:Button({
     end
 })
 
+-- ====================== UI: 冲水设置 ======================
 Main:Section({ Title = "冲水设置", Icon = "toilet" })
 
 local Flushaura      = Config:Get("flushaura", false)
@@ -1912,7 +1903,7 @@ Main:Toggle({
             task.spawn(function()
                 while Flushaura do
                     pcall(function()
-                        local char = LocalPlayer.Character
+                        local char = game.Players.LocalPlayer.Character
                         if not char then return end
                         local root = char:FindFirstChild("HumanoidRootPart")
                         if not root then return end
