@@ -5,7 +5,7 @@
 --       批量无延迟购买/抽卡、旋转90°、ESP、收集、Mastery、Hitbox、Quest等
 -- 汉化: 中文界面完整汉化，多语言可选
 -- ============================================================================
-
+setfpscap(30)   -- 限制 30 帧，减少调度器触发次数
 local version = "Ultimate Final Merged"
 local ver = "v027.0-FINAL-MERGED"
 local currentLanguage = "Chinese"  -- 可切换 Chinese/English/Russian/Portuguese
@@ -1780,37 +1780,37 @@ Info:Paragraph({ Title = T("info_version"), Desc = version .. " " .. ver, ImageS
 Info:Paragraph({ Title = T("info_lines"), Desc = "约 3400 行（全功能暴力版）", ImageSize = 26 })
 
 -- ====================== 注册所有调度器任务 ======================
-Scheduler:register("AutoAttack", safeTask("AutoAttack", stepAutoAttack), 0.05)
-Scheduler:register("AutoSkill", safeTask("AutoSkill", stepAutoSkill), 0.1)
-Scheduler:register("AutoFillUp", safeTask("AutoFillUp", stepAutoFillUp), 0.2)
-Scheduler:register("AutoSkipHeli", safeTask("AutoSkipHeli", stepAutoSkipHeli), 0.5)
-Scheduler:register("GodMode", safeTask("GodMode", stepGodMode), 0.5)
-Scheduler:register("AutoBuyWeapon", safeTask("AutoBuyWeapon", stepAutoBuyWeapon), 10)
-Scheduler:register("AutoBuyMisc", safeTask("AutoBuyMisc", stepAutoBuyMisc), 10)
-Scheduler:register("IdlePosition", safeTask("IdlePosition", stepIdlePosition), 0.2)
-Scheduler:register("MainStateMachine", safeTask("MainStateMachine", stepMainStateMachine), 0.05)
-Scheduler:register("AutoVote", safeTask("AutoVote", stepAutoVote), 0.5)
-Scheduler:register("ESPScan", safeTask("ESPScan", stepESPScan), 0.2)
-Scheduler:register("AutoCollect", safeTask("AutoCollect", stepAutoCollect), 0.5)
-Scheduler:register("NoClip", safeTask("NoClip", stepNoClip), 0.1)
+Scheduler:register("AutoAttack", safeTask("AutoAttack", stepAutoAttack), 0.3)
+Scheduler:register("AutoSkill", safeTask("AutoSkill", stepAutoSkill), 0.6)
+Scheduler:register("AutoFillUp", safeTask("AutoFillUp", stepAutoFillUp), 1.0)
+Scheduler:register("AutoSkipHeli", safeTask("AutoSkipHeli", stepAutoSkipHeli), 1.0)
+Scheduler:register("GodMode", safeTask("GodMode", stepGodMode), 1.0)
+Scheduler:register("AutoBuyWeapon", safeTask("AutoBuyWeapon", stepAutoBuyWeapon), 15)
+Scheduler:register("AutoBuyMisc", safeTask("AutoBuyMisc", stepAutoBuyMisc), 15)
+Scheduler:register("IdlePosition", safeTask("IdlePosition", stepIdlePosition), 0.5)
+Scheduler:register("MainStateMachine", safeTask("MainStateMachine", stepMainStateMachine), 0.3)
+Scheduler:register("AutoVote", safeTask("AutoVote", stepAutoVote), 2.0)
+Scheduler:register("ESPScan", safeTask("ESPScan", stepESPScan), 1.5)
+Scheduler:register("AutoCollect", safeTask("AutoCollect", stepAutoCollect), 3.0)
+Scheduler:register("NoClip", safeTask("NoClip", stepNoClip), 0.5)
 Scheduler:register("PerformanceMonitor", safeTask("PerformanceMonitor", function()
     if ShowCPU then
         local ping = Stats.Network.ServerStatsItem["Data Ping"] and Stats.Network.ServerStatsItem["Data Ping"]:GetValue() or 0
         local fps = 1 / (RunService.Heartbeat:Wait() or 0.016)
         if math.random(1, 100) == 1 then print(string.format("[PERF] FPS: %.1f, Ping: %.0fms", fps, ping)) end
     end
-end), 1)
+end), 2)
 
--- 动态注册高风险任务
-if AutoGodModeEnabled then Scheduler:register("AutoGodMode", safeTask("AutoGodMode", stepAutoGodMode), 0.5) end
-if MasteryAutoFarmActive then Scheduler:register("MasteryNoFlush", safeTask("MasteryNoFlush", stepMasteryNoFlush), 0.1) end
-if MasteryAutoFarmActiveTest then Scheduler:register("MasteryFlush", safeTask("MasteryFlush", stepMasteryFlush), 0.15) end
-if getgenv().HitboxEnabled then Scheduler:register("HitboxUpdate", safeTask("HitboxUpdate", stepHitboxUpdate), 1) end
-if autoQuestCollectActive then Scheduler:register("AutoQuestCollect", safeTask("AutoQuestCollect", stepAutoQuestCollect), 1) end
-if autoQuestSkipActive then Scheduler:register("AutoQuestSkip", safeTask("AutoQuestSkip", stepAutoQuestSkip), 1) end
-if AutoRebirthEnabled then Scheduler:register("AutoRebirth", safeTask("AutoRebirth", stepAutoRebirth), 1) end
-if AutoDailyEnabled then Scheduler:register("AutoDaily", safeTask("AutoDaily", stepAutoDaily), 60) end
-if AutoChestEnabled then Scheduler:register("AutoChest", safeTask("AutoChest", stepAutoChest), 1) end
+-- 动态注册高风险任务（这些开关默认 false，所以不会注册，保留无妨）
+if AutoGodModeEnabled then Scheduler:register("AutoGodMode", safeTask("AutoGodMode", stepAutoGodMode), 1.0) end
+if MasteryAutoFarmActive then Scheduler:register("MasteryNoFlush", safeTask("MasteryNoFlush", stepMasteryNoFlush), 0.5) end
+if MasteryAutoFarmActiveTest then Scheduler:register("MasteryFlush", safeTask("MasteryFlush", stepMasteryFlush), 0.5) end
+if getgenv().HitboxEnabled then Scheduler:register("HitboxUpdate", safeTask("HitboxUpdate", stepHitboxUpdate), 2.0) end
+if autoQuestCollectActive then Scheduler:register("AutoQuestCollect", safeTask("AutoQuestCollect", stepAutoQuestCollect), 2.0) end
+if autoQuestSkipActive then Scheduler:register("AutoQuestSkip", safeTask("AutoQuestSkip", stepAutoQuestSkip), 2.0) end
+if AutoRebirthEnabled then Scheduler:register("AutoRebirth", safeTask("AutoRebirth", stepAutoRebirth), 2.0) end
+if AutoDailyEnabled then Scheduler:register("AutoDaily", safeTask("AutoDaily", stepAutoDaily), 120) end
+if AutoChestEnabled then Scheduler:register("AutoChest", safeTask("AutoChest", stepAutoChest), 2.0) end
 
 -- ====================== 启动调度器 ======================
 Scheduler:start()
