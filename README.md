@@ -908,13 +908,17 @@ local function StopLock()
 end
 local function StartLock(mob,mType,prompt)
     StopLock()
-    lockConn=RunService.RenderStepped:Connect(function()
+    local lastLockTime = 0
+    lockConn = RunService.Heartbeat:Connect(function()
+        local now = tick()
+        if now - lastLockTime < 0.2 then return end  -- 每 0.2 秒执行一次
+        lastLockTime = now
         if not AutoFarmEnabled or farmState~="LOCKING" or IsMobDead(mob) then return end
-        local cf=GetTargetCFrame(mob,FarmPosition)
+        local cf = GetTargetCFrame(mob,FarmPosition)
         if cf and Character and HumanoidRootPart then
             Character:PivotTo(cf)
-            HumanoidRootPart.AssemblyLinearVelocity=Vector3.zero
-            HumanoidRootPart.AssemblyAngularVelocity=Vector3.zero
+            HumanoidRootPart.AssemblyLinearVelocity = Vector3.zero
+            HumanoidRootPart.AssemblyAngularVelocity = Vector3.zero
         end
         if mType=="GiantST" and prompt then
             pcall(function()
@@ -1380,6 +1384,7 @@ end
 if noBarrierActive then startNoBarrier() end
 
 -- ====================== UI 窗口构建 ======================
+local ESP = { Enabled = false, MobEnabled = false, PlayerEnabled = false, ItemEnabled = false, Settings = {}, SelectedItems = {}, ItemList = {} }
 local userversion = "终极暴力完整版"
 local Window = WindUI:CreateWindow({
     Title = "DYHUB", IconThemed = true, Icon = "rbxassetid://93661445926652",
