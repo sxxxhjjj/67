@@ -9,7 +9,7 @@
 local version = "Ultimate Final Merged"
 local ver = "v027.0-FINAL-MERGED"
 local currentLanguage = "Chinese"  -- 可切换 Chinese/English/Russian/Portuguese
-
+pcall(function() delfolder("DYHUB_FINAL") end)
 -- ====================== 多语言翻译表（完整汉化） ======================
 local translations = {
     -- 简体中文（完整汉化）
