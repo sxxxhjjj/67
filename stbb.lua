@@ -1815,7 +1815,6 @@ if AutoRebirthEnabled then Scheduler:register("AutoRebirth", safeTask("AutoRebir
 if AutoDailyEnabled then Scheduler:register("AutoDaily", safeTask("AutoDaily", stepAutoDaily), 300) end
 if AutoChestEnabled then Scheduler:register("AutoChest", safeTask("AutoChest", stepAutoChest), 4.0) end
 
-
 -- ====================== 启动调度器 ======================
 Scheduler:start()
 
