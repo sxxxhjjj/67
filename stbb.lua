@@ -1300,50 +1300,6 @@ function RestoreBoostFPS()
     end
     BoostFPS_OriginalData={}; BoostFPS_LightingData={}
 end
-
--- ====================== 大厅自动开始 ======================
-task.spawn(function()
-    local playBtn=workspace:FindFirstChild("ForGui") and workspace.ForGui:FindFirstChild("SurfaceGui") and workspace.ForGui.SurfaceGui:FindFirstChild("Frame") and workspace.ForGui.SurfaceGui.Frame:FindFirstChild("Play")
-    if playBtn then
-        WindUI:Notify({Title="自动开始",Content="检测到开始按钮",Duration=2})
-        task.wait(1)
-        local playGui=pg:FindFirstChild("Play")
-        if not (playGui and playGui.Enabled) then pcall(function() playBtn:Activate() end) end
-    end
-    task.wait(1)
-    local playGui=pg:FindFirstChild("Play")
-    if playGui and playGui.Enabled then
-        local classicBtn=playGui:FindFirstChild("Classic")
-        if classicBtn then task.wait(1); pcall(function() classicBtn:Activate() end) end
-        task.wait(1)
-        local modeGui=pg:FindFirstChild("mode select2")
-        if modeGui and modeGui.Enabled then
-            local diffBtn=modeGui:FindFirstChild("MainFrame") and modeGui.MainFrame:FindFirstChild("DiffMode")
-            if diffBtn then pcall(function() diffBtn:Activate() end) end
-        end
-    end
-end)
-task.spawn(function()
-    while true do
-        task.wait(0.5)
-        local loadingGui=pg:FindFirstChild("LoadingScreen")
-        if loadingGui then pcall(function() loadingGui:Destroy() end) end
-        local lobby=pg:FindFirstChild("Lobby")
-        if lobby and lobby.Enabled then
-            local btn=lobby:FindFirstChild("MainFrame") and lobby.MainFrame:FindFirstChild("Frame") and lobby.MainFrame.Frame:FindFirstChild("Create") and lobby.MainFrame.Frame.Create:FindFirstChild("TrackQuestButton")
-            if btn and btn.Visible then
-                pcall(function() btn:Activate() end)
-                task.wait(0.5)
-                if AutoVoteEnabled then
-                    ReplicatedStorage.MainHandler:FireServer({[1]="StartSolo",[2]=AutoGameValue})
-                    WindUI:Notify({Title="大厅系统",Content="游戏模式已创建",Duration=2})
-                end
-                break
-            end
-        end
-    end
-end)
-
 -- ====================== 防AFK ======================
 if AntiAFK then
     task.spawn(function()
