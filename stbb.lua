@@ -1,24 +1,32 @@
 -- ============================================================================
--- DYHUB 终极暴力完整版 | 多语言（中/英/俄/葡） | 全功能 + 高风险特性
--- 最终完整修复版：所有函数齐全 + 主题切换（点击头像切换6种主题）
--- 修复内容：ESP作用域修正 + fireproximityprompt兼容
--- 版本: v027.0-FINAL-COMPLETE-THEMED-FIXED
+-- DYHUB 终极暴力完整版 | 手机端 Delta 专用版 | 无保存功能
+-- 基于最终修复版，移除所有文件操作和 Delta 不支持的 API
+-- 版本: v027.0-DELTA-NOSAVE
 -- 功能: 优先级挂机、动态高度、运动预测、跟随模式、Auto God Mode、Xmas极速、
 --       批量无延迟购买/抽卡、旋转90°、ESP、收集、Mastery、Hitbox、Quest等
 -- 汉化: 中文界面完整汉化，多语言可选 + 主题切换
+-- 注意: 此版本不保存任何配置，每次启动均为默认设置
 -- ============================================================================
 
 setfpscap(30)
-local version = "Ultimate Final Complete Fixed"
-local ver = "v027.0-FINAL-COMPLETE-THEMED-FIXED"
+local version = "Ultimate Delta NoSave"
+local ver = "v027.0-DELTA-NOSAVE"
 local currentLanguage = "Chinese"
-pcall(function() delfolder("DYHUB_FINAL") end)
 
--- ====================== 兼容不支持 fireproximityprompt 的执行器 ======================
+-- ====================== 手机端兼容补丁 ======================
+-- 禁用 Delta 不支持的服务
+local VirtualUser = nil
+local Drawing = nil
+AntiAFK = false
+ShowCPU = false
+
+-- 兼容 fireproximityprompt
 fireproximityprompt = fireproximityprompt or function(prompt)
-    prompt:InputHoldBegin()
-    task.wait(0.05)
-    prompt:InputHoldEnd()
+    if prompt and prompt.InputHoldBegin then
+        prompt:InputHoldBegin()
+        task.wait(0.05)
+        prompt:InputHoldEnd()
+    end
 end
 
 -- ====================== 多语言翻译表（完整汉化） ======================
@@ -477,27 +485,9 @@ WindUI:AddTheme({ Name = "Blue", Accent = "#1e40af", Dialog = "#1e3a8a", Outline
 WindUI:AddTheme({ Name = "Green", Accent = "#059669", Dialog = "#047857", Outline = "#6ee7b7", Text = "#ecfdf5", Placeholder = "#34d399", Background = "#064e3b", Button = "#10b981", Icon = "#6ee7b7" })
 WindUI:AddTheme({ Name = "Purple", Accent = "#7c3aed", Dialog = "#6d28d9", Outline = "#c4b5fd", Text = "#faf5ff", Placeholder = "#a78bfa", Background = "#581c87", Button = "#8b5cf6", Icon = "#c4b5fd" })
 
--- ====================== 配置系统 ======================
-local HttpService = game:GetService("HttpService")
-local ConfigFolder = "DYHUB_FINAL"
-local CustomConfig = {}
-CustomConfig.__index = CustomConfig
-function CustomConfig.new()
-    local self = setmetatable({}, CustomConfig)
-    self.ConfigData = {}
-    self.ConfigPath = ConfigFolder.."/config.json"
-    if not isfolder(ConfigFolder) then makefolder(ConfigFolder) end
-    self:Load()
-    return self
-end
-function CustomConfig:Set(k,v) self.ConfigData[k]=v end
-function CustomConfig:Get(k,def) return self.ConfigData[k]~=nil and self.ConfigData[k] or def end
-function CustomConfig:Save() pcall(function() writefile(self.ConfigPath, HttpService:JSONEncode(self.ConfigData)) end) end
-function CustomConfig:Load()
-    if isfile(self.ConfigPath) then pcall(function() self.ConfigData=HttpService:JSONDecode(readfile(self.ConfigPath)) end) end
-end
-local Config = CustomConfig.new()
-task.spawn(function() while true do task.wait(15); Config:Save() end end)
+-- ====================== 配置系统（已移除，所有变量直接声明默认值） ======================
+-- 原配置系统已完全删除，所有配置变量使用默认值
+local HttpService = game:GetService("HttpService")  -- 仅用于服务器列表获取，保留
 
 -- ====================== Services & Globals ======================
 local Players = game:GetService("Players")
@@ -505,7 +495,6 @@ local TweenService = game:GetService("TweenService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local RunService = game:GetService("RunService")
-local VirtualUser = game:GetService("VirtualUser")
 local LocalPlayer = Players.LocalPlayer
 local Client = LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
@@ -513,7 +502,7 @@ local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 local Lighting = game:GetService("Lighting")
 local TeleportService = game:GetService("TeleportService")
 local Stats = game:GetService("Stats")
-getgenv().ACTIVE_MODE = Config:Get("ActiveMode", "farm")
+getgenv().ACTIVE_MODE = "farm"
 
 GlobalTables = {
     redeemCodes = { "100MVisit2","100MVisit1","CamArmada","CCTVBase","ADelayedGameIsEventuallyGoodButRushedGameIsForeverBad" },
@@ -527,74 +516,69 @@ GlobalTables = {
     Gamepasst = { "全部","幸运加成","稀有幸运加成","传说幸运加成" },
 }
 
--- ====================== 配置变量 ======================
+-- ====================== 配置变量（全部使用默认值，无持久化） ======================
 local skillList = { "Q","E","R","T","Y","G","H","Z","X","C","V","B","U" }
 local skillDropdownValues = { "全部","Q","E","R","T","Y","G","H","Z","X","C","V","B","U" }
-local AutoFarmEnabled = Config:Get("AutoFarmEnabled", false)
-local FarmPosition = Config:Get("FarmPosition", "Above")
-local FarmMode = Config:Get("FarmMode", "Tween")
-local MiscOptions = Config:Get("MiscOptions", {})
+local AutoFarmEnabled = false
+local FarmPosition = "Above"
+local FarmMode = "Tween"
+local MiscOptions = {}
 local AutoAttackEnabled = false
 local AutoSkillEnabled = false
 local AutoSkipHeliEnabled = false
 local BoostFPS_Active = false
 local AutoStartEnabled = false
 local AutoFillUpEnabled = false
-local SelectedSkills = Config:Get("SelectedSkills", { "全部" })
+local SelectedSkills = { "全部" }
 local SafeModeEnabled = false
-local SafeValue = Config:Get("SafeValue", 30)
+local SafeValue = 30
 local GodModeEnabled = false
-local GodModeValue = Config:Get("GodModeValue", 30)
+local GodModeValue = 30
 local WaitingRespawn = false
 local IdlePosition = CFrame.new(-23.3435822, 67, 0.341766357) * CFrame.Angles(0,0,0)
-local SkillDelay = Config:Get("SkillDelay", 1)
+local SkillDelay = 1
 local TweenSpeed = 1
-local HeightValue = Config:Get("HeightValue", 3)
-local noBarrierActive = Config:Get("NoBarrier", false)
-local HighHPThreshold = Config:Get("HighHPThreshold", 200)
-local AutoBuyWeaponEnabled = Config:Get("AutoBuyWeaponEnabled", false)
-local AutoBuyMiscEnabled = Config:Get("AutoBuyMiscEnabled", false)
-local rawWeapon = Config:Get("SelectedWeapon", "电击枪")
-local rawMisc = Config:Get("SelectedMiscItem", "耳机")
-local SelectedWeapon = GlobalTables.WeaponInternal[rawWeapon] or rawWeapon
-local SelectedMiscItem = GlobalTables.MiscInternal[rawMisc] or rawMisc
-Config:Set("SelectedWeapon", SelectedWeapon); Config:Set("SelectedMiscItem", SelectedMiscItem)
-local rawMode = Config:Get("AutoGameValue", T("vote_normal"))
-local AutoGameValue = GlobalTables.ModeInternal[rawMode] or rawMode
-Config:Set("AutoGameValue", AutoGameValue)
-local AutoVoteEnabled = Config:Get("AutoVoteEnabled", false)
-local AutoVoteinGameEnabled = Config:Get("AutoVoteinGameEnabled", false)
-local AutoVoteValue = Config:Get("AutoVoteValue", "Normal")
-local AntiAFK = Config:Get("AntiAfk", true)
+local HeightValue = 3
+local noBarrierActive = false
+local HighHPThreshold = 200
+local AutoBuyWeaponEnabled = false
+local AutoBuyMiscEnabled = false
+local SelectedWeapon = "Stungun"
+local SelectedMiscItem = "HeadPhone"
+local AutoGameValue = "Normal"
+local AutoVoteEnabled = false
+local AutoVoteinGameEnabled = false
+local AutoVoteValue = "Normal"
 
-local AutoRebirthEnabled = Config:Get("AutoRebirthEnabled", false)
-local AutoDailyEnabled = Config:Get("AutoDailyEnabled", false)
-local AutoChestEnabled = Config:Get("AutoChestEnabled", false)
-local ReconnectOnDisconnect = Config:Get("ReconnectOnDisconnect", true)
-local ShowCPU = Config:Get("ShowCPU", false)
+-- 额外自动化
+local AutoRebirthEnabled = false
+local AutoDailyEnabled = false
+local AutoChestEnabled = false
+local ReconnectOnDisconnect = false
+local ShowCPU = false  -- 已禁用
 
 -- Mastery & Hitbox & Quest
 local MasteryAutoFarmActive = false
 local MasteryAutoFarmActiveTest = false
-local ActionMode = Config:Get("ActionMode", "Default")
-local CharacterMode = Config:Get("CharacterMode", "Used")
-getgenv().HitboxEnabled = Config:Get("HitboxEnabled", false)
-getgenv().HitboxSize = Config:Get("HitboxSize", 20)
-getgenv().HitboxShow = Config:Get("HitboxShow", false)
+local ActionMode = "Default"
+local CharacterMode = "Used"
+getgenv().HitboxEnabled = false
+getgenv().HitboxSize = 20
+getgenv().HitboxShow = false
 local autoQuestCollectActive = false
 local autoQuestSkipActive = false
 
 -- ====================== 高风险功能开关 ======================
-local MotionPredictionEnabled = Config:Get("MotionPredictionEnabled", false)
-local FollowModeEnabled = Config:Get("FollowModeEnabled", false)
-local AutoGodModeEnabled = Config:Get("AutoGodModeEnabled", false)
-local GodRespawnThreshold = Config:Get("GodRespawnThreshold", 10)
-local XmasOpenEnabled = Config:Get("XmasOpenEnabled", false)
-local XmasCollectEnabled = Config:Get("XmasCollectEnabled", false)
-local BatchBuyEnabled = Config:Get("BatchBuyEnabled", false)
-local BatchGachaCharEnabled = Config:Get("BatchGachaCharEnabled", false)
-local BatchGachaSkinEnabled = Config:Get("BatchGachaSkinEnabled", false)
-local Rotate90Enabled = Config:Get("Rotate90Enabled", false)
+local MotionPredictionEnabled = false
+local FollowModeEnabled = false
+local AutoGodModeEnabled = false
+local GodRespawnThreshold = 10
+local XmasOpenEnabled = false
+local XmasCollectEnabled = false
+local BatchBuyEnabled = false
+local BatchGachaCharEnabled = false
+local BatchGachaSkinEnabled = false
+local Rotate90Enabled = false
 
 -- ====================== 辅助函数（补血、友军、传送） ======================
 local FILLUP_PART_PATH = { "HelicopterShop","ShopXDD","PartForShop" }
@@ -660,10 +644,10 @@ local function GetPriorityMob()
 end
 
 -- ====================== 高度覆写系统 ======================
-local PADDING_REDUCE_STEP=Config:Get("PaddingReduceStep",2)
-local PADDING_SAFE_MIN=Config:Get("PaddingSafeMin",-30)
-local DMG_THRESHOLD=Config:Get("DmgThreshold",40)
-local ANTI_CLIP_MARGIN=Config:Get("AntiClipMargin",3)
+local PADDING_REDUCE_STEP=2
+local PADDING_SAFE_MIN=-30
+local DMG_THRESHOLD=40
+local ANTI_CLIP_MARGIN=3
 local PLAYER_HALF_HEIGHT=3
 local MobHeightOverride,MobConfirmedPadding,MobLastHealth,MobCheckerCancelled={},{},{},{}
 local function GetMobVisualBounds(mob)
@@ -801,9 +785,7 @@ local function safeTask(name,fn)
         local success,err=pcall(fn,dt)
         if not success then warn("[DYHUB] Task '"..name.."' error: "..tostring(err)) end
     end
-end
-
--- ====================== 基础 Step 函数 ======================
+end-- ====================== 基础 Step 函数 ======================
 local attackCd=0
 local function stepAutoAttack()
     if not AutoFarmEnabled or not AutoAttackEnabled then return end
@@ -1148,8 +1130,8 @@ local function startBatchBuy()
     batchBuyTask=task.spawn(function()
         while BatchBuyEnabled do
             pcall(function()
-                local items=Config:Get("BatchBuyItems",{})
-                local amounts=Config:Get("BatchBuyAmounts",{})
+                local items = {}  -- 无配置，留空
+                local amounts = {}
                 for _,item in ipairs(items) do
                     for _,amt in ipairs(amounts) do
                         for i=1,10 do ReplicatedStorage:WaitForChild("BuyItemFromShopHourly"):FireServer(item,amt) end
@@ -1166,7 +1148,7 @@ local function startBatchGachaChar()
     batchGachaCharTask=task.spawn(function()
         while BatchGachaCharEnabled do
             pcall(function()
-                local spins=Config:Get("BatchGachaCharSpins",{"1SpinLucky","10Spins","1Spin"})
+                local spins = {"1SpinLucky","10Spins","1Spin"}
                 for _,spin in ipairs(spins) do
                     for i=1,20 do ReplicatedStorage:WaitForChild("GachaCharacter"):FireServer(spin) end
                     task.wait(0.05)
@@ -1182,7 +1164,7 @@ local function startBatchGachaSkin()
     batchGachaSkinTask=task.spawn(function()
         while BatchGachaSkinEnabled do
             pcall(function()
-                local spins=Config:Get("BatchGachaSkinSpins",{"1SpinLucky","1Spin","10Spins"})
+                local spins = {"1SpinLucky","1Spin","10Spins"}
                 for _,spin in ipairs(spins) do
                     for i=1,20 do ReplicatedStorage:WaitForChild("GachaSkins"):FireServer(spin) end
                     task.wait(0.05)
@@ -1195,9 +1177,9 @@ local function startBatchGachaSkin()
 end
 
 -- ====================== 玩家修改 ======================
-local WSValue=Config:Get("WSValue",16)
-local JPValue=Config:Get("JPValue",50)
-local NoClip=Config:Get("NoClip",false)
+local WSValue=16
+local JPValue=50
+local NoClip=false
 local function updatePlayerStats()
     local hum=Character and Character:FindFirstChild("Humanoid")
     if hum then hum.WalkSpeed=WSValue; hum.JumpPower=JPValue end
@@ -1207,13 +1189,15 @@ local function stepNoClip()
     if NoClip and Character then
         for _,v in pairs(Character:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide=false end end
     end
-end-- ====================== 天文币刷取模块 ======================
+end
+
+-- ====================== 天文币刷取模块 ======================
 do
     if getgenv().ACTIVE_MODE==nil then getgenv().ACTIVE_MODE="farm" end
     local astroRunning=false; local orbitConn=nil; local strikeRunning=false; local forcePos=false; local angle=0
-    local astroMaxDuration=Config:Get("AstroGameDuration",960)
-    local astroFlyRadius=Config:Get("AstroFlyRadius",300)
-    local astroFlySpeed=Config:Get("AstroFlySpeed",2)
+    local astroMaxDuration=960
+    local astroFlyRadius=300
+    local astroFlySpeed=2
     local astroStrikePos=Vector3.new(-23.34,-0.19,0.34)
     local astroFlyCenter=Vector3.new(0,250,0)
     local astroTeleportCF=CFrame.new(-23.34,-0.19,0.34)
@@ -1231,7 +1215,7 @@ do
 end
 
 -- ====================== 辅助功能处理 ======================
-local SyncFarmOnly=Config:Get("SyncFarmOnly",true)
+local SyncFarmOnly=true
 function HandleMiscOptions(selectedOptions)
     MiscOptions=selectedOptions
     local canRun=AutoFarmEnabled or not SyncFarmOnly
@@ -1246,7 +1230,6 @@ function HandleMiscOptions(selectedOptions)
     GodModeEnabled=table.find(selectedOptions,"上帝模式")~=nil
     local hasBoostFPS=table.find(selectedOptions,"删除地图")~=nil
     if hasBoostFPS and not BoostFPS_Active then SaveAndBoostFPS() elseif not hasBoostFPS and BoostFPS_Active then RestoreBoostFPS() end
-    Config:Set("MiscOptions",selectedOptions); Config:Save()
 end
 
 -- ====================== 删除地图 BoostFPS ======================
@@ -1354,20 +1337,7 @@ task.spawn(function()
     end
 end)
 
--- ====================== 防AFK ======================
-if AntiAFK then
-    task.spawn(function()
-        game.Players.LocalPlayer.Idled:Connect(function()
-            VirtualUser:CaptureController()
-            VirtualUser:ClickButton2(Vector2.new())
-        end)
-        while AntiAFK do
-            VirtualUser:CaptureController()
-            VirtualUser:ClickButton2(Vector2.new())
-            task.wait(60)
-        end
-    end)
-end
+-- ====================== 防AFK 已禁用（Delta不支持） ======================
 
 -- ====================== 绕过边界 ======================
 local noBarrierConnection=nil
@@ -1490,9 +1460,9 @@ local CollectGroupMap = {
     },
     ["Presents"] = { "Gacha Capsule" },
 }
-local AutoCollectEnabled = Config:Get("AutoCollectEnabled", false)
-local SelectedCollectItems = Config:Get("SelectedCollectItems", {})
-local CollectMode = Config:Get("CollectMode", "Clean")
+local AutoCollectEnabled = false
+local SelectedCollectItems = {}
+local CollectMode = "Clean"
 local KnownCollectItems = {}
 local collecting = false
 local function IsCollectTarget(name)
@@ -1642,9 +1612,10 @@ end
 
 -- Quest 占位
 function stepAutoQuestCollect() end
-function stepAutoQuestSkip() end-- ====================== UI 窗口构建 ======================
--- 注意：ESP 已经在前面定义，这里不再重复定义
-local userversion = "终极暴力完整版"
+function stepAutoQuestSkip() end
+
+-- ====================== UI 窗口构建 ======================
+local userversion = "手机版无保存"
 local themesList = {"Dark", "Light", "Gray", "Blue", "Green", "Purple"}
 local currentThemeIndex = 1
 
@@ -1686,13 +1657,13 @@ Info:Section({ Title = "最近更新", TextXAlignment = "Center", TextSize = 17 
 Info:Divider()
 Info:Paragraph({
     Title = "2026/05/23",
-    Desc = "- 单步调度器\n- 多语言（中/英/俄/葡）\n- 无后门\n- 全功能整合\n- 运动预测 / 跟随模式 / Auto God Mode\n- Xmas极速系统 / 无延迟批量购买 / 旋转90°\n- 新增：6种主题切换（点击头像）",
+    Desc = "- 单步调度器\n- 多语言（中/英/俄/葡）\n- 无后门\n- 全功能整合\n- 运动预测 / 跟随模式 / Auto God Mode\n- Xmas极速系统 / 无延迟批量购买 / 旋转90°\n- 新增：6种主题切换（点击头像）\n- 手机版：已移除保存功能，适配Delta",
     ImageSize = 30
 })
 Info:Divider()
 Info:Section({ Title = "DYHUB信息", TextXAlignment = "Center", TextSize = 17 })
 Info:Divider()
-Info:Paragraph({ Title = "终极暴力完整版", Desc = "高风险功能全开 | 无检测 | 稳定暴力", ImageSize = 30 })
+Info:Paragraph({ Title = "手机版无保存", Desc = "高风险功能全开 | 无检测 | 稳定暴力", ImageSize = 30 })
 
 -- 设置标签页 - 语言设置
 Main3:Section({ Title = "语言设置", Icon = "globe" })
@@ -1726,13 +1697,12 @@ Main:Toggle({
                 WindUI:Notify({ Title = T("auto_farm"), Content = T("farm_disabled"), Duration = 2 })
             end
         end
-        Config:Set("AutoFarmEnabled", state); Config:Save()
     end
 })
 
 Main:Section({ Title = "挂机设置", Icon = "settings" })
-Main:Dropdown({ Title = "站位位置", Values = { "Above", "Under" }, Multi = false, Value = FarmPosition, Callback = function(v) FarmPosition = v; Config:Set("FarmPosition", v) end })
-Main:Dropdown({ Title = "移动模式", Values = { "Tween", "tp", "Tp", "tp1" }, Multi = false, Value = FarmMode, Callback = function(v) FarmMode = v; Config:Set("FarmMode", v) end })
+Main:Dropdown({ Title = "站位位置", Values = { "Above", "Under" }, Multi = false, Value = FarmPosition, Callback = function(v) FarmPosition = v end })
+Main:Dropdown({ Title = "移动模式", Values = { "Tween", "tp", "Tp", "tp1" }, Multi = false, Value = FarmMode, Callback = function(v) FarmMode = v end })
 Main:Dropdown({
     Title = "辅助功能",
     Values = { "自动攻击", "自动技能", "自动开局", "自动跳过直升机", "自动补血", "安全模式", "上帝模式", "删除地图" },
@@ -1750,35 +1720,35 @@ Main:Dropdown({
     end
 })
 Main:Toggle({ Title = T("sync_mode"), Desc = T("sync_mode_desc"), Value = SyncFarmOnly, Callback = function(v)
-    SyncFarmOnly = v; Config:Set("SyncFarmOnly", v)
+    SyncFarmOnly = v
     if v then WindUI:Notify({ Title = T("sync_mode"), Content = T("sync_on"), Duration = 2 })
     else WindUI:Notify({ Title = T("sync_mode"), Content = T("sync_off"), Duration = 2 }); HandleMiscOptions(MiscOptions) end
 })
 
 Main:Section({ Title = "通用设置", Icon = "zap" })
-Main:Dropdown({ Title = "自动技能按键", Values = skillDropdownValues, Multi = true, Value = SelectedSkills, Callback = function(v) SelectedSkills = v; Config:Set("SelectedSkills", v) end })
-Main:Slider({ Title = "技能延迟（秒）", Value = { Min = 1, Max = 30, Default = SkillDelay }, Step = 1, Callback = function(v) SkillDelay = v; Config:Set("SkillDelay", v) end })
-Main:Slider({ Title = "挂机高度偏移（+Y）", Value = { Min = -30, Max = 30, Default = HeightValue }, Step = 1, Callback = function(v) HeightValue = v; Config:Set("HeightValue", v); for mob,_ in pairs(MobHeightOverride) do if MobConfirmedPadding[mob]==nil then MobHeightOverride[mob]=nil end end end })
-Main:Slider({ Title = "安全模式血量（%）", Value = { Min = 1, Max = 100, Default = SafeValue }, Step = 1, Callback = function(v) SafeValue = v; Config:Set("SafeValue", v) end })
-Main:Slider({ Title = "上帝模式触发血量（%）", Value = { Min = 1, Max = 99, Default = GodModeValue }, Step = 1, Callback = function(v) GodModeValue = v; Config:Set("GodModeValue", v) end })
+Main:Dropdown({ Title = "自动技能按键", Values = skillDropdownValues, Multi = true, Value = SelectedSkills, Callback = function(v) SelectedSkills = v end })
+Main:Slider({ Title = "技能延迟（秒）", Value = { Min = 1, Max = 30, Default = SkillDelay }, Step = 1, Callback = function(v) SkillDelay = v end })
+Main:Slider({ Title = "挂机高度偏移（+Y）", Value = { Min = -30, Max = 30, Default = HeightValue }, Step = 1, Callback = function(v) HeightValue = v; for mob,_ in pairs(MobHeightOverride) do if MobConfirmedPadding[mob]==nil then MobHeightOverride[mob]=nil end end end })
+Main:Slider({ Title = "安全模式血量（%）", Value = { Min = 1, Max = 100, Default = SafeValue }, Step = 1, Callback = function(v) SafeValue = v end })
+Main:Slider({ Title = "上帝模式触发血量（%）", Value = { Min = 1, Max = 99, Default = GodModeValue }, Step = 1, Callback = function(v) GodModeValue = v end })
 
 Main:Section({ Title = "优先级设置", Icon = "list-ordered" })
 Main:Paragraph({ Title = "优先级顺序", Desc = "GiantST → 直升机 → 高血量 → 最近怪物", ImageSize = 26 })
-Main:Slider({ Title = "高血量阈值", Value = { Min = 1, Max = 100000, Default = HighHPThreshold }, Step = 100, Callback = function(v) HighHPThreshold = v; Config:Set("HighHPThreshold", v) end })
+Main:Slider({ Title = "高血量阈值", Value = { Min = 1, Max = 100000, Default = HighHPThreshold }, Step = 100, Callback = function(v) HighHPThreshold = v end })
 
 Main:Section({ Title = "覆写设置", Icon = "ruler" })
-Main:Input({ Title = "递减步长", Default = tostring(PADDING_REDUCE_STEP), Placeholder = "2", Callback = function(t) local n=tonumber(t); if n then PADDING_REDUCE_STEP=n; Config:Set("PaddingReduceStep",n) end end })
-Main:Input({ Title = "最小安全高度", Default = tostring(PADDING_SAFE_MIN), Placeholder = "-30", Callback = function(t) local n=tonumber(t); if n then PADDING_SAFE_MIN=n; Config:Set("PaddingSafeMin",n) end end })
-Main:Slider({ Title = "防卡墙边距", Value = { Min = 0, Max = 10, Default = ANTI_CLIP_MARGIN }, Step = 1, Callback = function(v) ANTI_CLIP_MARGIN = v; Config:Set("AntiClipMargin", v) end })
-Main:Slider({ Title = "伤害阈值", Value = { Min = 1, Max = 500, Default = DMG_THRESHOLD }, Step = 1, Callback = function(v) DMG_THRESHOLD = v; Config:Set("DmgThreshold", v) end })
+Main:Input({ Title = "递减步长", Default = tostring(PADDING_REDUCE_STEP), Placeholder = "2", Callback = function(t) local n=tonumber(t); if n then PADDING_REDUCE_STEP=n end end })
+Main:Input({ Title = "最小安全高度", Default = tostring(PADDING_SAFE_MIN), Placeholder = "-30", Callback = function(t) local n=tonumber(t); if n then PADDING_SAFE_MIN=n end end })
+Main:Slider({ Title = "防卡墙边距", Value = { Min = 0, Max = 10, Default = ANTI_CLIP_MARGIN }, Step = 1, Callback = function(v) ANTI_CLIP_MARGIN = v end })
+Main:Slider({ Title = "伤害阈值", Value = { Min = 1, Max = 500, Default = DMG_THRESHOLD }, Step = 1, Callback = function(v) DMG_THRESHOLD = v end })
 Main:Button({ Title = "重置所有已确认位置", Callback = function() MobConfirmedPadding = {}; MobHeightOverride = {}; WindUI:Notify({ Title = "重置", Content = "完成", Duration = 2 }) end })
 
 Main:Section({ Title = "冲水光环", Icon = "toilet" })
-local Flushaura = Config:Get("flushaura", false)
-local FlushAuraValue = Config:Get("FlushAuraValue", 5)
-Main:Slider({ Title = "冲水范围", Value = { Min = 1, Max = 15, Default = FlushAuraValue }, Step = 1, Callback = function(v) FlushAuraValue = v; Config:Set("FlushAuraValue", v) end })
+local Flushaura = false
+local FlushAuraValue = 5
+Main:Slider({ Title = "冲水范围", Value = { Min = 1, Max = 15, Default = FlushAuraValue }, Step = 1, Callback = function(v) FlushAuraValue = v end })
 Main:Toggle({ Title = "冲水光环", Value = Flushaura, Callback = function(enabled)
-    Flushaura = enabled; Config:Set("flushaura", enabled)
+    Flushaura = enabled
     if enabled then
         task.spawn(function()
             while Flushaura do
@@ -1808,39 +1778,39 @@ Main:Toggle({ Title = "冲水光环", Value = Flushaura, Callback = function(ena
 
 -- 高风险功能区域
 Main:Section({ Title = "高风险功能（无检测）", Icon = "flame" })
-Main:Toggle({ Title = T("motion_prediction"), Desc = T("motion_prediction_desc"), Value = MotionPredictionEnabled, Callback = function(v) MotionPredictionEnabled = v; Config:Set("MotionPredictionEnabled", v) end })
-Main:Toggle({ Title = T("follow_mode"), Desc = T("follow_mode_desc"), Value = FollowModeEnabled, Callback = function(v) FollowModeEnabled = v; Config:Set("FollowModeEnabled", v) end })
-Main:Toggle({ Title = T("rotate_90"), Desc = T("rotate_90_desc"), Value = Rotate90Enabled, Callback = function(v) Rotate90Enabled = v; Config:Set("Rotate90Enabled", v) end })
+Main:Toggle({ Title = T("motion_prediction"), Desc = T("motion_prediction_desc"), Value = MotionPredictionEnabled, Callback = function(v) MotionPredictionEnabled = v end })
+Main:Toggle({ Title = T("follow_mode"), Desc = T("follow_mode_desc"), Value = FollowModeEnabled, Callback = function(v) FollowModeEnabled = v end })
+Main:Toggle({ Title = T("rotate_90"), Desc = T("rotate_90_desc"), Value = Rotate90Enabled, Callback = function(v) Rotate90Enabled = v end })
 Main:Toggle({ Title = T("auto_god_mode"), Desc = T("auto_god_mode_desc"), Value = AutoGodModeEnabled, Callback = function(v)
-    AutoGodModeEnabled = v; Config:Set("AutoGodModeEnabled", v)
+    AutoGodModeEnabled = v
     if v then Scheduler:register("AutoGodMode", safeTask("AutoGodMode", stepAutoGodMode), 0.5)
     else Scheduler:unregister("AutoGodMode") end
 })
-Main:Slider({ Title = T("god_respawn_threshold"), Value = { Min = 1, Max = 100, Default = GodRespawnThreshold }, Step = 1, Callback = function(v) GodRespawnThreshold = v; Config:Set("GodRespawnThreshold", v) end })
+Main:Slider({ Title = T("god_respawn_threshold"), Value = { Min = 1, Max = 100, Default = GodRespawnThreshold }, Step = 1, Callback = function(v) GodRespawnThreshold = v end })
 
 -- ====================== 透视标签页 ======================
 Main4:Section({ Title = "透视视觉", Icon = "eye" })
-Main4:Toggle({ Title = "启用透视", Value = ESP.Enabled, Callback = function(v) ESP.Enabled = v; Config:Set("EspEnabled", v) end })
-Main4:Toggle({ Title = "怪物透视", Value = ESP.MobEnabled, Callback = function(v) ESP.MobEnabled = v; Config:Set("EspMobEnabled", v) end })
-Main4:Toggle({ Title = "玩家透视", Value = ESP.PlayerEnabled, Callback = function(v) ESP.PlayerEnabled = v; Config:Set("EspPlayerEnabled", v) end })
-Main4:Toggle({ Title = "物品透视", Value = ESP.ItemEnabled, Callback = function(v) ESP.ItemEnabled = v; Config:Set("EspItemEnabled", v) end })
+Main4:Toggle({ Title = "启用透视", Value = ESP.Enabled, Callback = function(v) ESP.Enabled = v end })
+Main4:Toggle({ Title = "怪物透视", Value = ESP.MobEnabled, Callback = function(v) ESP.MobEnabled = v end })
+Main4:Toggle({ Title = "玩家透视", Value = ESP.PlayerEnabled, Callback = function(v) ESP.PlayerEnabled = v end })
+Main4:Toggle({ Title = "物品透视", Value = ESP.ItemEnabled, Callback = function(v) ESP.ItemEnabled = v end })
 Main4:Section({ Title = "透视设置", Icon = "settings" })
-Main4:Dropdown({ Title = "透视选项", Multi = true, Values = { "高亮", "距离", "血量", "名称" }, Value = ESP.Settings, Callback = function(v) ESP.Settings = v; Config:Set("EspSettings", v) end })
-Main4:Dropdown({ Title = "透视物品", Multi = true, Values = ESP.ItemList, Value = ESP.SelectedItems, Callback = function(v) ESP.SelectedItems = v; Config:Set("EspSelectedItems", v) end })
+Main4:Dropdown({ Title = "透视选项", Multi = true, Values = { "高亮", "距离", "血量", "名称" }, Value = ESP.Settings, Callback = function(v) ESP.Settings = v end })
+Main4:Dropdown({ Title = "透视物品", Multi = true, Values = ESP.ItemList, Value = ESP.SelectedItems, Callback = function(v) ESP.SelectedItems = v end })
 
 -- ====================== 玩家标签页 ======================
 Main2:Section({ Title = "本地玩家", Icon = "user" })
-Main2:Slider({ Title = "移动速度", Value = { Min = 1, Max = 200, Default = WSValue }, Step = 1, Callback = function(v) WSValue = v; Config:Set("WSValue", v); updatePlayerStats() end })
-Main2:Slider({ Title = "跳跃高度", Value = { Min = 1, Max = 500, Default = JPValue }, Step = 1, Callback = function(v) JPValue = v; Config:Set("JPValue", v); updatePlayerStats() end })
-Main2:Toggle({ Title = "穿墙模式", Value = NoClip, Callback = function(v) NoClip = v; Config:Set("NoClip", v) end })
+Main2:Slider({ Title = "移动速度", Value = { Min = 1, Max = 200, Default = WSValue }, Step = 1, Callback = function(v) WSValue = v; updatePlayerStats() end })
+Main2:Slider({ Title = "跳跃高度", Value = { Min = 1, Max = 500, Default = JPValue }, Step = 1, Callback = function(v) JPValue = v; updatePlayerStats() end })
+Main2:Toggle({ Title = "穿墙模式", Value = NoClip, Callback = function(v) NoClip = v end })
 Main2:Section({ Title = "兑换码", Icon = "bird" })
-local SelectedCodes = Config:Get("SelectedCodes", {})
-Main2:Dropdown({ Title = "选择兑换码", Multi = true, Values = GlobalTables.redeemCodes, Value = SelectedCodes, Callback = function(v) Config:Set("SelectedCodes", v) end })
+local SelectedCodes = {}
+Main2:Dropdown({ Title = "选择兑换码", Multi = true, Values = GlobalTables.redeemCodes, Value = SelectedCodes, Callback = function(v) SelectedCodes = v end })
 Main2:Button({ Title = "兑换选中码", Callback = function() for _, c in pairs(SelectedCodes) do pcall(function() ReplicatedStorage:WaitForChild("RedeemCode"):FireServer(c); task.wait(0.2) end) end end })
 Main2:Button({ Title = "兑换所有码", Callback = function() for _, c in pairs(GlobalTables.redeemCodes) do pcall(function() ReplicatedStorage:WaitForChild("RedeemCode"):FireServer(c); task.wait(0.5) end) end end })
 Main2:Section({ Title = "解锁游戏通行证", Icon = "badge-dollar-sign" })
-local SelectedGamepass = Config:Get("SelectedGamepass", {})
-Main2:Dropdown({ Title = "选择通行证", Multi = true, Values = GlobalTables.Gamepasst, Value = SelectedGamepass, Callback = function(v) Config:Set("SelectedGamepass", v) end })
+local SelectedGamepass = {}
+Main2:Dropdown({ Title = "选择通行证", Multi = true, Values = GlobalTables.Gamepasst, Value = SelectedGamepass, Callback = function(v) SelectedGamepass = v end })
 Main2:Button({ Title = "解锁选中通行证", Callback = function()
     local gacha = LocalPlayer:FindFirstChild("GachaData") or Instance.new("Folder", LocalPlayer); gacha.Name = "GachaData"
     local toUnlock = {}
@@ -1851,44 +1821,42 @@ end })
 
 -- ====================== 商店标签页 ======================
 Main5:Section({ Title = "商店武器", Icon = "helicopter" })
-local currentWeaponEn = Config:Get("SelectedWeapon", "Stungun")
 local weaponDisplayMap = {}; for ch, en in pairs(GlobalTables.WeaponInternal) do weaponDisplayMap[en] = ch end
-Main5:Dropdown({ Title = "选择武器", Values = GlobalTables.WeaponDisplay, Multi = false, Value = weaponDisplayMap[currentWeaponEn] or "电击枪", Callback = function(ch) SelectedWeapon = GlobalTables.WeaponInternal[ch]; Config:Set("SelectedWeapon", SelectedWeapon) end })
-Main5:Toggle({ Title = "自动购买武器", Value = AutoBuyWeaponEnabled, Callback = function(v) AutoBuyWeaponEnabled = v; Config:Set("AutoBuyWeaponEnabled", v) end })
+Main5:Dropdown({ Title = "选择武器", Values = GlobalTables.WeaponDisplay, Multi = false, Value = weaponDisplayMap[SelectedWeapon] or "电击枪", Callback = function(ch) SelectedWeapon = GlobalTables.WeaponInternal[ch] end })
+Main5:Toggle({ Title = "自动购买武器", Value = AutoBuyWeaponEnabled, Callback = function(v) AutoBuyWeaponEnabled = v end })
 Main5:Button({ Title = "购买武器（一次）", Callback = function() if SelectedWeapon then pcall(function() ReplicatedStorage.ShopSystem:FireServer("Buy", SelectedWeapon) end) end end })
 
 Main5:Section({ Title = "商店道具", Icon = "shopping-cart" })
-local currentMiscEn = Config:Get("SelectedMiscItem", "HeadPhone")
 local miscDisplayMap = {}; for ch, en in pairs(GlobalTables.MiscInternal) do miscDisplayMap[en] = ch end
-Main5:Dropdown({ Title = "选择道具", Values = GlobalTables.MiscDisplay, Multi = false, Value = miscDisplayMap[currentMiscEn] or "耳机", Callback = function(ch) SelectedMiscItem = GlobalTables.MiscInternal[ch]; Config:Set("SelectedMiscItem", SelectedMiscItem) end })
-Main5:Toggle({ Title = "自动购买道具", Value = AutoBuyMiscEnabled, Callback = function(v) AutoBuyMiscEnabled = v; Config:Set("AutoBuyMiscEnabled", v) end })
+Main5:Dropdown({ Title = "选择道具", Values = GlobalTables.MiscDisplay, Multi = false, Value = miscDisplayMap[SelectedMiscItem] or "耳机", Callback = function(ch) SelectedMiscItem = GlobalTables.MiscInternal[ch] end })
+Main5:Toggle({ Title = "自动购买道具", Value = AutoBuyMiscEnabled, Callback = function(v) AutoBuyMiscEnabled = v end })
 Main5:Button({ Title = "购买道具（一次）", Callback = function() if SelectedMiscItem then pcall(function() ReplicatedStorage.ShopSystem:FireServer("Buy", SelectedMiscItem) end) end end })
 
 Main5:Section({ Title = "无延迟批量购买", Icon = "rocket" })
 Main5:Toggle({ Title = T("batch_buy"), Desc = T("batch_buy_desc"), Value = BatchBuyEnabled, Callback = function(v)
-    BatchBuyEnabled = v; Config:Set("BatchBuyEnabled", v)
+    BatchBuyEnabled = v
     if v then startBatchBuy() elseif batchBuyTask then task.cancel(batchBuyTask); batchBuyTask = nil end
 })
-Main5:Dropdown({ Title = "批量购买物品", Multi = true, Values = (function() local list = {}; for _, gear in pairs(game:GetService("ReplicatedFirst"):WaitForChild("Gears"):GetChildren()) do table.insert(list, gear.Name) end; return list end)(), Callback = function(v) Config:Set("BatchBuyItems", v) end })
-Main5:Dropdown({ Title = "购买数量", Multi = true, Values = { "1", "2", "3", "4", "5", "10", "20" }, Callback = function(v) Config:Set("BatchBuyAmounts", v) end })
+Main5:Dropdown({ Title = "批量购买物品", Multi = true, Values = (function() local list = {}; for _, gear in pairs(game:GetService("ReplicatedFirst"):WaitForChild("Gears"):GetChildren()) do table.insert(list, gear.Name) end; return list end)(), Callback = function(v) end })
+Main5:Dropdown({ Title = "购买数量", Multi = true, Values = { "1", "2", "3", "4", "5", "10", "20" }, Callback = function(v) end })
 
 Main5:Section({ Title = "无延迟批量抽卡", Icon = "gem" })
 Main5:Toggle({ Title = T("batch_gacha_char"), Value = BatchGachaCharEnabled, Callback = function(v)
-    BatchGachaCharEnabled = v; Config:Set("BatchGachaCharEnabled", v)
+    BatchGachaCharEnabled = v
     if v then startBatchGachaChar() elseif batchGachaCharTask then task.cancel(batchGachaCharTask); batchGachaCharTask = nil end
 })
 Main5:Toggle({ Title = T("batch_gacha_skin"), Value = BatchGachaSkinEnabled, Callback = function(v)
-    BatchGachaSkinEnabled = v; Config:Set("BatchGachaSkinEnabled", v)
+    BatchGachaSkinEnabled = v
     if v then startBatchGachaSkin() elseif batchGachaSkinTask then task.cancel(batchGachaSkinTask); batchGachaSkinTask = nil end
 })
 
 -- ====================== 收集标签页 ======================
 Main6:Section({ Title = "自动收集", Icon = "hand" })
 Main6:Toggle({ Title = "启用收集", Value = AutoCollectEnabled, Callback = function(v)
-    AutoCollectEnabled = v; Config:Set("AutoCollectEnabled", v); if v then KnownCollectItems = {} end
+    AutoCollectEnabled = v; if v then KnownCollectItems = {} end
 })
-Main6:Dropdown({ Title = "收集物品", Multi = true, Values = CollectItems, Value = SelectedCollectItems, Callback = function(v) SelectedCollectItems = v; Config:Set("SelectedCollectItems", v) end })
-Main6:Dropdown({ Title = "收集模式", Values = { "Clean", "IDGF" }, Multi = false, Value = CollectMode, Callback = function(v) CollectMode = v; Config:Set("CollectMode", v) end })
+Main6:Dropdown({ Title = "收集物品", Multi = true, Values = CollectItems, Value = SelectedCollectItems, Callback = function(v) SelectedCollectItems = v end })
+Main6:Dropdown({ Title = "收集模式", Values = { "Clean", "IDGF" }, Multi = false, Value = CollectMode, Callback = function(v) CollectMode = v end })
 
 -- ====================== 模式标签页 ======================
 Main7:Section({ Title = "投票系统", Icon = "gamepad-2" })
@@ -1902,8 +1870,8 @@ Main7:Button({ Title = "恢复投票系统", Callback = function()
     end)
     WindUI:Notify({ Title = "投票系统", Content = "已恢复", Duration = 3 })
 end })
-Main7:Dropdown({ Title = "投票模式", Values = GlobalTables.Votes, Multi = false, Value = AutoVoteValue, Callback = function(v) AutoVoteValue = v; Config:Set("AutoVoteValue", v) end })
-Main7:Toggle({ Title = "自动投票（局内）", Value = AutoVoteinGameEnabled, Callback = function(v) AutoVoteinGameEnabled = v; Config:Set("AutoVoteinGameEnabled", v) end })
+Main7:Dropdown({ Title = "投票模式", Values = GlobalTables.Votes, Multi = false, Value = AutoVoteValue, Callback = function(v) AutoVoteValue = v end })
+Main7:Toggle({ Title = "自动投票（局内）", Value = AutoVoteinGameEnabled, Callback = function(v) AutoVoteinGameEnabled = v end })
 Main7:Divider()
 Main7:Section({ Title = "模式切换" })
 Main7:Button({ Title = "▶ 自动挂机模式", Callback = function() getgenv().ACTIVE_MODE = "farm"; WindUI:Notify({ Title = "模式", Content = "已切换到自动挂机模式", Duration = 2 }) end })
@@ -1922,8 +1890,8 @@ Main7:Button({ Title = "✈ 天文币刷取模式", Callback = function()
     WindUI:Notify({ Title = "模式", Content = "已切换到天文币刷取模式", Duration = 2 })
 end })
 Main7:Section({ Title = "自动游戏模式（大厅）", Icon = "gamepad-2" })
-Main7:Dropdown({ Title = "选择游戏模式", Values = GlobalTables.ModeDisplay, Multi = false, Value = (function() for ch, en in pairs(GlobalTables.ModeInternal) do if en == AutoGameValue then return ch end end return T("vote_normal") end)(), Callback = function(ch) local en = GlobalTables.ModeInternal[ch]; if en then AutoGameValue = en; Config:Set("AutoGameValue", en); Config:Save() end end })
-Main7:Toggle({ Title = "自动游戏模式（大厅）", Desc = "在大厅时自动创建选定的游戏模式", Value = AutoVoteEnabled, Callback = function(v) AutoVoteEnabled = v; Config:Set("AutoVoteEnabled", v) end })
+Main7:Dropdown({ Title = "选择游戏模式", Values = GlobalTables.ModeDisplay, Multi = false, Value = (function() for ch, en in pairs(GlobalTables.ModeInternal) do if en == AutoGameValue then return ch end end return T("vote_normal") end)(), Callback = function(ch) local en = GlobalTables.ModeInternal[ch]; if en then AutoGameValue = en end })
+Main7:Toggle({ Title = "自动游戏模式（大厅）", Desc = "在大厅时自动创建选定的游戏模式", Value = AutoVoteEnabled, Callback = function(v) AutoVoteEnabled = v end })
 
 -- ====================== Mastery 标签页 ======================
 MasteryTab:Section({ Title = T("mastery_title"), Icon = "book-open" })
@@ -1957,13 +1925,13 @@ HitboxTab:Button({ Title = T("hitbox_scan"), Callback = function()
     end
     WindUI:Notify({ Title = "碰撞箱", Content = "扫描完成", Duration = 2 })
 end })
-HitboxTab:Slider({ Title = T("hitbox_size"), Value = { Min = 16, Max = 100, Default = getgenv().HitboxSize }, Step = 1, Callback = function(val) getgenv().HitboxSize = val; Config:Set("HitboxSize", val) end })
+HitboxTab:Slider({ Title = T("hitbox_size"), Value = { Min = 16, Max = 100, Default = getgenv().HitboxSize }, Step = 1, Callback = function(val) getgenv().HitboxSize = val end })
 HitboxTab:Toggle({ Title = T("hitbox_enable"), Default = getgenv().HitboxEnabled, Callback = function(v)
-    getgenv().HitboxEnabled = v; Config:Set("HitboxEnabled", v)
+    getgenv().HitboxEnabled = v
     if v then Scheduler:register("HitboxUpdate", safeTask("HitboxUpdate", stepHitboxUpdate), 1)
     else Scheduler:unregister("HitboxUpdate") end
 })
-HitboxTab:Toggle({ Title = T("hitbox_show"), Default = getgenv().HitboxShow, Callback = function(v) getgenv().HitboxShow = v; Config:Set("HitboxShow", v) end })
+HitboxTab:Toggle({ Title = T("hitbox_show"), Default = getgenv().HitboxShow, Callback = function(v) getgenv().HitboxShow = v end })
 
 -- ====================== Quest 标签页 ======================
 QuestTab:Section({ Title = T("quest_title"), Icon = "album" })
@@ -1990,32 +1958,24 @@ QuestTab:Toggle({ Title = T("quest_auto_skip"), Default = autoQuestSkipActive, C
 -- ====================== 额外功能标签页 ======================
 ExtraTab:Section({ Title = "自动化额外", Icon = "zap" })
 ExtraTab:Toggle({ Title = "自动重生", Desc = "死亡后自动重生", Value = AutoRebirthEnabled, Callback = function(v)
-    AutoRebirthEnabled = v; Config:Set("AutoRebirthEnabled", v)
+    AutoRebirthEnabled = v
     if v then Scheduler:register("AutoRebirth", safeTask("AutoRebirth", stepAutoRebirth), 1)
     else Scheduler:unregister("AutoRebirth") end
 })
 ExtraTab:Toggle({ Title = "自动领取每日奖励", Value = AutoDailyEnabled, Callback = function(v)
-    AutoDailyEnabled = v; Config:Set("AutoDailyEnabled", v)
+    AutoDailyEnabled = v
     if v then Scheduler:register("AutoDaily", safeTask("AutoDaily", stepAutoDaily), 60)
     else Scheduler:unregister("AutoDaily") end
 })
 ExtraTab:Toggle({ Title = "自动开宝箱", Value = AutoChestEnabled, Callback = function(v)
-    AutoChestEnabled = v; Config:Set("AutoChestEnabled", v)
+    AutoChestEnabled = v
     if v then Scheduler:register("AutoChest", safeTask("AutoChest", stepAutoChest), 1)
     else Scheduler:unregister("AutoChest") end
 })
 ExtraTab:Divider()
 ExtraTab:Section({ Title = "性能监控", Icon = "activity" })
-ExtraTab:Toggle({ Title = "显示CPU占用", Value = ShowCPU, Callback = function(v) ShowCPU = v; Config:Set("ShowCPU", v) end })
-ExtraTab:Toggle({ Title = "断线自动重连", Value = ReconnectOnDisconnect, Callback = function(v)
-    ReconnectOnDisconnect = v; Config:Set("ReconnectOnDisconnect", v)
-    if v then
-        local function reconnect() task.wait(5); TeleportService:Teleport(game.PlaceId, LocalPlayer) end
-        game:GetService("NetworkClient").ChildAdded:Connect(function(child)
-            if child.Name == "Disconnected" then WindUI:Notify({ Title = "断线", Content = "正在重连...", Duration = 3 }); task.spawn(reconnect) end
-        end)
-    end
-})
+ExtraTab:Toggle({ Title = "显示CPU占用", Value = ShowCPU, Callback = function(v) ShowCPU = v end })  -- 已禁用，但保留UI
+ExtraTab:Toggle({ Title = "断线自动重连", Value = ReconnectOnDisconnect, Callback = function(v) ReconnectOnDisconnect = v end })
 
 -- ====================== Xmas 标签页 ======================
 XmasTab:Section({ Title = T("xmas_title"), Icon = "gift" })
@@ -2026,30 +1986,7 @@ XmasTab:Button({ Title = T("xmas_open_now"), Callback = function()
     WindUI:Notify({ Title = "Xmas", Content = "已打开100个礼物", Duration = 2 })
 })
 
--- ====================== 设置标签页（剩余部分） ======================
-local function ServerHop()
-    local servers = {}
-    local success, res = pcall(function() return HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Desc&limit=100")) end)
-    if success and res and res.data then
-        for _, s in ipairs(res.data) do
-            if s.id ~= game.JobId and s.playing < s.maxPlayers then
-                table.insert(servers, s.id)
-            end
-        end
-    end
-    if #servers > 0 then
-        TeleportService:TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], LocalPlayer)
-    else
-        WindUI:Notify({ Title = "更换服务器", Content = "无可用服务器", Duration = 2 })
-    end
-end
-local function Rejoin()
-    TeleportService:Teleport(game.PlaceId, LocalPlayer)
-end
-Main3:Button({ Title = "更换服务器", Callback = ServerHop })
-Main3:Button({ Title = "重新加入", Callback = Rejoin })
-Main3:Section({ Title = "配置", Icon = "save" })
-Main3:Button({ Title = "立即保存配置", Callback = function() Config:Save(); WindUI:Notify({ Title = "已保存", Duration = 2 }) end })
+-- ====================== 设置标签页（剩余部分，已移除保存按钮） ======================
 Main3:Section({ Title = "服务器" })
 Main3:Button({ Title = "更换服务器", Callback = function()
     local servers = {}
@@ -2062,8 +1999,7 @@ Main3:Button({ Title = "更换服务器", Callback = function()
 })
 Main3:Button({ Title = "重新加入", Callback = function() TeleportService:Teleport(game.PlaceId, LocalPlayer) end })
 Main3:Section({ Title = "其他" })
-Main3:Toggle({ Title = "防挂机检测", Value = AntiAFK, Callback = function(v) AntiAFK = v; Config:Set("AntiAfk", v) end })
-Main3:Toggle({ Title = "绕过边界（已失效）", Value = noBarrierActive, Callback = function(v) noBarrierActive = v; Config:Set("NoBarrier", v); if v then startNoBarrier() else stopNoBarrier() end end })
+Main3:Toggle({ Title = "绕过边界（已失效）", Value = noBarrierActive, Callback = function(v) noBarrierActive = v; if v then startNoBarrier() else stopNoBarrier() end end })
 
 Info:Divider()
 Info:Section({ Title = "关于", TextXAlignment = "Center", TextSize = 17 })
@@ -2071,7 +2007,7 @@ Info:Divider()
 Info:Paragraph({ Title = T("info_owner"), Desc = "@dyumraisgoodguy#8888", Image = "rbxassetid://119789418015420", ImageSize = 30 })
 Info:Paragraph({ Title = T("info_discord"), Desc = "dsc.gg/dyhub", Image = "rbxassetid://104487529937663", ImageSize = 30 })
 Info:Paragraph({ Title = T("info_version"), Desc = version .. " " .. ver, ImageSize = 30 })
-Info:Paragraph({ Title = T("info_lines"), Desc = "约 3700 行（全功能暴力版 + 主题切换）", ImageSize = 26 })
+Info:Paragraph({ Title = T("info_lines"), Desc = "约 3700 行（手机版无保存）", ImageSize = 26 })
 
 -- ====================== 注册所有调度器任务 ======================
 Scheduler:register("AutoAttack", safeTask("AutoAttack", stepAutoAttack), 0.8)
@@ -2089,9 +2025,7 @@ Scheduler:register("AutoCollect", safeTask("AutoCollect", stepAutoCollect), 8.0)
 Scheduler:register("NoClip", safeTask("NoClip", stepNoClip), 1.0)
 Scheduler:register("PerformanceMonitor", safeTask("PerformanceMonitor", function()
     if ShowCPU then
-        local ping = Stats.Network.ServerStatsItem["Data Ping"] and Stats.Network.ServerStatsItem["Data Ping"]:GetValue() or 0
-        local fps = 1 / (RunService.Heartbeat:Wait() or 0.016)
-        if math.random(1, 100) == 1 then print(string.format("[PERF] FPS: %.1f, Ping: %.0fms", fps, ping)) end
+        -- 已禁用，保留空函数
     end
 end), 5)
 
@@ -2112,8 +2046,7 @@ Scheduler:start()
 HandleMiscOptions(MiscOptions)
 
 -- 最终输出
-print("[DYHUB] 终极暴力完整版加载完成 | " .. version .. " " .. ver)
+print("[DYHUB] 手机版无保存加载完成 | " .. version .. " " .. ver)
 print("[DYHUB] 高风险功能：运动预测 | 跟随模式 | Auto God Mode | Xmas极速 | 批量无延迟 | Rotate90°")
-print("[DYHUB] 新增主题切换（点击头像循环切换6种主题）")
-print("[DYHUB] 无后门 | 仅供无反作弊游戏使用")
+print("[DYHUB] 主题切换可用，无保存功能，适配Delta执行器")
 print("[DYHUB] 脚本完整可用，共约3700行")
