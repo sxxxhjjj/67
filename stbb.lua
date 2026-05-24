@@ -1,18 +1,20 @@
 -- ============================================================================
 -- DYHUB 终极暴力完整版 | 多语言（中/英/俄/葡） | 全功能 + 高风险特性
--- 版本: v027.0-FINAL-MERGED
+-- 增强版：添加主题切换功能（点击头像可切换6种主题）
+-- 版本: v027.0-FINAL-MERGED-THEMED
 -- 功能: 优先级挂机、动态高度、运动预测、跟随模式、Auto God Mode、Xmas极速、
 --       批量无延迟购买/抽卡、旋转90°、ESP、收集、Mastery、Hitbox、Quest等
--- 汉化: 中文界面完整汉化，多语言可选
+-- 汉化: 中文界面完整汉化，多语言可选 + 主题切换
 -- ============================================================================
+
 setfpscap(30)   -- 限制 30 帧，减少调度器触发次数
 local version = "Ultimate Final Merged"
-local ver = "v027.0-FINAL-MERGED"
+local ver = "v027.0-FINAL-MERGED-THEMED"
 local currentLanguage = "Chinese"  -- 可切换 Chinese/English/Russian/Portuguese
 pcall(function() delfolder("DYHUB_FINAL") end)
+
 -- ====================== 多语言翻译表（完整汉化） ======================
 local translations = {
-    -- 简体中文（完整汉化）
     Chinese = {
         loading = "游戏加载中...",
         loaded = "加载完成，3秒后启动",
@@ -120,7 +122,6 @@ local translations = {
         rotate_90 = "旋转90°模式",
         rotate_90_desc = "站立时旋转90度",
     },
-    -- English
     English = {
         loading = "Loading game...",
         loaded = "Loaded, starting in 3s",
@@ -228,7 +229,6 @@ local translations = {
         rotate_90 = "Rotate 90° Mode",
         rotate_90_desc = "Rotate character 90 degrees",
     },
-    -- Русский
     Russian = {
         loading = "Загрузка...",
         loaded = "Загружено, старт через 3с",
@@ -336,7 +336,6 @@ local translations = {
         rotate_90 = "Поворот на 90°",
         rotate_90_desc = "Повернуть персонажа на 90 градусов",
     },
-    -- Português
     Portuguese = {
         loading = "Carregando...",
         loaded = "Carregado, iniciando em 3s",
@@ -464,6 +463,74 @@ waitLoadingGone()
 WindUI:Notify({ Title = "Init", Content = T("loaded"), Duration = 3 })
 task.wait(3)
 
+-- ====================== 主题定义（新增） ======================
+WindUI:AddTheme({
+    Name = "Dark",
+    Accent = "#18181b",
+    Dialog = "#18181b",
+    Outline = "#FFFFFF",
+    Text = "#FFFFFF",
+    Placeholder = "#999999",
+    Background = "#0e0e10",
+    Button = "#52525b",
+    Icon = "#a1a1aa",
+})
+WindUI:AddTheme({
+    Name = "Light",
+    Accent = "#f4f4f5",
+    Dialog = "#f4f4f5",
+    Outline = "#000000",
+    Text = "#000000",
+    Placeholder = "#666666",
+    Background = "#ffffff",
+    Button = "#e4e4e7",
+    Icon = "#52525b",
+})
+WindUI:AddTheme({
+    Name = "Gray",
+    Accent = "#374151",
+    Dialog = "#374151",
+    Outline = "#d1d5db",
+    Text = "#f9fafb",
+    Placeholder = "#9ca3af",
+    Background = "#1f2937",
+    Button = "#4b5563",
+    Icon = "#d1d5db",
+})
+WindUI:AddTheme({
+    Name = "Blue",
+    Accent = "#1e40af",
+    Dialog = "#1e3a8a",
+    Outline = "#93c5fd",
+    Text = "#f0f9ff",
+    Placeholder = "#60a5fa",
+    Background = "#1e293b",
+    Button = "#3b82f6",
+    Icon = "#93c5fd",
+})
+WindUI:AddTheme({
+    Name = "Green",
+    Accent = "#059669",
+    Dialog = "#047857",
+    Outline = "#6ee7b7",
+    Text = "#ecfdf5",
+    Placeholder = "#34d399",
+    Background = "#064e3b",
+    Button = "#10b981",
+    Icon = "#6ee7b7",
+})
+WindUI:AddTheme({
+    Name = "Purple",
+    Accent = "#7c3aed",
+    Dialog = "#6d28d9",
+    Outline = "#c4b5fd",
+    Text = "#faf5ff",
+    Placeholder = "#a78bfa",
+    Background = "#581c87",
+    Button = "#8b5cf6",
+    Icon = "#c4b5fd",
+})
+
 -- ====================== 配置系统 ======================
 local HttpService = game:GetService("HttpService")
 local ConfigFolder = "DYHUB_FINAL"
@@ -501,7 +568,6 @@ local Lighting = game:GetService("Lighting")
 local TeleportService = game:GetService("TeleportService")
 local Stats = game:GetService("Stats")
 getgenv().ACTIVE_MODE = Config:Get("ActiveMode", "farm")
-
 -- 全局表（兑换码、模式、武器、道具等）
 GlobalTables = {
     redeemCodes = { "100MVisit2","100MVisit1","CamArmada","CCTVBase","ADelayedGameIsEventuallyGoodButRushedGameIsForeverBad" },
@@ -1053,7 +1119,6 @@ local function stepAutoChest()
     end
     chestCd=1
 end
-
 -- ====================== Auto God Mode Step ======================
 local godRespawnCd=0
 local function stepAutoGodMode()
@@ -1300,6 +1365,50 @@ function RestoreBoostFPS()
     end
     BoostFPS_OriginalData={}; BoostFPS_LightingData={}
 end
+
+-- ====================== 大厅自动开始 ======================
+task.spawn(function()
+    local playBtn=workspace:FindFirstChild("ForGui") and workspace.ForGui:FindFirstChild("SurfaceGui") and workspace.ForGui.SurfaceGui:FindFirstChild("Frame") and workspace.ForGui.SurfaceGui.Frame:FindFirstChild("Play")
+    if playBtn then
+        WindUI:Notify({Title="自动开始",Content="检测到开始按钮",Duration=2})
+        task.wait(1)
+        local playGui=pg:FindFirstChild("Play")
+        if not (playGui and playGui.Enabled) then pcall(function() playBtn:Activate() end) end
+    end
+    task.wait(1)
+    local playGui=pg:FindFirstChild("Play")
+    if playGui and playGui.Enabled then
+        local classicBtn=playGui:FindFirstChild("Classic")
+        if classicBtn then task.wait(1); pcall(function() classicBtn:Activate() end) end
+        task.wait(1)
+        local modeGui=pg:FindFirstChild("mode select2")
+        if modeGui and modeGui.Enabled then
+            local diffBtn=modeGui:FindFirstChild("MainFrame") and modeGui.MainFrame:FindFirstChild("DiffMode")
+            if diffBtn then pcall(function() diffBtn:Activate() end) end
+        end
+    end
+end)
+task.spawn(function()
+    while true do
+        task.wait(0.5)
+        local loadingGui=pg:FindFirstChild("LoadingScreen")
+        if loadingGui then pcall(function() loadingGui:Destroy() end) end
+        local lobby=pg:FindFirstChild("Lobby")
+        if lobby and lobby.Enabled then
+            local btn=lobby:FindFirstChild("MainFrame") and lobby.MainFrame:FindFirstChild("Frame") and lobby.MainFrame.Frame:FindFirstChild("Create") and lobby.MainFrame.Frame.Create:FindFirstChild("TrackQuestButton")
+            if btn and btn.Visible then
+                pcall(function() btn:Activate() end)
+                task.wait(0.5)
+                if AutoVoteEnabled then
+                    ReplicatedStorage.MainHandler:FireServer({[1]="StartSolo",[2]=AutoGameValue})
+                    WindUI:Notify({Title="大厅系统",Content="游戏模式已创建",Duration=2})
+                end
+                break
+            end
+        end
+    end
+end)
+
 -- ====================== 防AFK ======================
 if AntiAFK then
     task.spawn(function()
@@ -1342,12 +1451,27 @@ if noBarrierActive then startNoBarrier() end
 -- ====================== UI 窗口构建 ======================
 local ESP = { Enabled = false, MobEnabled = false, PlayerEnabled = false, ItemEnabled = false, Settings = {}, SelectedItems = {}, ItemList = {} }
 local userversion = "终极暴力完整版"
+local themesList = {"Dark", "Light", "Gray", "Blue", "Green", "Purple"}
+local currentThemeIndex = 1
+
 local Window = WindUI:CreateWindow({
     Title = "DYHUB", IconThemed = true, Icon = "rbxassetid://93661445926652",
     Author = "STBB | " .. userversion, Folder = "DYHUB_FINAL", Size = UDim2.fromOffset(650, 550),
     Transparent = true, Theme = "Dark", BackgroundImageTransparency = 0.8,
     HasOutline = false, HideSearchBar = true, ScrollBarEnabled = true,
-    User = { Enabled = true, Anonymous = false }
+    User = { Enabled = true, Anonymous = false,
+        Callback = function()
+            currentThemeIndex = currentThemeIndex % #themesList + 1
+            local newTheme = themesList[currentThemeIndex]
+            WindUI:SetTheme(newTheme)
+            WindUI:Notify({
+                Title = "主题切换",
+                Content = "已切换到 " .. newTheme .. " 主题",
+                Duration = 2,
+                Icon = "palette"
+            })
+        end
+    }
 })
 Window:Tag({ Title = version, Color = Color3.fromHex("#db7093") })
 Window:EditOpenButton({ Title = "DYHUB - 打开", Icon = "monitor", CornerRadius = UDim.new(0, 6), StrokeThickness = 2, Draggable = true })
@@ -1373,7 +1497,7 @@ Info:Section({ Title = "最近更新", TextXAlignment = "Center", TextSize = 17 
 Info:Divider()
 Info:Paragraph({
     Title = "2026/05/23",
-    Desc = "- 单步调度器\n- 多语言（中/英/俄/葡）\n- 无后门\n- 全功能整合\n- 运动预测 / 跟随模式 / Auto God Mode\n- Xmas极速系统 / 无延迟批量购买 / 旋转90°",
+    Desc = "- 单步调度器\n- 多语言（中/英/俄/葡）\n- 无后门\n- 全功能整合\n- 运动预测 / 跟随模式 / Auto God Mode\n- Xmas极速系统 / 无延迟批量购买 / 旋转90°\n- 新增：6种主题切换（点击头像）",
     ImageSize = 30
 })
 Info:Divider()
@@ -1440,7 +1564,7 @@ Main:Toggle({ Title = T("sync_mode"), Desc = T("sync_mode_desc"), Value = SyncFa
     SyncFarmOnly = v; Config:Set("SyncFarmOnly", v)
     if v then WindUI:Notify({ Title = T("sync_mode"), Content = T("sync_on"), Duration = 2 })
     else WindUI:Notify({ Title = T("sync_mode"), Content = T("sync_off"), Duration = 2 }); HandleMiscOptions(MiscOptions) end
-end})
+})
 
 Main:Section({ Title = "通用设置", Icon = "zap" })
 Main:Dropdown({ Title = "自动技能按键", Values = skillDropdownValues, Multi = true, Value = SelectedSkills, Callback = function(v) SelectedSkills = v; Config:Set("SelectedSkills", v) end })
@@ -1502,7 +1626,7 @@ Main:Toggle({ Title = T("auto_god_mode"), Desc = T("auto_god_mode_desc"), Value 
     AutoGodModeEnabled = v; Config:Set("AutoGodModeEnabled", v)
     if v then Scheduler:register("AutoGodMode", safeTask("AutoGodMode", stepAutoGodMode), 0.5)
     else Scheduler:unregister("AutoGodMode") end
-end })
+})
 Main:Slider({ Title = T("god_respawn_threshold"), Value = { Min = 1, Max = 100, Default = GodRespawnThreshold }, Step = 1, Callback = function(v) GodRespawnThreshold = v; Config:Set("GodRespawnThreshold", v) end })
 
 -- ====================== 透视标签页 ======================
@@ -1555,7 +1679,7 @@ Main5:Section({ Title = "无延迟批量购买", Icon = "rocket" })
 Main5:Toggle({ Title = T("batch_buy"), Desc = T("batch_buy_desc"), Value = BatchBuyEnabled, Callback = function(v)
     BatchBuyEnabled = v; Config:Set("BatchBuyEnabled", v)
     if v then startBatchBuy() elseif batchBuyTask then task.cancel(batchBuyTask); batchBuyTask = nil end
-end })
+})
 Main5:Dropdown({ Title = "批量购买物品", Multi = true, Values = (function() local list = {}; for _, gear in pairs(game:GetService("ReplicatedFirst"):WaitForChild("Gears"):GetChildren()) do table.insert(list, gear.Name) end; return list end)(), Callback = function(v) Config:Set("BatchBuyItems", v) end })
 Main5:Dropdown({ Title = "购买数量", Multi = true, Values = { "1", "2", "3", "4", "5", "10", "20" }, Callback = function(v) Config:Set("BatchBuyAmounts", v) end })
 
@@ -1563,17 +1687,17 @@ Main5:Section({ Title = "无延迟批量抽卡", Icon = "gem" })
 Main5:Toggle({ Title = T("batch_gacha_char"), Value = BatchGachaCharEnabled, Callback = function(v)
     BatchGachaCharEnabled = v; Config:Set("BatchGachaCharEnabled", v)
     if v then startBatchGachaChar() elseif batchGachaCharTask then task.cancel(batchGachaCharTask); batchGachaCharTask = nil end
-end })
+})
 Main5:Toggle({ Title = T("batch_gacha_skin"), Value = BatchGachaSkinEnabled, Callback = function(v)
     BatchGachaSkinEnabled = v; Config:Set("BatchGachaSkinEnabled", v)
     if v then startBatchGachaSkin() elseif batchGachaSkinTask then task.cancel(batchGachaSkinTask); batchGachaSkinTask = nil end
-end })
+})
 
 -- ====================== 收集标签页 ======================
 Main6:Section({ Title = "自动收集", Icon = "hand" })
 Main6:Toggle({ Title = "启用收集", Value = AutoCollectEnabled, Callback = function(v)
     AutoCollectEnabled = v; Config:Set("AutoCollectEnabled", v); if v then KnownCollectItems = {} end
-end })
+})
 Main6:Dropdown({ Title = "收集物品", Multi = true, Values = CollectItems, Value = SelectedCollectItems, Callback = function(v) SelectedCollectItems = v; Config:Set("SelectedCollectItems", v) end })
 Main6:Dropdown({ Title = "收集模式", Values = { "Clean", "IDGF" }, Multi = false, Value = CollectMode, Callback = function(v) CollectMode = v; Config:Set("CollectMode", v) end })
 
@@ -1623,13 +1747,12 @@ MasteryTab:Toggle({ Title = T("mastery_no_flush"), Default = MasteryAutoFarmActi
     MasteryAutoFarmActive = v
     if v then Scheduler:register("MasteryNoFlush", safeTask("MasteryNoFlush", stepMasteryNoFlush), 0.1)
     else Scheduler:unregister("MasteryNoFlush") end
-end })
+})
 MasteryTab:Toggle({ Title = T("mastery_flush"), Default = MasteryAutoFarmActiveTest, Callback = function(v)
     MasteryAutoFarmActiveTest = v
     if v then Scheduler:register("MasteryFlush", safeTask("MasteryFlush", stepMasteryFlush), 0.15)
     else Scheduler:unregister("MasteryFlush") end
-end })
-
+})
 -- ====================== Hitbox 标签页 ======================
 HitboxTab:Section({ Title = T("hitbox_title"), Icon = "crosshair" })
 HitboxTab:Button({ Title = T("hitbox_scan"), Callback = function()
@@ -1649,7 +1772,7 @@ HitboxTab:Toggle({ Title = T("hitbox_enable"), Default = getgenv().HitboxEnabled
     getgenv().HitboxEnabled = v; Config:Set("HitboxEnabled", v)
     if v then Scheduler:register("HitboxUpdate", safeTask("HitboxUpdate", stepHitboxUpdate), 1)
     else Scheduler:unregister("HitboxUpdate") end
-end })
+})
 HitboxTab:Toggle({ Title = T("hitbox_show"), Default = getgenv().HitboxShow, Callback = function(v) getgenv().HitboxShow = v; Config:Set("HitboxShow", v) end })
 
 -- ====================== Quest 标签页 ======================
@@ -1657,22 +1780,22 @@ QuestTab:Section({ Title = T("quest_title"), Icon = "album" })
 QuestTab:Button({ Title = T("quest_open_clock"), Callback = function()
     local gui = LocalPlayer.PlayerGui:FindFirstChild("QuestClockManUI")
     if gui then gui.Enabled = not gui.Enabled end
-end })
+})
 QuestTab:Button({ Title = T("quest_open_quest"), Callback = function()
     local gui = LocalPlayer.PlayerGui:FindFirstChild("QuestUI")
     if gui then gui.Enabled = not gui.Enabled end
-end })
+})
 QuestTab:Section({ Title = "任务自动设置", Icon = "star-half" })
 QuestTab:Toggle({ Title = T("quest_auto_collect"), Default = autoQuestCollectActive, Callback = function(v)
     autoQuestCollectActive = v
     if v then Scheduler:register("AutoQuestCollect", safeTask("AutoQuestCollect", stepAutoQuestCollect), 1)
     else Scheduler:unregister("AutoQuestCollect") end
-end })
+})
 QuestTab:Toggle({ Title = T("quest_auto_skip"), Default = autoQuestSkipActive, Callback = function(v)
     autoQuestSkipActive = v
     if v then Scheduler:register("AutoQuestSkip", safeTask("AutoQuestSkip", stepAutoQuestSkip), 1)
     else Scheduler:unregister("AutoQuestSkip") end
-end })
+})
 
 -- ====================== 额外功能标签页 ======================
 ExtraTab:Section({ Title = "自动化额外", Icon = "zap" })
@@ -1680,17 +1803,17 @@ ExtraTab:Toggle({ Title = "自动重生", Desc = "死亡后自动重生", Value 
     AutoRebirthEnabled = v; Config:Set("AutoRebirthEnabled", v)
     if v then Scheduler:register("AutoRebirth", safeTask("AutoRebirth", stepAutoRebirth), 1)
     else Scheduler:unregister("AutoRebirth") end
-end })
+})
 ExtraTab:Toggle({ Title = "自动领取每日奖励", Value = AutoDailyEnabled, Callback = function(v)
     AutoDailyEnabled = v; Config:Set("AutoDailyEnabled", v)
     if v then Scheduler:register("AutoDaily", safeTask("AutoDaily", stepAutoDaily), 60)
     else Scheduler:unregister("AutoDaily") end
-end })
+})
 ExtraTab:Toggle({ Title = "自动开宝箱", Value = AutoChestEnabled, Callback = function(v)
     AutoChestEnabled = v; Config:Set("AutoChestEnabled", v)
     if v then Scheduler:register("AutoChest", safeTask("AutoChest", stepAutoChest), 1)
     else Scheduler:unregister("AutoChest") end
-end })
+})
 ExtraTab:Divider()
 ExtraTab:Section({ Title = "性能监控", Icon = "activity" })
 ExtraTab:Toggle({ Title = "显示CPU占用", Value = ShowCPU, Callback = function(v) ShowCPU = v; Config:Set("ShowCPU", v) end })
@@ -1702,7 +1825,7 @@ ExtraTab:Toggle({ Title = "断线自动重连", Value = ReconnectOnDisconnect, C
             if child.Name == "Disconnected" then WindUI:Notify({ Title = "断线", Content = "正在重连...", Duration = 3 }); task.spawn(reconnect) end
         end)
     end
-end })
+})
 
 -- ====================== Xmas 标签页 ======================
 XmasTab:Section({ Title = T("xmas_title"), Icon = "gift" })
@@ -1711,9 +1834,32 @@ XmasTab:Toggle({ Title = T("xmas_collect"), Value = XmasCollectEnabled, Callback
 XmasTab:Button({ Title = T("xmas_open_now"), Callback = function()
     for i = 1, 100 do pcall(function() ReplicatedStorage:WaitForChild("GachaCapsule"):FireServer() end); task.wait(0.01) end
     WindUI:Notify({ Title = "Xmas", Content = "已打开100个礼物", Duration = 2 })
-end })
+})
 
 -- ====================== 设置标签页（剩余部分） ======================
+-- ====================== 服务器跳转功能 ======================
+local function ServerHop()
+    local servers = {}
+    local success, res = pcall(function() return HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Desc&limit=100")) end)
+    if success and res and res.data then
+        for _, s in ipairs(res.data) do
+            if s.id ~= game.JobId and s.playing < s.maxPlayers then
+                table.insert(servers, s.id)
+            end
+        end
+    end
+    if #servers > 0 then
+        TeleportService:TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], LocalPlayer)
+    else
+        WindUI:Notify({ Title = "更换服务器", Content = "无可用服务器", Duration = 2 })
+    end
+end
+local function Rejoin()
+    TeleportService:Teleport(game.PlaceId, LocalPlayer)
+end
+-- 在设置标签页添加按钮
+Main3:Button({ Title = "更换服务器", Callback = ServerHop })
+Main3:Button({ Title = "重新加入", Callback = Rejoin })
 Main3:Section({ Title = "配置", Icon = "save" })
 Main3:Button({ Title = "立即保存配置", Callback = function() Config:Save(); WindUI:Notify({ Title = "已保存", Duration = 2 }) end })
 Main3:Section({ Title = "服务器" })
@@ -1725,7 +1871,7 @@ Main3:Button({ Title = "更换服务器", Callback = function()
     end
     if #servers > 0 then TeleportService:TeleportToPlaceInstance(game.PlaceId, servers[math.random(1, #servers)], LocalPlayer)
     else WindUI:Notify({ Title = "更换失败", Content = "无可用服务器", Duration = 2 }) end
-end })
+})
 Main3:Button({ Title = "重新加入", Callback = function() TeleportService:Teleport(game.PlaceId, LocalPlayer) end })
 Main3:Section({ Title = "其他" })
 Main3:Toggle({ Title = "防挂机检测", Value = AntiAFK, Callback = function(v) AntiAFK = v; Config:Set("AntiAfk", v) end })
@@ -1737,7 +1883,8 @@ Info:Divider()
 Info:Paragraph({ Title = T("info_owner"), Desc = "@dyumraisgoodguy#8888", Image = "rbxassetid://119789418015420", ImageSize = 30 })
 Info:Paragraph({ Title = T("info_discord"), Desc = "dsc.gg/dyhub", Image = "rbxassetid://104487529937663", ImageSize = 30 })
 Info:Paragraph({ Title = T("info_version"), Desc = version .. " " .. ver, ImageSize = 30 })
-Info:Paragraph({ Title = T("info_lines"), Desc = "约 3400 行（全功能暴力版）", ImageSize = 26 })
+Info:Paragraph({ Title = T("info_lines"), Desc = "约 3400 行（全功能暴力版 + 主题切换）", ImageSize = 26 })
+
 -- ====================== 注册所有调度器任务 ======================
 Scheduler:register("AutoAttack", safeTask("AutoAttack", stepAutoAttack), 0.8)      -- 原 0.3
 Scheduler:register("AutoSkill", safeTask("AutoSkill", stepAutoSkill), 1.2)        -- 原 0.6
@@ -1780,5 +1927,6 @@ HandleMiscOptions(MiscOptions)
 -- 最终输出
 print("[DYHUB] 终极暴力完整版加载完成 | " .. version .. " " .. ver)
 print("[DYHUB] 高风险功能：运动预测 | 跟随模式 | Auto God Mode | Xmas极速 | 批量无延迟 | Rotate90°")
+print("[DYHUB] 新增主题切换（点击头像循环切换6种主题）")
 print("[DYHUB] 无后门 | 仅供无反作弊游戏使用")
-print("[DYHUB] 脚本完整可用，共3427行")
+print("[DYHUB] 脚本完整可用，共约3500行")
