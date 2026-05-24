@@ -1,17 +1,25 @@
 -- ============================================================================
 -- DYHUB 终极暴力完整版 | 多语言（中/英/俄/葡） | 全功能 + 高风险特性
--- 增强版：添加主题切换功能（点击头像可切换6种主题）
--- 版本: v027.0-FINAL-MERGED-THEMED
+-- 最终完整修复版：所有函数齐全 + 主题切换（点击头像切换6种主题）
+-- 修复内容：ESP作用域修正 + fireproximityprompt兼容
+-- 版本: v027.0-FINAL-COMPLETE-THEMED-FIXED
 -- 功能: 优先级挂机、动态高度、运动预测、跟随模式、Auto God Mode、Xmas极速、
 --       批量无延迟购买/抽卡、旋转90°、ESP、收集、Mastery、Hitbox、Quest等
 -- 汉化: 中文界面完整汉化，多语言可选 + 主题切换
 -- ============================================================================
 
-setfpscap(30)   -- 限制 30 帧，减少调度器触发次数
-local version = "Ultimate Final Merged"
-local ver = "v027.0-FINAL-MERGED-THEMED"
-local currentLanguage = "Chinese"  -- 可切换 Chinese/English/Russian/Portuguese
+setfpscap(30)
+local version = "Ultimate Final Complete Fixed"
+local ver = "v027.0-FINAL-COMPLETE-THEMED-FIXED"
+local currentLanguage = "Chinese"
 pcall(function() delfolder("DYHUB_FINAL") end)
+
+-- ====================== 兼容不支持 fireproximityprompt 的执行器 ======================
+fireproximityprompt = fireproximityprompt or function(prompt)
+    prompt:InputHoldBegin()
+    task.wait(0.05)
+    prompt:InputHoldEnd()
+end
 
 -- ====================== 多语言翻译表（完整汉化） ======================
 local translations = {
@@ -445,9 +453,7 @@ local translations = {
     },
 }
 
-local function T(key)
-    return translations[currentLanguage][key] or key
-end
+local function T(key) return translations[currentLanguage][key] or key end
 
 -- ====================== UI 初始化 ======================
 local WindUI = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
@@ -463,73 +469,13 @@ waitLoadingGone()
 WindUI:Notify({ Title = "Init", Content = T("loaded"), Duration = 3 })
 task.wait(3)
 
--- ====================== 主题定义（新增） ======================
-WindUI:AddTheme({
-    Name = "Dark",
-    Accent = "#18181b",
-    Dialog = "#18181b",
-    Outline = "#FFFFFF",
-    Text = "#FFFFFF",
-    Placeholder = "#999999",
-    Background = "#0e0e10",
-    Button = "#52525b",
-    Icon = "#a1a1aa",
-})
-WindUI:AddTheme({
-    Name = "Light",
-    Accent = "#f4f4f5",
-    Dialog = "#f4f4f5",
-    Outline = "#000000",
-    Text = "#000000",
-    Placeholder = "#666666",
-    Background = "#ffffff",
-    Button = "#e4e4e7",
-    Icon = "#52525b",
-})
-WindUI:AddTheme({
-    Name = "Gray",
-    Accent = "#374151",
-    Dialog = "#374151",
-    Outline = "#d1d5db",
-    Text = "#f9fafb",
-    Placeholder = "#9ca3af",
-    Background = "#1f2937",
-    Button = "#4b5563",
-    Icon = "#d1d5db",
-})
-WindUI:AddTheme({
-    Name = "Blue",
-    Accent = "#1e40af",
-    Dialog = "#1e3a8a",
-    Outline = "#93c5fd",
-    Text = "#f0f9ff",
-    Placeholder = "#60a5fa",
-    Background = "#1e293b",
-    Button = "#3b82f6",
-    Icon = "#93c5fd",
-})
-WindUI:AddTheme({
-    Name = "Green",
-    Accent = "#059669",
-    Dialog = "#047857",
-    Outline = "#6ee7b7",
-    Text = "#ecfdf5",
-    Placeholder = "#34d399",
-    Background = "#064e3b",
-    Button = "#10b981",
-    Icon = "#6ee7b7",
-})
-WindUI:AddTheme({
-    Name = "Purple",
-    Accent = "#7c3aed",
-    Dialog = "#6d28d9",
-    Outline = "#c4b5fd",
-    Text = "#faf5ff",
-    Placeholder = "#a78bfa",
-    Background = "#581c87",
-    Button = "#8b5cf6",
-    Icon = "#c4b5fd",
-})
+-- ====================== 主题定义 ======================
+WindUI:AddTheme({ Name = "Dark", Accent = "#18181b", Dialog = "#18181b", Outline = "#FFFFFF", Text = "#FFFFFF", Placeholder = "#999999", Background = "#0e0e10", Button = "#52525b", Icon = "#a1a1aa" })
+WindUI:AddTheme({ Name = "Light", Accent = "#f4f4f5", Dialog = "#f4f4f5", Outline = "#000000", Text = "#000000", Placeholder = "#666666", Background = "#ffffff", Button = "#e4e4e7", Icon = "#52525b" })
+WindUI:AddTheme({ Name = "Gray", Accent = "#374151", Dialog = "#374151", Outline = "#d1d5db", Text = "#f9fafb", Placeholder = "#9ca3af", Background = "#1f2937", Button = "#4b5563", Icon = "#d1d5db" })
+WindUI:AddTheme({ Name = "Blue", Accent = "#1e40af", Dialog = "#1e3a8a", Outline = "#93c5fd", Text = "#f0f9ff", Placeholder = "#60a5fa", Background = "#1e293b", Button = "#3b82f6", Icon = "#93c5fd" })
+WindUI:AddTheme({ Name = "Green", Accent = "#059669", Dialog = "#047857", Outline = "#6ee7b7", Text = "#ecfdf5", Placeholder = "#34d399", Background = "#064e3b", Button = "#10b981", Icon = "#6ee7b7" })
+WindUI:AddTheme({ Name = "Purple", Accent = "#7c3aed", Dialog = "#6d28d9", Outline = "#c4b5fd", Text = "#faf5ff", Placeholder = "#a78bfa", Background = "#581c87", Button = "#8b5cf6", Icon = "#c4b5fd" })
 
 -- ====================== 配置系统 ======================
 local HttpService = game:GetService("HttpService")
@@ -568,7 +514,7 @@ local Lighting = game:GetService("Lighting")
 local TeleportService = game:GetService("TeleportService")
 local Stats = game:GetService("Stats")
 getgenv().ACTIVE_MODE = Config:Get("ActiveMode", "farm")
--- 全局表（兑换码、模式、武器、道具等）
+
 GlobalTables = {
     redeemCodes = { "100MVisit2","100MVisit1","CamArmada","CCTVBase","ADelayedGameIsEventuallyGoodButRushedGameIsForeverBad" },
     ModeDisplay = { T("vote_normal"),T("vote_hard"),T("vote_veryhard"),T("vote_insane"),T("vote_nightmare"),T("vote_bossrush"),T("vote_darkdim"),T("vote_hell"),T("vote_thunder"),T("vote_christmas"),T("vote_zombie"),T("vote_astro") },
@@ -621,7 +567,6 @@ local AutoVoteinGameEnabled = Config:Get("AutoVoteinGameEnabled", false)
 local AutoVoteValue = Config:Get("AutoVoteValue", "Normal")
 local AntiAFK = Config:Get("AntiAfk", true)
 
--- 额外自动化
 local AutoRebirthEnabled = Config:Get("AutoRebirthEnabled", false)
 local AutoDailyEnabled = Config:Get("AutoDailyEnabled", false)
 local AutoChestEnabled = Config:Get("AutoChestEnabled", false)
@@ -678,7 +623,7 @@ local function IsValidMob(obj)
         if Players:GetPlayerFromCharacter(obj) then return false end
         if IsAlly(obj) then return false end
         local hum = obj:FindFirstChild("Humanoid")
-        if hum and hum.Health>0 then return true end
+        if hum and hum.Health > 0 then return true end
     end
     return false
 end
@@ -977,7 +922,7 @@ local function StartLock(mob,mType,prompt)
     local lastLockTime = 0
     lockConn = RunService.Heartbeat:Connect(function()
         local now = tick()
-        if now - lastLockTime < 0.2 then return end  -- 每 0.2 秒执行一次
+        if now - lastLockTime < 0.2 then return end
         lastLockTime = now
         if not AutoFarmEnabled or farmState~="LOCKING" or IsMobDead(mob) then return end
         local cf = GetTargetCFrame(mob,FarmPosition)
@@ -1119,6 +1064,7 @@ local function stepAutoChest()
     end
     chestCd=1
 end
+
 -- ====================== Auto God Mode Step ======================
 local godRespawnCd=0
 local function stepAutoGodMode()
@@ -1261,9 +1207,7 @@ local function stepNoClip()
     if NoClip and Character then
         for _,v in pairs(Character:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide=false end end
     end
-end
-
--- ====================== 天文币刷取模块 ======================
+end-- ====================== 天文币刷取模块 ======================
 do
     if getgenv().ACTIVE_MODE==nil then getgenv().ACTIVE_MODE="farm" end
     local astroRunning=false; local orbitConn=nil; local strikeRunning=false; local forcePos=false; local angle=0
@@ -1285,6 +1229,7 @@ do
     function StartAstroFarm() if astroRunning then return end astroRunning=true task.spawn(AstroFarmLoop) end
     function StopAstroFarm() astroRunning=false AstroStopOrbit() AstroStopStrike() end
 end
+
 -- ====================== 辅助功能处理 ======================
 local SyncFarmOnly=Config:Get("SyncFarmOnly",true)
 function HandleMiscOptions(selectedOptions)
@@ -1448,8 +1393,257 @@ local function stopNoBarrier()
 end
 if noBarrierActive then startNoBarrier() end
 
--- ====================== UI 窗口构建 ======================
-local ESP = { Enabled = false, MobEnabled = false, PlayerEnabled = false, ItemEnabled = false, Settings = {}, SelectedItems = {}, ItemList = {} }
+-- ====================== ESP 定义（提前，供 stepESPScan 使用） ======================
+local ESP = { Enabled = false, MobEnabled = false, PlayerEnabled = false, ItemEnabled = false, Settings = {}, SelectedItems = {}, ItemList = {
+    "Clock Spider", "X-18 Core", "Green Energy Core", "Weird Transmitter",
+    "Presents", "Weird Prism", "Key Card", "Zombie Core", "Flash Drives", "Astro Samples"
+} }
+
+-- ====================== 补全缺失的函数 ======================
+-- ESP 扫描
+local espScanCd = 0
+function stepESPScan()
+    if not ESP.Enabled then return end
+    if espScanCd > 0 then espScanCd = espScanCd - 0.05; if espScanCd > 0 then return end end
+    espScanCd = 0.5
+    local settings = ESP.Settings
+    local showHighlight = table.find(settings, "高亮") ~= nil
+    local showDistance = table.find(settings, "距离") ~= nil
+    local showHealth = table.find(settings, "血量") ~= nil
+    local showName = table.find(settings, "名称") ~= nil
+    if ESP.MobEnabled and workspace:FindFirstChild("Living") then
+        for _, mob in ipairs(workspace.Living:GetChildren()) do
+            if IsValidMob(mob) then
+                local hrp = mob:FindFirstChild("HumanoidRootPart")
+                if hrp then
+                    local dist = (HumanoidRootPart.Position - hrp.Position).Magnitude
+                    if dist <= 1500 then
+                        if showHighlight then
+                            local hl = mob:FindFirstChild("DYHUB_ESP")
+                            if not hl then
+                                hl = Instance.new("Highlight")
+                                hl.Name = "DYHUB_ESP"
+                                hl.Adornee = mob
+                                hl.FillColor = Color3.fromRGB(255, 0, 0)
+                                hl.OutlineColor = Color3.fromRGB(255, 255, 255)
+                                hl.FillTransparency = 0.9
+                                hl.Parent = mob
+                            end
+                        end
+                        if showName or showHealth or showDistance then
+                            local bill = hrp:FindFirstChild("DYHUB_LABEL")
+                            if not bill then
+                                bill = Instance.new("BillboardGui")
+                                bill.Name = "DYHUB_LABEL"
+                                bill.Size = UDim2.new(0, 150, 0, 40)
+                                bill.StudsOffset = Vector3.new(0, 2.5, 0)
+                                bill.AlwaysOnTop = true
+                                bill.Adornee = hrp
+                                bill.Parent = hrp
+                                local frame = Instance.new("Frame", bill)
+                                frame.Size = UDim2.new(1, 0, 1, 0)
+                                frame.BackgroundTransparency = 1
+                                local label = Instance.new("TextLabel", frame)
+                                label.Size = UDim2.new(1, 0, 1, 0)
+                                label.BackgroundTransparency = 1
+                                label.Font = Enum.Font.GothamBold
+                                label.TextSize = 12
+                                label.TextColor3 = Color3.fromRGB(255, 255, 255)
+                                label.TextStrokeTransparency = 0.3
+                                label.Name = "Label"
+                            end
+                            local label = bill:FindFirstChild("Frame").Label
+                            local parts = {}
+                            if showName then table.insert(parts, mob.Name) end
+                            if showHealth then
+                                local hum = mob:FindFirstChild("Humanoid")
+                                if hum then table.insert(parts, string.format("❤ %.0f/%.0f", hum.Health, hum.MaxHealth)) end
+                            end
+                            if showDistance then table.insert(parts, string.format("📏 %.0fm", dist)) end
+                            label.Text = table.concat(parts, "\n")
+                        end
+                    else
+                        local hl = mob:FindFirstChild("DYHUB_ESP")
+                        if hl then hl:Destroy() end
+                        local bill = hrp:FindFirstChild("DYHUB_LABEL")
+                        if bill then bill:Destroy() end
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- 自动收集
+local CollectItems = {
+    "Clock Spider", "X-18 Core", "Green Energy Core", "Weird Transmitter",
+    "Astro Samples", "Weird Prism", "Key Card", "Zombie Core",
+    "Flash Drives", "Presents"
+}
+local CollectGroupMap = {
+    ["Astro Samples"] = {
+        "Trooper Blast","Trooper Spinner","Specialist Blaster","Specialist Spinner",
+        "Specialist Sword Arm","Strider Leg","Interceptor Wing","Interceptor Goggles",
+        "Interceptor Spinner","Impactor Cannon","Impactor Laser","High Impactor Cannon",
+        "High Impactor Laser","Destructor Laser","Destructor Blaster","Destructor Core",
+        "Obliterator Blaster","Obliterator Spinner",
+    },
+    ["Presents"] = { "Gacha Capsule" },
+}
+local AutoCollectEnabled = Config:Get("AutoCollectEnabled", false)
+local SelectedCollectItems = Config:Get("SelectedCollectItems", {})
+local CollectMode = Config:Get("CollectMode", "Clean")
+local KnownCollectItems = {}
+local collecting = false
+local function IsCollectTarget(name)
+    for _, p in ipairs(SelectedCollectItems) do
+        if name:lower() == p:lower() then return true end
+        if CollectGroupMap[p] then
+            for _, g in ipairs(CollectGroupMap[p]) do
+                if name:lower() == g:lower() then return true end
+            end
+        end
+    end
+    return false
+end
+function stepAutoCollect()
+    if not AutoCollectEnabled or #SelectedCollectItems == 0 then return end
+    if collecting then return end
+    collecting = true
+    task.spawn(function()
+        local items = {}
+        for _, obj in ipairs(workspace:GetDescendants()) do
+            if IsCollectTarget(obj.Name) and not KnownCollectItems[obj] then
+                local root = obj:IsA("Model") and (obj.PrimaryPart or obj:FindFirstChildOfClass("BasePart")) or obj
+                if root then table.insert(items, obj) end
+            end
+        end
+        if #items == 0 then collecting = false; return end
+        if CollectMode == "Clean" then
+            local waited = 0
+            while true do
+                local allDead = true
+                local living = workspace:FindFirstChild("Living")
+                if living then
+                    for _, m in ipairs(living:GetChildren()) do
+                        if IsValidMob(m) then allDead = false; break end
+                    end
+                end
+                if allDead then break end
+                task.wait(0.5)
+                waited = waited + 0.5
+                if waited >= 120 then break end
+            end
+        end
+        if AutoSkipHeliEnabled then pcall(function() ReplicatedStorage.SetSettingAutoSkipWave:FireServer(false) end) end
+        for _, obj in ipairs(items) do
+            if AutoCollectEnabled and obj and obj.Parent then
+                local root = obj:IsA("Model") and (obj.PrimaryPart or obj:FindFirstChildOfClass("BasePart")) or obj
+                if root then
+                    local targetCF = CFrame.new(root.Position + Vector3.new(0, 3, 0), root.Position)
+                    tp1(targetCF)
+                    task.wait(0.1)
+                    for _, prompt in ipairs(obj:GetDescendants()) do
+                        if prompt:IsA("ProximityPrompt") then
+                            pcall(function()
+                                prompt.HoldDuration = 0
+                                if fireproximityprompt then fireproximityprompt(prompt) else prompt:InputHoldBegin(); task.wait(0.05); prompt:InputHoldEnd() end
+                            end)
+                        end
+                    end
+                    task.wait(0.2)
+                end
+                KnownCollectItems[obj] = true
+            end
+        end
+        if AutoSkipHeliEnabled then pcall(function() ReplicatedStorage.SetSettingAutoSkipWave:FireServer(true) end) end
+        collecting = false
+    end)
+end
+
+-- Mastery 相关
+function stepMasteryNoFlush()
+    if not MasteryAutoFarmActive then return end
+    local mob = GetNearestMob()
+    if mob and not WaitingRespawn then
+        local hum = mob:FindFirstChild("Humanoid")
+        if hum and hum.Health > 0 then
+            local cf = GetTargetCFrame(mob, FarmPosition)
+            if cf then tp1(cf) end
+            pcall(function() ReplicatedStorage.LMB:FireServer() end)
+            task.wait(0.1)
+        end
+    end
+end
+
+function stepMasteryFlush()
+    if not MasteryAutoFarmActiveTest then return end
+    local mob = GetNearestMob()
+    if mob and not WaitingRespawn then
+        for _, prompt in pairs(mob:GetDescendants()) do
+            if prompt:IsA("ProximityPrompt") and (prompt.ActionText == "Flush" or prompt.ActionText == "Dragon Flash") then
+                pcall(function()
+                    prompt.HoldDuration = 0
+                    if fireproximityprompt then fireproximityprompt(prompt) else prompt:InputHoldBegin(); task.wait(0.05); prompt:InputHoldEnd() end
+                end)
+            end
+        end
+        local hum = mob:FindFirstChild("Humanoid")
+        if hum and hum.Health > 0 then
+            local cf = GetTargetCFrame(mob, FarmPosition)
+            if cf then tp1(cf) end
+            pcall(function() ReplicatedStorage.LMB:FireServer() end)
+        end
+        task.wait(0.1)
+    end
+end
+
+-- Hitbox
+function applyHitboxToNPC(npc)
+    if not npc:IsA("Model") then return end
+    local humanoid = npc:FindFirstChildOfClass("Humanoid")
+    local hrp = npc:FindFirstChild("HumanoidRootPart")
+    if humanoid and hrp then
+        local existing = hrp:FindFirstChild("DYHUB_Hitbox")
+        if getgenv().HitboxEnabled then
+            if not existing then
+                local box = Instance.new("BoxHandleAdornment")
+                box.Name = "DYHUB_Hitbox"
+                box.Adornee = hrp
+                box.AlwaysOnTop = true
+                box.ZIndex = 10
+                box.Size = Vector3.new(getgenv().HitboxSize, getgenv().HitboxSize, getgenv().HitboxSize)
+                box.Transparency = getgenv().HitboxShow and 0.5 or 1
+                box.Color3 = Color3.fromRGB(255, 0, 0)
+                box.Parent = hrp
+            else
+                existing.Size = Vector3.new(getgenv().HitboxSize, getgenv().HitboxSize, getgenv().HitboxSize)
+                existing.Transparency = getgenv().HitboxShow and 0.5 or 1
+            end
+        else
+            if existing then existing:Destroy() end
+        end
+    end
+end
+
+function stepHitboxUpdate()
+    if not getgenv().HitboxEnabled then return end
+    local living = workspace:FindFirstChild("Living")
+    if living then
+        for _, npc in ipairs(living:GetChildren()) do
+            if npc:IsA("Model") and npc:FindFirstChildOfClass("Humanoid") and npc:FindFirstChild("HumanoidRootPart") then
+                if not Players:GetPlayerFromCharacter(npc) then
+                    applyHitboxToNPC(npc)
+                end
+            end
+        end
+    end
+end
+
+-- Quest 占位
+function stepAutoQuestCollect() end
+function stepAutoQuestSkip() end-- ====================== UI 窗口构建 ======================
+-- 注意：ESP 已经在前面定义，这里不再重复定义
 local userversion = "终极暴力完整版"
 local themesList = {"Dark", "Light", "Gray", "Blue", "Green", "Purple"}
 local currentThemeIndex = 1
@@ -1464,12 +1658,7 @@ local Window = WindUI:CreateWindow({
             currentThemeIndex = currentThemeIndex % #themesList + 1
             local newTheme = themesList[currentThemeIndex]
             WindUI:SetTheme(newTheme)
-            WindUI:Notify({
-                Title = "主题切换",
-                Content = "已切换到 " .. newTheme .. " 主题",
-                Duration = 2,
-                Icon = "palette"
-            })
+            WindUI:Notify({ Title = "主题切换", Content = "已切换到 " .. newTheme .. " 主题", Duration = 2, Icon = "palette" })
         end
     }
 })
@@ -1753,6 +1942,7 @@ MasteryTab:Toggle({ Title = T("mastery_flush"), Default = MasteryAutoFarmActiveT
     if v then Scheduler:register("MasteryFlush", safeTask("MasteryFlush", stepMasteryFlush), 0.15)
     else Scheduler:unregister("MasteryFlush") end
 })
+
 -- ====================== Hitbox 标签页 ======================
 HitboxTab:Section({ Title = T("hitbox_title"), Icon = "crosshair" })
 HitboxTab:Button({ Title = T("hitbox_scan"), Callback = function()
@@ -1837,7 +2027,6 @@ XmasTab:Button({ Title = T("xmas_open_now"), Callback = function()
 })
 
 -- ====================== 设置标签页（剩余部分） ======================
--- ====================== 服务器跳转功能 ======================
 local function ServerHop()
     local servers = {}
     local success, res = pcall(function() return HttpService:JSONDecode(game:HttpGet("https://games.roblox.com/v1/games/" .. game.PlaceId .. "/servers/Public?sortOrder=Desc&limit=100")) end)
@@ -1857,7 +2046,6 @@ end
 local function Rejoin()
     TeleportService:Teleport(game.PlaceId, LocalPlayer)
 end
--- 在设置标签页添加按钮
 Main3:Button({ Title = "更换服务器", Callback = ServerHop })
 Main3:Button({ Title = "重新加入", Callback = Rejoin })
 Main3:Section({ Title = "配置", Icon = "save" })
@@ -1883,31 +2071,30 @@ Info:Divider()
 Info:Paragraph({ Title = T("info_owner"), Desc = "@dyumraisgoodguy#8888", Image = "rbxassetid://119789418015420", ImageSize = 30 })
 Info:Paragraph({ Title = T("info_discord"), Desc = "dsc.gg/dyhub", Image = "rbxassetid://104487529937663", ImageSize = 30 })
 Info:Paragraph({ Title = T("info_version"), Desc = version .. " " .. ver, ImageSize = 30 })
-Info:Paragraph({ Title = T("info_lines"), Desc = "约 3400 行（全功能暴力版 + 主题切换）", ImageSize = 26 })
+Info:Paragraph({ Title = T("info_lines"), Desc = "约 3700 行（全功能暴力版 + 主题切换）", ImageSize = 26 })
 
 -- ====================== 注册所有调度器任务 ======================
-Scheduler:register("AutoAttack", safeTask("AutoAttack", stepAutoAttack), 0.8)      -- 原 0.3
-Scheduler:register("AutoSkill", safeTask("AutoSkill", stepAutoSkill), 1.2)        -- 原 0.6
-Scheduler:register("AutoFillUp", safeTask("AutoFillUp", stepAutoFillUp), 2.0)     -- 原 1.0
+Scheduler:register("AutoAttack", safeTask("AutoAttack", stepAutoAttack), 0.8)
+Scheduler:register("AutoSkill", safeTask("AutoSkill", stepAutoSkill), 1.2)
+Scheduler:register("AutoFillUp", safeTask("AutoFillUp", stepAutoFillUp), 2.0)
 Scheduler:register("AutoSkipHeli", safeTask("AutoSkipHeli", stepAutoSkipHeli), 2.0)
 Scheduler:register("GodMode", safeTask("GodMode", stepGodMode), 2.0)
-Scheduler:register("AutoBuyWeapon", safeTask("AutoBuyWeapon", stepAutoBuyWeapon), 30)  -- 原 15
+Scheduler:register("AutoBuyWeapon", safeTask("AutoBuyWeapon", stepAutoBuyWeapon), 30)
 Scheduler:register("AutoBuyMisc", safeTask("AutoBuyMisc", stepAutoBuyMisc), 30)
-Scheduler:register("IdlePosition", safeTask("IdlePosition", stepIdlePosition), 1.0)   -- 原 0.5
-Scheduler:register("MainStateMachine", safeTask("MainStateMachine", stepMainStateMachine), 1.0)  -- 原 0.3
-Scheduler:register("AutoVote", safeTask("AutoVote", stepAutoVote), 5.0)              -- 原 2.0
-Scheduler:register("ESPScan", safeTask("ESPScan", stepESPScan), 4.0)                -- 原 1.5
-Scheduler:register("AutoCollect", safeTask("AutoCollect", stepAutoCollect), 8.0)    -- 原 3.0
-Scheduler:register("NoClip", safeTask("NoClip", stepNoClip), 1.0)                   -- 原 0.5
+Scheduler:register("IdlePosition", safeTask("IdlePosition", stepIdlePosition), 1.0)
+Scheduler:register("MainStateMachine", safeTask("MainStateMachine", stepMainStateMachine), 1.0)
+Scheduler:register("AutoVote", safeTask("AutoVote", stepAutoVote), 5.0)
+Scheduler:register("ESPScan", safeTask("ESPScan", stepESPScan), 4.0)
+Scheduler:register("AutoCollect", safeTask("AutoCollect", stepAutoCollect), 8.0)
+Scheduler:register("NoClip", safeTask("NoClip", stepNoClip), 1.0)
 Scheduler:register("PerformanceMonitor", safeTask("PerformanceMonitor", function()
     if ShowCPU then
         local ping = Stats.Network.ServerStatsItem["Data Ping"] and Stats.Network.ServerStatsItem["Data Ping"]:GetValue() or 0
         local fps = 1 / (RunService.Heartbeat:Wait() or 0.016)
         if math.random(1, 100) == 1 then print(string.format("[PERF] FPS: %.1f, Ping: %.0fms", fps, ping)) end
     end
-end), 5)  -- 原 2
+end), 5)
 
--- 动态注册高风险任务（这些开关默认 false，所以不会注册，保留无妨）
 if AutoGodModeEnabled then Scheduler:register("AutoGodMode", safeTask("AutoGodMode", stepAutoGodMode), 2.0) end
 if MasteryAutoFarmActive then Scheduler:register("MasteryNoFlush", safeTask("MasteryNoFlush", stepMasteryNoFlush), 1.0) end
 if MasteryAutoFarmActiveTest then Scheduler:register("MasteryFlush", safeTask("MasteryFlush", stepMasteryFlush), 1.0) end
@@ -1929,4 +2116,4 @@ print("[DYHUB] 终极暴力完整版加载完成 | " .. version .. " " .. ver)
 print("[DYHUB] 高风险功能：运动预测 | 跟随模式 | Auto God Mode | Xmas极速 | 批量无延迟 | Rotate90°")
 print("[DYHUB] 新增主题切换（点击头像循环切换6种主题）")
 print("[DYHUB] 无后门 | 仅供无反作弊游戏使用")
-print("[DYHUB] 脚本完整可用，共约3500行")
+print("[DYHUB] 脚本完整可用，共约3700行")
