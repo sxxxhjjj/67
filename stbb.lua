@@ -7422,7 +7422,20 @@ NoBarrierToggle = Main3:Toggle({
         if value then startNoBarrier() else stopNoBarrier() end
     end
 })
+Main3:Section({ Title = "语言 / Language", Icon = "globe" })
 
+Main3:Dropdown({
+    Title = "选择语言 / Select Language",
+    Values = { "Chinese", "English", "Russian", "Portuguese" },
+    Multi = false,
+    Value = currentLanguage,
+    Callback = function(value)
+        currentLanguage = value
+        Config:Set("Language", value)
+        Config:Save()
+        WindUI:Notify({ Title = "语言", Content = "已切换到 " .. value, Duration = 2 })
+    end
+})
 CombatDebugToggle = Main3:Toggle({
     Title = T("combat_debug"),
     Value = CombatDebugEnabled,
