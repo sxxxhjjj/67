@@ -289,106 +289,36 @@ local translations = {
         fly = "飞行", fly_speed = "飞行速度",
         infinite_jump = "无限跳跃", full_bright = "全亮",
         no_fog = "去雾",
-        normal_mode = "普通模式",
-        astro_holdout_mode = "天文坚守模式",
-        dark_dimension_mode = "暗黑维度模式",
-        teleport = "传送",
-        tween = "缓动",
-        above = "上方",
-        under = "下方",
-        clean = "清场",
-        idgf = "IDGF (立即收集)",
-        collect_mode = "收集模式",
-        collect_movement = "收集移动模式",
-        esp_options = "透视选项",
-        esp_items = "透视物品",
-        collect_items = "收集物品",
-        select_language = "选择语言",
-        language_changed = "语言已切换至",
-        all_skills = "全部技能",
-        highlight = "高亮",
-        distance = "距离",
-        health = "血量",
-        name = "名称",
-        spin1 = "1抽",
-        spin10 = "10抽",
-        spin100 = "100抽",
-        spin1lucky = "1抽（幸运）",
-        spin10lucky = "10抽（幸运）",
-        jetpack = "Jetpack",
-        overcharge = "OverCharge",
-        soundbooster = "SoundBooster",
-        core = "Core",
-        upgrade = "Upgrade",
-        shield = "Shield",
-        blaster = "Blaster",
-        lens = "Lens",
-        heat = "Heat",
-        armor = "Armor",
-        absorb = "Absorb",
-        share_overcharge = "ShareOverCharge",
-        astro_arm = "AstroArm",
-        titan_request = "Titan-Request",
-        special_titan_request = "SpecialTitan-Request",
-        speaker_request = "Speaker-Request",
-        headphone = "HeadPhone",
-        grenade = "Grenade",
-        jetpack_item = "Jetpack",
-        lens_item = "Lens",
-        stungun = "Stungun",
-        flamethrower = "Flamethrower",
-        harpoon_gun = "Harpoon Gun",
-        shot_gun = "Shot Gun",
-        pulse_rifle = "Pulse Rifle",
-        shot_harpoon_gun = "Shot Harpoon Gun",
-        epd = "EPD",
-        small_laser_gun = "Small Laser Gun",
-        normal = "Normal",
-        veryhard = "VeryHard",
-        hard = "Hard",
-        insane = "Insane",
-        nightmare = "Nightmare",
-        bossrush = "BossRush",
-        darkdimension = "DarkDimension",
-        hell = "Hell",
-        thunderstorm = "ThunderStorm",
-        christmas = "Christmas",
-        zombie = "Zombie",
-        astrov2 = "AstroV2",
-        astro = "Astro",
-        visit_100m = "100MVisit",
-        all = "All",
-        lucky_boost = "LuckyBoost",
-        rare_lucky_boost = "RareLuckyBoost",
-        legendary_lucky_boost = "LegendaryLuckyBoost",
-        luck_potion_I = "LuckPotionI",
-        luck_potion_II = "LuckPotionII",
-        luck_potion_III = "LuckPotionIII",
-        s_ember = "S-Ember",
-        bsx2_30 = "BSX2:30",
-        bsx2_60 = "BSX2:60",
-        bsx2_360 = "BSX2:360",
-        flash_drive_1 = "FlashDrive#1",
-        flash_drive_2 = "FlashDrive#2",
-        flash_drive_3 = "FlashDrive#3",
-        flash_drive_4 = "FlashDrive#4",
-        flash_drive_5 = "FlashDrive#5",
-        flash_drive_6 = "FlashDrive#6",
-        master_card_normal = "MasterCard:Normal",
-        master_card_normal_titan = "MasterCard:NormalTitan",
-        master_card_special_titan = "MasterCard:SpecialTitan",
-        select_redeem_codes = "选择兑换码",
-        select_redeem_codes_desc = "选择要兑换的代码。",
-        select_gamepass = "选择通行证",
-        select_gamepass_desc = "选择要本地解锁的游戏通行证标志。",
-        fly_movement = "飞行移动",
-        visual_utility = "视觉与实用",
+        -- 新增翻译键
+        normal_mode = "普通模式", astro_holdout_mode = "天文坚守模式", dark_dimension_mode = "暗黑维度模式",
+        teleport = "传送", tween = "缓动", above = "上方", under = "下方",
+        clean = "清场", idgf = "IDGF (立即收集)", collect_mode = "收集模式", collect_movement = "收集移动模式",
+        esp_options = "透视选项", esp_items = "透视物品", collect_items = "收集物品",
+        select_language = "选择语言", language_changed = "语言已切换至",
+        all_skills = "全部技能", highlight = "高亮", distance = "距离", health = "血量", name = "名称",
+        spin1 = "1抽", spin10 = "10抽", spin100 = "100抽", spin1lucky = "1抽（幸运）", spin10lucky = "10抽（幸运）",
+        jetpack = "Jetpack", overcharge = "OverCharge", soundbooster = "SoundBooster", core = "Core", upgrade = "Upgrade",
+        shield = "Shield", blaster = "Blaster", lens = "Lens", heat = "Heat", armor = "Armor",
+        absorb = "Absorb", share_overcharge = "ShareOverCharge", astro_arm = "AstroArm",
+        titan_request = "Titan-Request", special_titan_request = "SpecialTitan-Request", speaker_request = "Speaker-Request",
+        headphone = "HeadPhone", grenade = "Grenade", jetpack_item = "Jetpack", lens_item = "Lens",
+        stungun = "Stungun", flamethrower = "Flamethrower", harpoon_gun = "Harpoon Gun", shot_gun = "Shot Gun",
+        pulse_rifle = "Pulse Rifle", shot_harpoon_gun = "Shot Harpoon Gun", epd = "EPD", small_laser_gun = "Small Laser Gun",
+        normal = "Normal", veryhard = "VeryHard", hard = "Hard", insane = "Insane", nightmare = "Nightmare",
+        bossrush = "BossRush", darkdimension = "DarkDimension", hell = "Hell", thunderstorm = "ThunderStorm",
+        christmas = "Christmas", zombie = "Zombie", astrov2 = "AstroV2", astro = "Astro", visit_100m = "100MVisit",
+        all = "All", lucky_boost = "LuckyBoost", rare_lucky_boost = "RareLuckyBoost", legendary_lucky_boost = "LegendaryLuckyBoost",
+        luck_potion_I = "LuckPotionI", luck_potion_II = "LuckPotionII", luck_potion_III = "LuckPotionIII",
+        s_ember = "S-Ember", bsx2_30 = "BSX2:30", bsx2_60 = "BSX2:60", bsx2_360 = "BSX2:360",
+        flash_drive_1 = "FlashDrive#1", flash_drive_2 = "FlashDrive#2", flash_drive_3 = "FlashDrive#3",
+        flash_drive_4 = "FlashDrive#4", flash_drive_5 = "FlashDrive#5", flash_drive_6 = "FlashDrive#6",
+        master_card_normal = "MasterCard:Normal", master_card_normal_titan = "MasterCard:NormalTitan", master_card_special_titan = "MasterCard:SpecialTitan",
+        select_redeem_codes = "选择兑换码", select_redeem_codes_desc = "选择要兑换的代码。",
+        select_gamepass = "选择通行证", select_gamepass_desc = "选择要本地解锁的游戏通行证标志。",
+        fly_movement = "飞行移动", visual_utility = "视觉与实用",
         fly_desc = "启用飞行移动。W/S 前后飞行，视角上下控制升降，A/D 左右平移。",
-        auto_gacha = "自动抽卡",
-        shop_upgrade = "商店升级",
-        shop_request = "请求 Titan / Speaker",
-        auto_collect = "自动收集",
-        auto_collect_desc = "自动收集地图上出现的选定物品。",
+        auto_gacha = "自动抽卡", shop_upgrade = "商店升级", shop_request = "请求 Titan / Speaker",
+        auto_collect = "自动收集", auto_collect_desc = "自动收集地图上出现的选定物品。",
         language = "语言 / Language",
     },
     English = {
@@ -467,106 +397,35 @@ local translations = {
         fly = "Fly", fly_speed = "Fly Speed",
         infinite_jump = "Infinite Jump", full_bright = "Full Bright",
         no_fog = "No Fog",
-        normal_mode = "Normal Mode",
-        astro_holdout_mode = "Astro Holdout Mode",
-        dark_dimension_mode = "Dark Dimension Mode",
-        teleport = "Teleport",
-        tween = "Tween",
-        above = "Above",
-        under = "Under",
-        clean = "Clean",
-        idgf = "IDGF",
-        collect_mode = "Collect Mode",
-        collect_movement = "Collect Movement",
-        esp_options = "ESP Options",
-        esp_items = "ESP Items",
-        collect_items = "Collect Items",
-        select_language = "Select Language",
-        language_changed = "Language changed to",
-        all_skills = "All",
-        highlight = "Highlight",
-        distance = "Distance",
-        health = "Health",
-        name = "Name",
-        spin1 = "1 Spin",
-        spin10 = "10 Spins",
-        spin100 = "100 Spins",
-        spin1lucky = "1 Spin Lucky",
-        spin10lucky = "10 Spins Lucky",
-        jetpack = "Jetpack",
-        overcharge = "OverCharge",
-        soundbooster = "SoundBooster",
-        core = "Core",
-        upgrade = "Upgrade",
-        shield = "Shield",
-        blaster = "Blaster",
-        lens = "Lens",
-        heat = "Heat",
-        armor = "Armor",
-        absorb = "Absorb",
-        share_overcharge = "ShareOverCharge",
-        astro_arm = "AstroArm",
-        titan_request = "Titan-Request",
-        special_titan_request = "SpecialTitan-Request",
-        speaker_request = "Speaker-Request",
-        headphone = "HeadPhone",
-        grenade = "Grenade",
-        jetpack_item = "Jetpack",
-        lens_item = "Lens",
-        stungun = "Stungun",
-        flamethrower = "Flamethrower",
-        harpoon_gun = "Harpoon Gun",
-        shot_gun = "Shot Gun",
-        pulse_rifle = "Pulse Rifle",
-        shot_harpoon_gun = "Shot Harpoon Gun",
-        epd = "EPD",
-        small_laser_gun = "Small Laser Gun",
-        normal = "Normal",
-        veryhard = "VeryHard",
-        hard = "Hard",
-        insane = "Insane",
-        nightmare = "Nightmare",
-        bossrush = "BossRush",
-        darkdimension = "DarkDimension",
-        hell = "Hell",
-        thunderstorm = "ThunderStorm",
-        christmas = "Christmas",
-        zombie = "Zombie",
-        astrov2 = "AstroV2",
-        astro = "Astro",
-        visit_100m = "100MVisit",
-        all = "All",
-        lucky_boost = "LuckyBoost",
-        rare_lucky_boost = "RareLuckyBoost",
-        legendary_lucky_boost = "LegendaryLuckyBoost",
-        luck_potion_I = "LuckPotionI",
-        luck_potion_II = "LuckPotionII",
-        luck_potion_III = "LuckPotionIII",
-        s_ember = "S-Ember",
-        bsx2_30 = "BSX2:30",
-        bsx2_60 = "BSX2:60",
-        bsx2_360 = "BSX2:360",
-        flash_drive_1 = "FlashDrive#1",
-        flash_drive_2 = "FlashDrive#2",
-        flash_drive_3 = "FlashDrive#3",
-        flash_drive_4 = "FlashDrive#4",
-        flash_drive_5 = "FlashDrive#5",
-        flash_drive_6 = "FlashDrive#6",
-        master_card_normal = "MasterCard:Normal",
-        master_card_normal_titan = "MasterCard:NormalTitan",
-        master_card_special_titan = "MasterCard:SpecialTitan",
-        select_redeem_codes = "Select Redeem Codes",
-        select_redeem_codes_desc = "Select the codes to redeem.",
-        select_gamepass = "Select Gamepass",
-        select_gamepass_desc = "Select the gamepass flags to unlock locally.",
-        fly_movement = "Fly Movement",
-        visual_utility = "Visual & Utility",
+        normal_mode = "Normal Mode", astro_holdout_mode = "Astro Holdout Mode", dark_dimension_mode = "Dark Dimension Mode",
+        teleport = "Teleport", tween = "Tween", above = "Above", under = "Under",
+        clean = "Clean", idgf = "IDGF", collect_mode = "Collect Mode", collect_movement = "Collect Movement",
+        esp_options = "ESP Options", esp_items = "ESP Items", collect_items = "Collect Items",
+        select_language = "Select Language", language_changed = "Language changed to",
+        all_skills = "All", highlight = "Highlight", distance = "Distance", health = "Health", name = "Name",
+        spin1 = "1 Spin", spin10 = "10 Spins", spin100 = "100 Spins", spin1lucky = "1 Spin Lucky", spin10lucky = "10 Spins Lucky",
+        jetpack = "Jetpack", overcharge = "OverCharge", soundbooster = "SoundBooster", core = "Core", upgrade = "Upgrade",
+        shield = "Shield", blaster = "Blaster", lens = "Lens", heat = "Heat", armor = "Armor",
+        absorb = "Absorb", share_overcharge = "ShareOverCharge", astro_arm = "AstroArm",
+        titan_request = "Titan-Request", special_titan_request = "SpecialTitan-Request", speaker_request = "Speaker-Request",
+        headphone = "HeadPhone", grenade = "Grenade", jetpack_item = "Jetpack", lens_item = "Lens",
+        stungun = "Stungun", flamethrower = "Flamethrower", harpoon_gun = "Harpoon Gun", shot_gun = "Shot Gun",
+        pulse_rifle = "Pulse Rifle", shot_harpoon_gun = "Shot Harpoon Gun", epd = "EPD", small_laser_gun = "Small Laser Gun",
+        normal = "Normal", veryhard = "VeryHard", hard = "Hard", insane = "Insane", nightmare = "Nightmare",
+        bossrush = "BossRush", darkdimension = "DarkDimension", hell = "Hell", thunderstorm = "ThunderStorm",
+        christmas = "Christmas", zombie = "Zombie", astrov2 = "AstroV2", astro = "Astro", visit_100m = "100MVisit",
+        all = "All", lucky_boost = "LuckyBoost", rare_lucky_boost = "RareLuckyBoost", legendary_lucky_boost = "LegendaryLuckyBoost",
+        luck_potion_I = "LuckPotionI", luck_potion_II = "LuckPotionII", luck_potion_III = "LuckPotionIII",
+        s_ember = "S-Ember", bsx2_30 = "BSX2:30", bsx2_60 = "BSX2:60", bsx2_360 = "BSX2:360",
+        flash_drive_1 = "FlashDrive#1", flash_drive_2 = "FlashDrive#2", flash_drive_3 = "FlashDrive#3",
+        flash_drive_4 = "FlashDrive#4", flash_drive_5 = "FlashDrive#5", flash_drive_6 = "FlashDrive#6",
+        master_card_normal = "MasterCard:Normal", master_card_normal_titan = "MasterCard:NormalTitan", master_card_special_titan = "MasterCard:SpecialTitan",
+        select_redeem_codes = "Select Redeem Codes", select_redeem_codes_desc = "Select the codes to redeem.",
+        select_gamepass = "Select Gamepass", select_gamepass_desc = "Select the gamepass flags to unlock locally.",
+        fly_movement = "Fly Movement", visual_utility = "Visual & Utility",
         fly_desc = "Enable fly movement. W/S for forward/back, look up/down for vertical, A/D for strafe.",
-        auto_gacha = "Auto Gacha",
-        shop_upgrade = "Shop Upgrade",
-        shop_request = "Request Titan / Speaker",
-        auto_collect = "Auto Collect",
-        auto_collect_desc = "Automatically collect selected items that appear on the map.",
+        auto_gacha = "Auto Gacha", shop_upgrade = "Shop Upgrade", shop_request = "Request Titan / Speaker",
+        auto_collect = "Auto Collect", auto_collect_desc = "Automatically collect selected items that appear on the map.",
         language = "Language",
     },
     Russian = {
@@ -645,106 +504,35 @@ local translations = {
         fly = "Полёт", fly_speed = "Скорость полёта",
         infinite_jump = "Бесконечный прыжок", full_bright = "Полная яркость",
         no_fog = "Без тумана",
-        normal_mode = "Обычный режим",
-        astro_holdout_mode = "Astro Holdout",
-        dark_dimension_mode = "Тёмное измерение",
-        teleport = "Телепорт",
-        tween = "Плавно",
-        above = "Сверху",
-        under = "Снизу",
-        clean = "Зачистка",
-        idgf = "IDGF",
-        collect_mode = "Режим сбора",
-        collect_movement = "Перемещение при сборе",
-        esp_options = "Настройки ESP",
-        esp_items = "Предметы ESP",
-        collect_items = "Предметы сбора",
-        select_language = "Выбрать язык",
-        language_changed = "Язык изменён на",
-        all_skills = "Все",
-        highlight = "Подсветка",
-        distance = "Дистанция",
-        health = "Здоровье",
-        name = "Имя",
-        spin1 = "1 вращение",
-        spin10 = "10 вращений",
-        spin100 = "100 вращений",
-        spin1lucky = "1 удачное",
-        spin10lucky = "10 удачных",
-        jetpack = "Джетпак",
-        overcharge = "Перезарядка",
-        soundbooster = "Усилитель звука",
-        core = "Ядро",
-        upgrade = "Улучшение",
-        shield = "Щит",
-        blaster = "Бластер",
-        lens = "Линза",
-        heat = "Нагрев",
-        armor = "Броня",
-        absorb = "Поглощение",
-        share_overcharge = "Общая перезарядка",
-        astro_arm = "Astro-рука",
-        titan_request = "Запрос Титана",
-        special_titan_request = "Запрос спец. Титана",
-        speaker_request = "Запрос Спикера",
-        headphone = "Наушники",
-        grenade = "Граната",
-        jetpack_item = "Джетпак",
-        lens_item = "Линза",
-        stungun = "Электрошокер",
-        flamethrower = "Огнемёт",
-        harpoon_gun = "Гарпун",
-        shot_gun = "Дробовик",
-        pulse_rifle = "Импульсная винтовка",
-        shot_harpoon_gun = "Гарпунный дробовик",
-        epd = "EPD",
-        small_laser_gun = "Малый лазер",
-        normal = "Нормально",
-        veryhard = "Очень сложно",
-        hard = "Сложно",
-        insane = "Безумие",
-        nightmare = "Кошмар",
-        bossrush = "Босс-раш",
-        darkdimension = "Тёмное измерение",
-        hell = "Ад",
-        thunderstorm = "Гроза",
-        christmas = "Рождество",
-        zombie = "Зомби",
-        astrov2 = "AstroV2",
-        astro = "Astro",
-        visit_100m = "100MVisit",
-        all = "Все",
-        lucky_boost = "LuckyBoost",
-        rare_lucky_boost = "RareLuckyBoost",
-        legendary_lucky_boost = "LegendaryLuckyBoost",
-        luck_potion_I = "Зелье удачи I",
-        luck_potion_II = "Зелье удачи II",
-        luck_potion_III = "Зелье удачи III",
-        s_ember = "S-Ember",
-        bsx2_30 = "BSX2:30",
-        bsx2_60 = "BSX2:60",
-        bsx2_360 = "BSX2:360",
-        flash_drive_1 = "Флешка #1",
-        flash_drive_2 = "Флешка #2",
-        flash_drive_3 = "Флешка #3",
-        flash_drive_4 = "Флешка #4",
-        flash_drive_5 = "Флешка #5",
-        flash_drive_6 = "Флешка #6",
-        master_card_normal = "MasterCard:Normal",
-        master_card_normal_titan = "MasterCard:NormalTitan",
-        master_card_special_titan = "MasterCard:SpecialTitan",
-        select_redeem_codes = "Выбрать коды",
-        select_redeem_codes_desc = "Выберите коды для активации.",
-        select_gamepass = "Выбрать Gamepass",
-        select_gamepass_desc = "Выберите флаги для локальной разблокировки.",
-        fly_movement = "Управление полётом",
-        visual_utility = "Визуал и утилиты",
+        normal_mode = "Обычный режим", astro_holdout_mode = "Astro Holdout", dark_dimension_mode = "Тёмное измерение",
+        teleport = "Телепорт", tween = "Плавно", above = "Сверху", under = "Снизу",
+        clean = "Зачистка", idgf = "IDGF", collect_mode = "Режим сбора", collect_movement = "Перемещение при сборе",
+        esp_options = "Настройки ESP", esp_items = "Предметы ESP", collect_items = "Предметы сбора",
+        select_language = "Выбрать язык", language_changed = "Язык изменён на",
+        all_skills = "Все", highlight = "Подсветка", distance = "Дистанция", health = "Здоровье", name = "Имя",
+        spin1 = "1 вращение", spin10 = "10 вращений", spin100 = "100 вращений", spin1lucky = "1 удачное", spin10lucky = "10 удачных",
+        jetpack = "Джетпак", overcharge = "Перезарядка", soundbooster = "Усилитель звука", core = "Ядро", upgrade = "Улучшение",
+        shield = "Щит", blaster = "Бластер", lens = "Линза", heat = "Нагрев", armor = "Броня",
+        absorb = "Поглощение", share_overcharge = "Общая перезарядка", astro_arm = "Astro-рука",
+        titan_request = "Запрос Титана", special_titan_request = "Запрос спец. Титана", speaker_request = "Запрос Спикера",
+        headphone = "Наушники", grenade = "Граната", jetpack_item = "Джетпак", lens_item = "Линза",
+        stungun = "Электрошокер", flamethrower = "Огнемёт", harpoon_gun = "Гарпун", shot_gun = "Дробовик",
+        pulse_rifle = "Импульсная винтовка", shot_harpoon_gun = "Гарпунный дробовик", epd = "EPD", small_laser_gun = "Малый лазер",
+        normal = "Нормально", veryhard = "Очень сложно", hard = "Сложно", insane = "Безумие", nightmare = "Кошмар",
+        bossrush = "Босс-раш", darkdimension = "Тёмное измерение", hell = "Ад", thunderstorm = "Гроза",
+        christmas = "Рождество", zombie = "Зомби", astrov2 = "AstroV2", astro = "Astro", visit_100m = "100MVisit",
+        all = "Все", lucky_boost = "LuckyBoost", rare_lucky_boost = "RareLuckyBoost", legendary_lucky_boost = "LegendaryLuckyBoost",
+        luck_potion_I = "Зелье удачи I", luck_potion_II = "Зелье удачи II", luck_potion_III = "Зелье удачи III",
+        s_ember = "S-Ember", bsx2_30 = "BSX2:30", bsx2_60 = "BSX2:60", bsx2_360 = "BSX2:360",
+        flash_drive_1 = "Флешка #1", flash_drive_2 = "Флешка #2", flash_drive_3 = "Флешка #3",
+        flash_drive_4 = "Флешка #4", flash_drive_5 = "Флешка #5", flash_drive_6 = "Флешка #6",
+        master_card_normal = "MasterCard:Normal", master_card_normal_titan = "MasterCard:NormalTitan", master_card_special_titan = "MasterCard:SpecialTitan",
+        select_redeem_codes = "Выбрать коды", select_redeem_codes_desc = "Выберите коды для активации.",
+        select_gamepass = "Выбрать Gamepass", select_gamepass_desc = "Выберите флаги для локальной разблокировки.",
+        fly_movement = "Управление полётом", visual_utility = "Визуал и утилиты",
         fly_desc = "Включить полёт. W/S вперёд/назад, взгляд вверх/вниз для высоты, A/D в стороны.",
-        auto_gacha = "Авто-гача",
-        shop_upgrade = "Улучшения",
-        shop_request = "Запрос Титана/Спикера",
-        auto_collect = "Авто-сбор",
-        auto_collect_desc = "Автоматически собирать выбранные предметы на карте.",
+        auto_gacha = "Авто-гача", shop_upgrade = "Улучшения", shop_request = "Запрос Титана/Спикера",
+        auto_collect = "Авто-сбор", auto_collect_desc = "Автоматически собирать выбранные предметы на карте.",
         language = "Язык",
     },
     Portuguese = {
@@ -823,106 +611,35 @@ local translations = {
         fly = "Voar", fly_speed = "Velocidade de Voo",
         infinite_jump = "Pulo Infinito", full_bright = "Brilho Máximo",
         no_fog = "Sem Névoa",
-        normal_mode = "Modo Normal",
-        astro_holdout_mode = "Modo Astro Holdout",
-        dark_dimension_mode = "Modo Dimensão Sombria",
-        teleport = "Teleporte",
-        tween = "Suave",
-        above = "Acima",
-        under = "Abaixo",
-        clean = "Limpar",
-        idgf = "IDGF",
-        collect_mode = "Modo de Coleta",
-        collect_movement = "Movimento de Coleta",
-        esp_options = "Opções ESP",
-        esp_items = "Itens ESP",
-        collect_items = "Itens de Coleta",
-        select_language = "Selecionar Idioma",
-        language_changed = "Idioma alterado para",
-        all_skills = "Todas",
-        highlight = "Destaque",
-        distance = "Distância",
-        health = "Vida",
-        name = "Nome",
-        spin1 = "1 Giro",
-        spin10 = "10 Giros",
-        spin100 = "100 Giros",
-        spin1lucky = "1 Giro da Sorte",
-        spin10lucky = "10 Giros da Sorte",
-        jetpack = "Jetpack",
-        overcharge = "Sobrecarga",
-        soundbooster = "Amplificador de Som",
-        core = "Núcleo",
-        upgrade = "Melhoria",
-        shield = "Escudo",
-        blaster = "Blaster",
-        lens = "Lente",
-        heat = "Calor",
-        armor = "Armadura",
-        absorb = "Absorver",
-        share_overcharge = "Compartilhar Sobrecarga",
-        astro_arm = "Braço Astro",
-        titan_request = "Solicitar Titã",
-        special_titan_request = "Solicitar Titã Especial",
-        speaker_request = "Solicitar Speaker",
-        headphone = "Fone de Ouvido",
-        grenade = "Granada",
-        jetpack_item = "Jetpack",
-        lens_item = "Lente",
-        stungun = "Arma de Choque",
-        flamethrower = "Lança-chamas",
-        harpoon_gun = "Arpão",
-        shot_gun = "Escopeta",
-        pulse_rifle = "Rifle de Pulso",
-        shot_harpoon_gun = "Escopeta de Arpão",
-        epd = "EPD",
-        small_laser_gun = "Laser Pequeno",
-        normal = "Normal",
-        veryhard = "Muito Difícil",
-        hard = "Difícil",
-        insane = "Insano",
-        nightmare = "Pesadelo",
-        bossrush = "Boss Rush",
-        darkdimension = "Dimensão Sombria",
-        hell = "Inferno",
-        thunderstorm = "Tempestade",
-        christmas = "Natal",
-        zombie = "Zumbi",
-        astrov2 = "AstroV2",
-        astro = "Astro",
-        visit_100m = "100MVisit",
-        all = "Todos",
-        lucky_boost = "LuckyBoost",
-        rare_lucky_boost = "RareLuckyBoost",
-        legendary_lucky_boost = "LegendaryLuckyBoost",
-        luck_potion_I = "Poção da Sorte I",
-        luck_potion_II = "Poção da Sorte II",
-        luck_potion_III = "Poção da Sorte III",
-        s_ember = "S-Ember",
-        bsx2_30 = "BSX2:30",
-        bsx2_60 = "BSX2:60",
-        bsx2_360 = "BSX2:360",
-        flash_drive_1 = "PenDrive #1",
-        flash_drive_2 = "PenDrive #2",
-        flash_drive_3 = "PenDrive #3",
-        flash_drive_4 = "PenDrive #4",
-        flash_drive_5 = "PenDrive #5",
-        flash_drive_6 = "PenDrive #6",
-        master_card_normal = "MasterCard:Normal",
-        master_card_normal_titan = "MasterCard:NormalTitan",
-        master_card_special_titan = "MasterCard:SpecialTitan",
-        select_redeem_codes = "Selecionar Códigos",
-        select_redeem_codes_desc = "Selecione os códigos para resgatar.",
-        select_gamepass = "Selecionar Gamepass",
-        select_gamepass_desc = "Selecione os gamepasses para desbloquear localmente.",
-        fly_movement = "Movimento de Voo",
-        visual_utility = "Visual e Utilidades",
+        normal_mode = "Modo Normal", astro_holdout_mode = "Modo Astro Holdout", dark_dimension_mode = "Modo Dimensão Sombria",
+        teleport = "Teleporte", tween = "Suave", above = "Acima", under = "Abaixo",
+        clean = "Limpar", idgf = "IDGF", collect_mode = "Modo de Coleta", collect_movement = "Movimento de Coleta",
+        esp_options = "Opções ESP", esp_items = "Itens ESP", collect_items = "Itens de Coleta",
+        select_language = "Selecionar Idioma", language_changed = "Idioma alterado para",
+        all_skills = "Todas", highlight = "Destaque", distance = "Distância", health = "Vida", name = "Nome",
+        spin1 = "1 Giro", spin10 = "10 Giros", spin100 = "100 Giros", spin1lucky = "1 Giro da Sorte", spin10lucky = "10 Giros da Sorte",
+        jetpack = "Jetpack", overcharge = "Sobrecarga", soundbooster = "Amplificador de Som", core = "Núcleo", upgrade = "Melhoria",
+        shield = "Escudo", blaster = "Blaster", lens = "Lente", heat = "Calor", armor = "Armadura",
+        absorb = "Absorver", share_overcharge = "Compartilhar Sobrecarga", astro_arm = "Braço Astro",
+        titan_request = "Solicitar Titã", special_titan_request = "Solicitar Titã Especial", speaker_request = "Solicitar Speaker",
+        headphone = "Fone de Ouvido", grenade = "Granada", jetpack_item = "Jetpack", lens_item = "Lente",
+        stungun = "Arma de Choque", flamethrower = "Lança-chamas", harpoon_gun = "Arpão", shot_gun = "Escopeta",
+        pulse_rifle = "Rifle de Pulso", shot_harpoon_gun = "Escopeta de Arpão", epd = "EPD", small_laser_gun = "Laser Pequeno",
+        normal = "Normal", veryhard = "Muito Difícil", hard = "Difícil", insane = "Insano", nightmare = "Pesadelo",
+        bossrush = "Boss Rush", darkdimension = "Dimensão Sombria", hell = "Inferno", thunderstorm = "Tempestade",
+        christmas = "Natal", zombie = "Zumbi", astrov2 = "AstroV2", astro = "Astro", visit_100m = "100MVisit",
+        all = "Todos", lucky_boost = "LuckyBoost", rare_lucky_boost = "RareLuckyBoost", legendary_lucky_boost = "LegendaryLuckyBoost",
+        luck_potion_I = "Poção da Sorte I", luck_potion_II = "Poção da Sorte II", luck_potion_III = "Poção da Sorte III",
+        s_ember = "S-Ember", bsx2_30 = "BSX2:30", bsx2_60 = "BSX2:60", bsx2_360 = "BSX2:360",
+        flash_drive_1 = "PenDrive #1", flash_drive_2 = "PenDrive #2", flash_drive_3 = "PenDrive #3",
+        flash_drive_4 = "PenDrive #4", flash_drive_5 = "PenDrive #5", flash_drive_6 = "PenDrive #6",
+        master_card_normal = "MasterCard:Normal", master_card_normal_titan = "MasterCard:NormalTitan", master_card_special_titan = "MasterCard:SpecialTitan",
+        select_redeem_codes = "Selecionar Códigos", select_redeem_codes_desc = "Selecione os códigos para resgatar.",
+        select_gamepass = "Selecionar Gamepass", select_gamepass_desc = "Selecione os gamepasses para desbloquear localmente.",
+        fly_movement = "Movimento de Voo", visual_utility = "Visual e Utilidades",
         fly_desc = "Ativar voo. W/S frente/trás, olhar p/ cima/baixo controla altura, A/D laterais.",
-        auto_gacha = "Gacha Automático",
-        shop_upgrade = "Melhorias da Loja",
-        shop_request = "Solicitar Titã/Speaker",
-        auto_collect = "Coleta Automática",
-        auto_collect_desc = "Coletar automaticamente os itens selecionados no mapa.",
+        auto_gacha = "Gacha Automático", shop_upgrade = "Melhorias da Loja", shop_request = "Solicitar Titã/Speaker",
+        auto_collect = "Coleta Automática", auto_collect_desc = "Coletar automaticamente os itens selecionados no mapa.",
         language = "Idioma",
     },
 }
@@ -934,7 +651,7 @@ local function T(key)
     return getgenv().DYHUB_T(key)
 end
 
--- 构建反向翻译表 (显示文本 -> 键)
+-- 构建反向翻译表
 local translationReverse = {}
 local function BuildReverseTranslation()
     translationReverse = {}
@@ -947,10 +664,9 @@ local function BuildReverseTranslation()
 end
 BuildReverseTranslation()
 
--- 工具函数：获取原始键（用于保存值）
+-- 获取原始键（用于将翻译文本映射回英文原值）
 local function GetOriginalKey(displayValue)
-    local key = translationReverse[displayValue]
-    return key or displayValue
+    return translationReverse[displayValue] or displayValue
 end
 
 -- ====================== WINDOW 2 ======================
@@ -1043,7 +759,6 @@ skillList          = { "Q", "E", "R", "T", "Y", "G", "H", "Z", "X", "C", "V", "B
 skillDropdownValues = { "All", "Q", "E", "R", "T", "Y", "G", "H", "Z", "X", "C", "V", "B", "U" }
 
 -- ====================== FARM HELPERS ======================
-function NormalizeFarmMode(mode) ... end -- 保持不变
 function NormalizeFarmMode(mode)
     mode = tostring(mode or "Tween")
     if mode == "tp" or mode == "Tp" or mode == "tp1" then
@@ -5026,7 +4741,6 @@ function StartFarmLoop()
     end)
 end
 
-
 -- ====================== RESET WAVE SYSTEM ======================
 function GetResetWaveLabel()
     local playerGui = LocalPlayer and LocalPlayer:FindFirstChild("PlayerGui")
@@ -5433,19 +5147,24 @@ AutoFarmToggle = Main:Toggle({
     end
 })
 
--- 挂机模式选择（翻译下拉选项，内部存储英文原值）
+-- 全部用户均可使用 Mode Farm（付费墙已移除）
 Main:Dropdown({
     Title = T("mode_farm"),
     Desc = "选择不同的农场模式。",
     Values = { T("normal_mode"), T("astro_holdout_mode"), T("dark_dimension_mode") },
     Multi = false,
-    Value = T(FarmTargetMode == "Normal Mode" and "normal_mode" or FarmTargetMode == "Astro Holdout Mode" and "astro_holdout_mode" or "dark_dimension_mode"),
+    Value = FarmTargetMode == "Normal Mode" and T("normal_mode") or FarmTargetMode == "Astro Holdout Mode" and T("astro_holdout_mode") or T("dark_dimension_mode"),
     Callback = function(value)
-        local originalKey = GetOriginalKey(value)
-        if originalKey == "normal_mode" then FarmTargetMode = "Normal Mode"
-        elseif originalKey == "astro_holdout_mode" then FarmTargetMode = "Astro Holdout Mode"
-        elseif originalKey == "dark_dimension_mode" then FarmTargetMode = "Dark Dimension Mode"
-        else FarmTargetMode = NormalizeFarmTargetMode(value) end
+        local key = GetOriginalKey(value)
+        if key == "normal_mode" then
+            FarmTargetMode = "Normal Mode"
+        elseif key == "astro_holdout_mode" then
+            FarmTargetMode = "Astro Holdout Mode"
+        elseif key == "dark_dimension_mode" then
+            FarmTargetMode = "Dark Dimension Mode"
+        else
+            FarmTargetMode = NormalizeFarmTargetMode(value)
+        end
         Config:Set("FarmTargetMode", FarmTargetMode)
         Config:Save()
         InvalidateMobCache("farm target mode changed")
@@ -5458,33 +5177,28 @@ Main:Dropdown({
 
 Main:Section({ Title = T("farm_settings"), Icon = "settings" })
 
--- 站位下拉（翻译选项）
-PositionDropdown = Main:Dropdown({
+Main:Dropdown({
     Title = T("position_farm"),
     Desc = "选择角色相对目标的站位。",
     Values = { T("position_above"), T("position_under") },
     Multi = false,
-    Value = T(FarmPosition == "Above" and "position_above" or "position_under"),
+    Value = FarmPosition == "Above" and T("position_above") or T("position_under"),
     Callback = function(value)
-        local originalKey = GetOriginalKey(value)
-        if originalKey == "position_above" then FarmPosition = "Above"
-        elseif originalKey == "position_under" then FarmPosition = "Under"
-        else FarmPosition = value end
+        local key = GetOriginalKey(value)
+        if key == "position_above" then FarmPosition = "Above" elseif key == "position_under" then FarmPosition = "Under" end
         Config:Set("FarmPosition", FarmPosition); Config:Save()
     end
 })
 
--- 移动方式下拉（翻译选项）
-ModeDropdown = Main:Dropdown({
+Main:Dropdown({
     Title = T("movement_farm"),
     Desc = "选择角色移动到每个目标的方式。",
     Values = { T("teleport"), T("tween") },
     Multi = false,
-    Value = T(FarmMode == "Teleport" and "teleport" or "tween"),
+    Value = FarmMode == "Teleport" and T("teleport") or T("tween"),
     Callback = function(value)
-        local originalKey = GetOriginalKey(value)
-        if originalKey == "teleport" then FarmMode = "Teleport"
-        elseif originalKey == "tween" then FarmMode = "Tween"
+        local key = GetOriginalKey(value)
+        if key == "teleport" then FarmMode = "Teleport" elseif key == "tween" then FarmMode = "Tween"
         else FarmMode = NormalizeFarmMode(value) end
         Config:Set("FarmMode", FarmMode); Config:Save()
         WindUI:Notify({ Title = T("movement_farm"), Content = "已选择: " .. tostring(value), Duration = 2, Icon = "mouse-pointer-click" })
@@ -5500,11 +5214,7 @@ MiscDropdown = Main:Dropdown({
     Callback = function(values)
         MiscOptions = values
         if not AutoFarmEnabled and SyncFarmOnly and #values > 0 then
-            WindUI:Notify({
-                Title = T("misc_farm"),
-                Content = "请先开启自动挂机（同步模式已开启）",
-                Duration = 3, Icon = "triangle-alert"
-            })
+            WindUI:Notify({ Title = T("misc_farm"), Content = "请先开启自动挂机（同步模式已开启）", Duration = 3, Icon = "triangle-alert" })
         end
         HandleMiscOptions(values)
     end
@@ -5573,7 +5283,6 @@ FarmAstroTokenToggle = Main:Toggle({
 
 Main:Section({ Title = T("general_settings"), Icon = "zap" })
 
--- 技能按键下拉，All 翻译为 "全部技能"
 SkillDropdown = Main:Dropdown({
     Title = T("skill_keys"),
     Desc = "选择自动技能要按下的技能按键。",
@@ -6160,7 +5869,6 @@ EspItemToggle = Main4:Toggle({
 
 Main4:Section({ Title = T("esp_settings"), Icon = "settings" })
 
--- 透视选项下拉，使用翻译
 EspSettingsDropdown = Main4:Dropdown({
     Title = T("esp_options"),
     Desc = "选择显示哪些额外的透视标签和视觉效果。",
@@ -6644,7 +6352,6 @@ Main2:Section({ Title = T("unlock_gamepass"), Icon = "badge-dollar-sign" })
 SelectedGamepass = Config:Get("SelectedGamepass", {})
 GlobalTables.Gamepassts = SelectedGamepass
 
--- 通行证选择，翻译选项
 GamepassDropdown = Main2:Dropdown({
     Title = T("select_gamepass"),
     Desc = T("select_gamepass_desc"),
@@ -6777,8 +6484,7 @@ Main7:Button({
     end
 })
 
--- 投票模式下拉，翻译选项
-local voteModeTranslationMap = {
+local voteModeMap = {
     normal = "Normal", veryhard = "VeryHard", hard = "Hard", insane = "Insane",
     nightmare = "Nightmare", bossrush = "BossRush", darkdimension = "DarkDimension",
     hell = "Hell", thunderstorm = "ThunderStorm", christmas = "Christmas",
@@ -6790,14 +6496,13 @@ GameModeDropdown2 = Main7:Dropdown({
     Desc = "选择自动投票要投的游戏模式。",
     Values = { T("normal"), T("veryhard"), T("hard"), T("insane"), T("nightmare"), T("bossrush"), T("darkdimension"), T("hell"), T("thunderstorm"), T("christmas"), T("zombie"), T("astrov2"), T("astro"), T("visit_100m") },
     Multi = false,
-    Value = T(AutoVoteValue == "Normal" and "normal" or AutoVoteValue == "VeryHard" and "veryhard" or AutoVoteValue == "Hard" and "hard" or AutoVoteValue == "Insane" and "insane" or AutoVoteValue == "Nightmare" and "nightmare" or AutoVoteValue == "BossRush" and "bossrush" or AutoVoteValue == "DarkDimension" and "darkdimension" or AutoVoteValue == "Hell" and "hell" or AutoVoteValue == "ThunderStorm" and "thunderstorm" or AutoVoteValue == "Christmas" and "christmas" or AutoVoteValue == "Zombie" and "zombie" or AutoVoteValue == "AstroV2" and "astrov2" or AutoVoteValue == "Astro" and "astro" or AutoVoteValue == "100MVisit" and "visit_100m" or "christmas"),
+    Value = AutoVoteValue == "Normal" and T("normal") or AutoVoteValue == "VeryHard" and T("veryhard") or AutoVoteValue == "Hard" and T("hard") or AutoVoteValue == "Insane" and T("insane") or AutoVoteValue == "Nightmare" and T("nightmare") or AutoVoteValue == "BossRush" and T("bossrush") or AutoVoteValue == "DarkDimension" and T("darkdimension") or AutoVoteValue == "Hell" and T("hell") or AutoVoteValue == "ThunderStorm" and T("thunderstorm") or AutoVoteValue == "Christmas" and T("christmas") or AutoVoteValue == "Zombie" and T("zombie") or AutoVoteValue == "AstroV2" and T("astrov2") or AutoVoteValue == "Astro" and T("astro") or AutoVoteValue == "100MVisit" and T("visit_100m") or T("christmas"),
     Callback = function(value)
-        local originalKey = GetOriginalKey(value)
-        local originalValue = voteModeTranslationMap[originalKey] or value
-        AutoVoteValue = originalValue
-        Config:Set("AutoVoteValue", originalValue)
+        local key = GetOriginalKey(value)
+        AutoVoteValue = voteModeMap[key] or value
+        Config:Set("AutoVoteValue", AutoVoteValue)
         Config:Save()
-        print("[DYHUB] 投票模式已选择:", tostring(originalValue))
+        print("[DYHUB] 投票模式已选择:", tostring(AutoVoteValue))
     end
 })
 
@@ -6838,27 +6543,17 @@ Main7:Paragraph({
 Main7:Divider()
 Main7:Section({ Title = T("game_mode"), Icon = "gamepad-2" })
 
--- 游戏模式下拉，翻译选项
-local gameModeTranslationMap = {
-    normal = "Normal", veryhard = "VeryHard", hard = "Hard", insane = "Insane",
-    nightmare = "Nightmare", bossrush = "BossRush", darkdimension = "DarkDimension",
-    hell = "Hell", thunderstorm = "ThunderStorm", christmas = "Christmas",
-    zombie = "Zombie", astrov2 = "AstroV2", astro = "Astro", visit_100m = "100MVisit",
-}
-
 GameModeDropdown = Main7:Dropdown({
     Title = T("set_game_mode"),
     Desc = "选择自动创建要创建的游戏模式。",
     Values = { T("normal"), T("veryhard"), T("hard"), T("insane"), T("nightmare"), T("bossrush"), T("darkdimension"), T("hell"), T("thunderstorm"), T("christmas"), T("zombie"), T("astrov2"), T("astro"), T("visit_100m") },
     Multi = false,
-    Value = T(AutoGameValue == "Normal" and "normal" or AutoGameValue == "VeryHard" and "veryhard" or AutoGameValue == "Hard" and "hard" or AutoGameValue == "Insane" and "insane" or AutoGameValue == "Nightmare" and "nightmare" or AutoGameValue == "BossRush" and "bossrush" or AutoGameValue == "DarkDimension" and "darkdimension" or AutoGameValue == "Hell" and "hell" or AutoGameValue == "ThunderStorm" and "thunderstorm" or AutoGameValue == "Christmas" and "christmas" or AutoGameValue == "Zombie" and "zombie" or AutoGameValue == "AstroV2" and "astrov2" or AutoGameValue == "Astro" and "astro" or AutoGameValue == "100MVisit" and "visit_100m" or "normal"),
+    Value = AutoGameValue == "Normal" and T("normal") or AutoGameValue == "VeryHard" and T("veryhard") or AutoGameValue == "Hard" and T("hard") or AutoGameValue == "Insane" and T("insane") or AutoGameValue == "Nightmare" and T("nightmare") or AutoGameValue == "BossRush" and T("bossrush") or AutoGameValue == "DarkDimension" and T("darkdimension") or AutoGameValue == "Hell" and T("hell") or AutoGameValue == "ThunderStorm" and T("thunderstorm") or AutoGameValue == "Christmas" and T("christmas") or AutoGameValue == "Zombie" and T("zombie") or AutoGameValue == "AstroV2" and T("astrov2") or AutoGameValue == "Astro" and T("astro") or AutoGameValue == "100MVisit" and T("visit_100m") or T("normal"),
     Callback = function(value)
-        local originalKey = GetOriginalKey(value)
-        local originalValue = gameModeTranslationMap[originalKey] or value
-        AutoGameValue = originalValue
-        Config:Set("AutoGameValue", originalValue)
-        Config:Save()
-        print("[DYHUB] 游戏模式已选择: " .. tostring(originalValue))
+        local key = GetOriginalKey(value)
+        AutoGameValue = voteModeMap[key] or value
+        Config:Set("AutoGameValue", AutoGameValue); Config:Save()
+        print("[DYHUB] 游戏模式已选择: " .. tostring(AutoGameValue))
     end
 })
 
@@ -7010,6 +6705,7 @@ AutoVoteToggle = Main7:Toggle({
         end
     end
 })
+
 
 -- ====================== REQUEST / SKILL TREE HELPERS ======================
 RequestWaveNotifyAt = 0
@@ -7217,17 +6913,15 @@ function FireAutoSkillTrees()
     return true
 end
 
+
 -- ====================== UI: SHOP SYSTEMS ======================
 Main5:Section({ Title = T("auto_gacha"), Icon = "sparkles" })
 
 _G.__DYHUB_ShopSystems = function()
-    -- 抽卡参数翻译映射
-    local gachaArgs = { "1Spin", "10Spins", "100Spins", "1SpinLucky", "10SpinLucky" }
     local gachaTranslationMap = {
         spin1 = "1Spin", spin10 = "10Spins", spin100 = "100Spins",
         spin1lucky = "1SpinLucky", spin10lucky = "10SpinLucky",
     }
-    -- 升级项翻译映射
     local titanUpgradeMap = {
         jetpack = "Jetpack", overcharge = "OverCharge", soundbooster = "SoundBooster",
         core = "Core", upgrade = "Upgrade",
@@ -7238,18 +6932,15 @@ _G.__DYHUB_ShopSystems = function()
     local tvUpgradeMap = {
         absorb = "Absorb", share_overcharge = "ShareOverCharge", shield = "Shield", astro_arm = "AstroArm",
     }
-    -- 请求项翻译映射
     local requestMap = {
         titan_request = "Titan-Request", special_titan_request = "SpecialTitan-Request",
         speaker_request = "Speaker-Request",
     }
-    -- 武器翻译映射
     local weaponMap = {
         stungun = "Stungun", flamethrower = "Flamethrower", harpoon_gun = "Harpoon Gun",
         shot_gun = "Shot Gun", pulse_rifle = "Pulse Rifle", shot_harpoon_gun = "Shot Harpoon Gun",
         epd = "EPD", small_laser_gun = "Small Laser Gun",
     }
-    -- 杂项翻译映射
     local miscMap = {
         headphone = "HeadPhone", grenade = "Grenade", jetpack_item = "Jetpack", lens_item = "Lens",
     }
@@ -7349,16 +7040,15 @@ _G.__DYHUB_ShopSystems = function()
         end)
     end
 
-    -- 抽角色下拉
     Main5:Dropdown({
         Title = T("gacha_character"),
         Desc = "选择角色抽卡使用的旋转类型。",
         Values = { T("spin1"), T("spin10"), T("spin100"), T("spin1lucky"), T("spin10lucky") },
         Multi = false,
-        Value = T(selectedGachaCharacterArg == "1Spin" and "spin1" or selectedGachaCharacterArg == "10Spins" and "spin10" or selectedGachaCharacterArg == "100Spins" and "spin100" or selectedGachaCharacterArg == "1SpinLucky" and "spin1lucky" or selectedGachaCharacterArg == "10SpinLucky" and "spin10lucky" or "spin1"),
+        Value = selectedGachaCharacterArg == "1Spin" and T("spin1") or selectedGachaCharacterArg == "10Spins" and T("spin10") or selectedGachaCharacterArg == "100Spins" and T("spin100") or selectedGachaCharacterArg == "1SpinLucky" and T("spin1lucky") or selectedGachaCharacterArg == "10SpinLucky" and T("spin10lucky") or T("spin1"),
         Callback = function(value)
-            local originalKey = GetOriginalKey(value)
-            selectedGachaCharacterArg = gachaTranslationMap[originalKey] or "1Spin"
+            local key = GetOriginalKey(value)
+            selectedGachaCharacterArg = gachaTranslationMap[key] or "1Spin"
             Config:Set("SelectedGachaCharacterArg", selectedGachaCharacterArg)
             Config:Save()
         end
@@ -7376,16 +7066,15 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
-    -- 抽皮肤下拉
     Main5:Dropdown({
         Title = T("gacha_skin"),
         Desc = "选择皮肤抽卡使用的旋转类型。",
         Values = { T("spin1"), T("spin10"), T("spin100"), T("spin1lucky"), T("spin10lucky") },
         Multi = false,
-        Value = T(selectedGachaSkinArg == "1Spin" and "spin1" or selectedGachaSkinArg == "10Spins" and "spin10" or selectedGachaSkinArg == "100Spins" and "spin100" or selectedGachaSkinArg == "1SpinLucky" and "spin1lucky" or selectedGachaSkinArg == "10SpinLucky" and "spin10lucky" or "spin1"),
+        Value = selectedGachaSkinArg == "1Spin" and T("spin1") or selectedGachaSkinArg == "10Spins" and T("spin10") or selectedGachaSkinArg == "100Spins" and T("spin100") or selectedGachaSkinArg == "1SpinLucky" and T("spin1lucky") or selectedGachaSkinArg == "10SpinLucky" and T("spin10lucky") or T("spin1"),
         Callback = function(value)
-            local originalKey = GetOriginalKey(value)
-            selectedGachaSkinArg = gachaTranslationMap[originalKey] or "1Spin"
+            local key = GetOriginalKey(value)
+            selectedGachaSkinArg = gachaTranslationMap[key] or "1Spin"
             Config:Set("SelectedGachaSkinArg", selectedGachaSkinArg)
             Config:Save()
         end
@@ -7433,10 +7122,6 @@ _G.__DYHUB_ShopSystems = function()
     -- ====================== 同步商店购买/升级系统 ======================
     Main5:Section({ Title = T("shop_upgrade"), Icon = "arrow-big-up-dash" })
 
-    local titanSpeakerUpgradeValues = { "Jetpack", "OverCharge", "SoundBooster", "Core", "Upgrade" }
-    local utcmUpgradeValues         = { "Shield", "Blaster", "Lens", "Heat", "Armor" }
-    local tvUpgradeValues           = { "Absorb", "ShareOverCharge", "Shield", "AstroArm" }
-
     local selectedTitanSpeakerUpgrades = EnsureList(Config:Get("SelectedTitanSpeakerUpgrades", { "Jetpack" }), { "Jetpack" })
     local selectedUTCMUpgrades         = EnsureList(Config:Get("SelectedUTCMUpgrades", { "Shield" }), { "Shield" })
     local selectedTVUpgrades           = EnsureList(Config:Get("SelectedTVUpgrades", { "Absorb" }), { "Absorb" })
@@ -7447,7 +7132,6 @@ _G.__DYHUB_ShopSystems = function()
 
     local StartAutoSyncedShopLoop = function() end
 
-    -- Titan Speaker 升级下拉翻译
     Main5:Dropdown({
         Title = T("select_upgrade_titan"),
         Desc = "选择要请求的 Titan Speaker 升级。",
@@ -7546,16 +7230,15 @@ _G.__DYHUB_ShopSystems = function()
     local autoBuyWeaponValue   = Config:Get("AutoBuyWeaponValue", "Stungun")
     local autoBuyWeaponEnabled = Config:Get("AutoBuyWeaponEnabled", false)
 
-    -- 武器下拉翻译
     WeaponDropdown = Main5:Dropdown({
         Title = T("select_weapon"),
         Desc = "选择要自动购买的武器。",
         Values = { T("stungun"), T("flamethrower"), T("harpoon_gun"), T("shot_gun"), T("pulse_rifle"), T("shot_harpoon_gun"), T("epd"), T("small_laser_gun") },
         Multi = false,
-        Value = T(autoBuyWeaponValue == "Stungun" and "stungun" or autoBuyWeaponValue == "Flamethrower" and "flamethrower" or autoBuyWeaponValue == "Harpoon Gun" and "harpoon_gun" or autoBuyWeaponValue == "Shot Gun" and "shot_gun" or autoBuyWeaponValue == "Pulse Rifle" and "pulse_rifle" or autoBuyWeaponValue == "Shot Harpoon Gun" and "shot_harpoon_gun" or autoBuyWeaponValue == "EPD" and "epd" or autoBuyWeaponValue == "Small Laser Gun" and "small_laser_gun" or "stungun"),
+        Value = autoBuyWeaponValue == "Stungun" and T("stungun") or autoBuyWeaponValue == "Flamethrower" and T("flamethrower") or autoBuyWeaponValue == "Harpoon Gun" and T("harpoon_gun") or autoBuyWeaponValue == "Shot Gun" and T("shot_gun") or autoBuyWeaponValue == "Pulse Rifle" and T("pulse_rifle") or autoBuyWeaponValue == "Shot Harpoon Gun" and T("shot_harpoon_gun") or autoBuyWeaponValue == "EPD" and T("epd") or autoBuyWeaponValue == "Small Laser Gun" and T("small_laser_gun") or T("stungun"),
         Callback = function(value)
-            local originalKey = GetOriginalKey(value)
-            autoBuyWeaponValue = weaponMap[originalKey] or "Stungun"
+            local key = GetOriginalKey(value)
+            autoBuyWeaponValue = weaponMap[key] or "Stungun"
             Config:Set("AutoBuyWeaponValue", autoBuyWeaponValue)
             Config:Save()
         end
@@ -7600,16 +7283,15 @@ _G.__DYHUB_ShopSystems = function()
         Config:Save()
     end
 
-    -- 杂项下拉翻译
     MiscShopDropdown = Main5:Dropdown({
         Title = T("select_misc"),
         Desc = "选择要自动购买的杂项物品。",
         Values = { T("headphone"), T("grenade"), T("jetpack_item"), T("lens_item") },
         Multi = false,
-        Value = T(autoBuyMiscValue == "HeadPhone" and "headphone" or autoBuyMiscValue == "Grenade" and "grenade" or autoBuyMiscValue == "Jetpack" and "jetpack_item" or autoBuyMiscValue == "Lens" and "lens_item" or "headphone"),
+        Value = autoBuyMiscValue == "HeadPhone" and T("headphone") or autoBuyMiscValue == "Grenade" and T("grenade") or autoBuyMiscValue == "Jetpack" and T("jetpack_item") or autoBuyMiscValue == "Lens" and T("lens_item") or T("headphone"),
         Callback = function(value)
-            local originalKey = GetOriginalKey(value)
-            autoBuyMiscValue = miscMap[originalKey] or "HeadPhone"
+            local key = GetOriginalKey(value)
+            autoBuyMiscValue = miscMap[key] or "HeadPhone"
             Config:Set("AutoBuyMiscValue", autoBuyMiscValue)
             Config:Save()
         end
@@ -7639,16 +7321,15 @@ _G.__DYHUB_ShopSystems = function()
 
     Main5:Section({ Title = T("shop_request"), Icon = "send" })
 
-    -- 请求下拉翻译
     RequestTitanSpeakerDropdown = Main5:Dropdown({
         Title = T("select_request"),
         Desc = "选择要自动购买的 Titan/Speaker 请求。",
         Values = { T("titan_request"), T("special_titan_request"), T("speaker_request") },
         Multi = false,
-        Value = T(selectedRequestItem == "Titan-Request" and "titan_request" or selectedRequestItem == "SpecialTitan-Request" and "special_titan_request" or selectedRequestItem == "Speaker-Request" and "speaker_request" or "titan_request"),
+        Value = selectedRequestItem == "Titan-Request" and T("titan_request") or selectedRequestItem == "SpecialTitan-Request" and T("special_titan_request") or selectedRequestItem == "Speaker-Request" and T("speaker_request") or T("titan_request"),
         Callback = function(value)
-            local originalKey = GetOriginalKey(value)
-            selectedRequestItem = requestMap[originalKey] or "Titan-Request"
+            local key = GetOriginalKey(value)
+            selectedRequestItem = requestMap[key] or "Titan-Request"
             Config:Set("SelectedRequestItem", selectedRequestItem)
             Config:Save()
         end
@@ -7799,7 +7480,6 @@ _G.__DYHUB_ShopSystems = function()
             autoSyncedShopRunning = false
         end)
     end
-
     -- ====================== 商店每小时系统 ======================
     Main5:Section({ Title = T("shop_hourly"), Icon = "clock" })
 
@@ -7905,7 +7585,6 @@ _G.__DYHUB_ShopSystems = function()
         end)
     end
 
-    -- 每小时物品下拉翻译
     local hourlyTranslationMap = {
         luck_potion_I = "LuckPotionI", luck_potion_II = "LuckPotionII", luck_potion_III = "LuckPotionIII",
         s_ember = "S-Ember", bsx2_30 = "BSX2:30", bsx2_60 = "BSX2:60", bsx2_360 = "BSX2:360",
@@ -8004,17 +7683,16 @@ CollectItemDropdown = Main6:Dropdown({
     end
 })
 
--- 收集模式下拉翻译
 CollectModeDropdown = Main6:Dropdown({
     Title = T("collect_mode"),
     Desc = "选择自动收集应何时收集物品。",
     Values = { T("clean"), T("idgf") },
     Multi = false,
-    Value = T(CollectMode == "Clean" and "clean" or "idgf"),
+    Value = CollectMode == "Clean" and T("clean") or T("idgf"),
     Callback = function(value)
-        local originalKey = GetOriginalKey(value)
-        if originalKey == "clean" then CollectMode = "Clean"
-        elseif originalKey == "idgf" then CollectMode = "IDGF"
+        local key = GetOriginalKey(value)
+        if key == "clean" then CollectMode = "Clean"
+        elseif key == "idgf" then CollectMode = "IDGF"
         else CollectMode = value end
         Config:Set("CollectMode", CollectMode)
         Config:Save()
@@ -8022,17 +7700,16 @@ CollectModeDropdown = Main6:Dropdown({
     end
 })
 
--- 收集移动方式下拉翻译
 CollectMovementDropdown = Main6:Dropdown({
     Title = T("collect_movement"),
     Desc = "选择角色移动到可收集物品的方式。",
     Values = { T("teleport"), T("tween") },
     Multi = false,
-    Value = T(CollectMovementMode == "Teleport" and "teleport" or "tween"),
+    Value = CollectMovementMode == "Teleport" and T("teleport") or T("tween"),
     Callback = function(value)
-        local originalKey = GetOriginalKey(value)
-        if originalKey == "teleport" then CollectMovementMode = "Teleport"
-        elseif originalKey == "tween" then CollectMovementMode = "Tween"
+        local key = GetOriginalKey(value)
+        if key == "teleport" then CollectMovementMode = "Teleport"
+        elseif key == "tween" then CollectMovementMode = "Tween"
         else CollectMovementMode = NormalizeCollectMovement(value) end
         Config:Set("CollectMovementMode", CollectMovementMode)
         Config:Save()
