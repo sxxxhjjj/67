@@ -214,16 +214,12 @@ Config = CustomConfig.new()
 local currentLanguage = Config:Get("Language", "Chinese")
 local translations = {
     Chinese = {
-        -- 基础
         loading = "游戏加载中...", loaded = "加载完成，2秒后启动",
-        -- 自动挂机
         auto_farm = "自动挂机", auto_farm_desc = "根据优先级自动刷怪",
         farm_enabled = "已开启", farm_disabled = "已关闭",
         sync_mode = "同步挂机模式", sync_desc = "辅助功能需自动挂机开启",
         sync_on = "需自动挂机", sync_off = "辅助功能独立",
-        -- 位置
         position_above = "上方", position_under = "下方",
-        -- 功能名称
         auto_attack = "自动攻击", auto_skill = "自动技能",
         auto_ready = "自动开局", auto_skip_heli = "自动跳过直升机",
         auto_heal = "自动补血", safe_mode = "安全模式",
@@ -232,12 +228,10 @@ local translations = {
         attack_speed = "攻击速度", skill_delay = "技能延迟",
         height_offset = "挂机高度偏移", safe_hp = "安全模式血量",
         god_hp = "上帝模式血量", high_hp_threshold = "高血量阈值",
-        -- ESP
         esp_enable = "启用透视", esp_mob = "怪物透视",
         esp_player = "玩家透视", esp_item = "物品透视",
         esp_highlight = "高亮", esp_distance = "距离",
         esp_health = "血量", esp_name = "名称",
-        -- 分区标题
         farm_settings = "挂机设置", general_settings = "通用设置",
         priority_settings = "优先级设置", override_settings = "覆写设置",
         flush_settings = "冲水设置",
@@ -250,7 +244,6 @@ local translations = {
         game_mode = "游戏模式",
         save_settings = "保存配置", server_status = "服务器状态",
         others = "其他",
-        -- 功能
         reset_wave = "重置波次", reset_wave_val = "重置波次值",
         bypass_jeffrey = "绕过 Jeffrey", anti_jeffrey = "反 Jeffrey",
         anti_jeffrey_range = "反 Jeffrey 范围",
@@ -289,7 +282,6 @@ local translations = {
         lock_movement = "锁定移动属性", no_clip = "穿墙",
         fly = "飞行", fly_speed = "飞行速度",
         infinite_jump = "无限跳跃", full_bright = "全亮", no_fog = "去雾",
-        -- 下拉选项
         normal_mode = "普通模式", astro_holdout_mode = "天文坚守模式", dark_dimension_mode = "暗黑维度模式",
         teleport = "传送", tween = "缓动", above = "上方", under = "下方",
         clean = "清场", idgf = "IDGF (立即收集)",
@@ -319,7 +311,6 @@ local translations = {
         flash_drive_1 = "FlashDrive#1", flash_drive_2 = "FlashDrive#2", flash_drive_3 = "FlashDrive#3",
         flash_drive_4 = "FlashDrive#4", flash_drive_5 = "FlashDrive#5", flash_drive_6 = "FlashDrive#6",
         master_card_normal = "MasterCard:Normal", master_card_normal_titan = "MasterCard:NormalTitan", master_card_special_titan = "MasterCard:SpecialTitan",
-        -- UI 固定文本
         select_redeem_codes = "选择兑换码", select_redeem_codes_desc = "选择要兑换的代码。",
         select_gamepass = "选择通行证", select_gamepass_desc = "选择要本地解锁的游戏通行证标志。",
         fly_movement = "飞行移动", visual_utility = "视觉与实用",
@@ -328,7 +319,6 @@ local translations = {
         auto_collect = "自动收集", auto_collect_desc_full = "自动收集地图上出现的选定物品。",
         language_title = "语言 / Language",
         tab_info = "信息", tab_shop = "商店", tab_settings = "设置",
-        -- 描述文本
         desc_mode_farm = "选择不同的农场模式。",
         desc_position_farm = "选择角色相对目标的站位。",
         desc_movement_farm = "选择角色移动到每个目标的方式。",
@@ -409,7 +399,6 @@ local translations = {
         desc_select_language = "选择界面语言。",
         desc_combat_debug = "输出基于冷却时间的自动攻击/技能和怪物缓存调试日志。",
         desc_anti_afk = "防止 Roblox 因长时间不操作将你踢出。",
-        -- 通知文本
         notify_save_success = "配置已成功保存！",
         notify_selected = "已选择: ",
         notify_positions_cleared = "所有已确认的怪物位置已清除。",
@@ -435,7 +424,7 @@ local translations = {
         notify_auto_farm_closed_independent = "已关闭自动挂机（同步模式关闭，辅助功能保持运行）",
         notify_misc_farm_warning = "请先开启自动挂机（同步模式已开启）",
         notify_collect_movement_mode = "收集移动模式",
-        -- 特殊文本
+        notify_language_restart = "语言已更改，请重启脚本以完全应用新语言。",
         vote_restore_warning = "⚠️ 在首次使用自动投票前请先点击此按钮。",
         casual_title = "休闲: 任务选择",
         casual_desc = "- [ 步骤 1 ] 留在大厅内（不在游戏中）\n- [ 步骤 2 ] 按 Play 并进入 Classic 游戏模式选择界面\n- [ 步骤 3 ] 选择休闲并完成传送\n- [ 步骤 4 ] 运行脚本",
@@ -659,6 +648,7 @@ local translations = {
         notify_auto_farm_closed_independent = "Auto Farm disabled (Sync Mode OFF, aux functions keep running)",
         notify_misc_farm_warning = "Please enable Auto Farm first (Sync Mode is ON)",
         notify_collect_movement_mode = "Collect Movement Mode",
+        notify_language_restart = "Language changed. Please restart the script to fully apply.",
         vote_restore_warning = "⚠️ Please click this button before using auto vote for the first time.",
         casual_title = "Casual: Mission Select",
         casual_desc = "- [ Step 1 ] Stay in the lobby (not in game)\n- [ Step 2 ] Press Play and enter Classic game mode selection\n- [ Step 3 ] Select Casual and complete teleport\n- [ Step 4 ] Run the script",
@@ -670,6 +660,454 @@ local translations = {
         serverhop_progress = "Teleporting to another server...",
         rejoin_progress = "Rejoining server...",
         language_notify_title = "Language",
+    },
+    Russian = {
+        loading = "Загрузка игры...", loaded = "Загружено, запуск через 2с",
+        auto_farm = "Авто-ферма", auto_farm_desc = "Авто-ферма с приоритетом",
+        farm_enabled = "Включено", farm_disabled = "Отключено",
+        sync_mode = "Синхр. ферма", sync_desc = "Доп. функции требуют авто-ферму",
+        sync_on = "Нужна авто-ферма", sync_off = "Доп. функции независимы",
+        position_above = "Сверху", position_under = "Снизу",
+        auto_attack = "Авто-атака", auto_skill = "Авто-скиллы",
+        auto_ready = "Авто-старт", auto_skip_heli = "Пропуск вертолёта",
+        auto_heal = "Авто-лечение", safe_mode = "Безопасный режим",
+        god_mode = "Режим бога", delete_map = "Удалить карту",
+        flush_aura = "Аура смыва", flush_range = "Радиус смыва",
+        attack_speed = "Скорость атаки", skill_delay = "Задержка скиллов",
+        height_offset = "Смещение по высоте", safe_hp = "HP безопасности",
+        god_hp = "HP бога", high_hp_threshold = "Порог высокого HP",
+        esp_enable = "Включить ESP", esp_mob = "ESP монстров",
+        esp_player = "ESP игроков", esp_item = "ESP предметов",
+        esp_highlight = "Подсветка", esp_distance = "Дистанция",
+        esp_health = "Здоровье", esp_name = "Имя",
+        farm_settings = "Настройки фермы", general_settings = "Общие настройки",
+        priority_settings = "Приоритеты", override_settings = "Переопределения",
+        flush_settings = "Настройки смыва",
+        esp_visual = "Визуал ESP", esp_settings = "Настройки ESP",
+        local_player = "Локальный игрок", redeem_codes = "Коды",
+        unlock_gamepass = "Разблокировать Gamepass", shop_weapon = "Оружие",
+        shop_misc = "Предметы",
+        collect_section = "Сбор предметов", collect_settings = "Настройки сбора",
+        vote_system = "Голосование", vote_mode = "Режим голосования",
+        game_mode = "Режим игры",
+        save_settings = "Сохранить настройки", server_status = "Статус сервера",
+        others = "Прочее",
+        reset_wave = "Сброс волны", reset_wave_val = "Значение сброса",
+        bypass_jeffrey = "Обход Джеффри", anti_jeffrey = "Анти-Джеффри",
+        anti_jeffrey_range = "Радиус анти-Джеффри",
+        camera_mode = "Режим камеры", combat_debug = "Отладка боя",
+        anti_afk = "Анти-АФК", bypass_barrier = "Обход барьера",
+        farm_astro = "Фарм Astro", farm_astro_desc = "Избегать монстров, идти в центр по времени",
+        mode_farm = "Режим фермы", movement_farm = "Перемещение",
+        position_farm = "Позиция", misc_farm = "Доп. функции",
+        skill_keys = "Клавиши скиллов",
+        serverhop = "Смена сервера", rejoin = "Перезайти",
+        save_config = "Сохранить конфиг", auto_save = "Автосохранение", delay_save = "Задержка сохранения",
+        reset_positions = "Сбросить позиции",
+        padding_reduce = "Шаг уменьшения", padding_safe = "Мин. безопасный отступ",
+        anti_clip_margin = "Отступ от стены", dmg_threshold = "Порог урона",
+        select_weapon = "Выбрать оружие", buy_weapon = "Купить оружие",
+        buy_weapon_once = "Купить оружие (разово)", select_misc = "Выбрать предмет",
+        buy_misc = "Купить предмет", buy_misc_once = "Купить предмет (разово)",
+        select_request = "Выбрать запрос", auto_request = "Авто-запрос",
+        skill_tree = "Дерево навыков", auto_skill_tree = "Авто-навыки",
+        select_upgrade_titan = "Выбрать улучшение Titan Speaker", upgrade_titan = "Улучшить Titan Speaker",
+        select_upgrade_utcm = "Выбрать улучшение UTCM", upgrade_utcm = "Улучшить UTCM",
+        select_upgrade_tv = "Выбрать улучшение TV", upgrade_tv = "Улучшить TV",
+        gacha_character = "Гача персонажей", gacha_skin = "Гача скинов",
+        auto_gacha_character = "Авто-гача персонажей", auto_gacha_skin = "Авто-гача скинов",
+        use_item = "Использовать предмет", auto_use_item = "Авто-использование",
+        shop_hourly = "Часовой магазин", select_shop_hourly = "Выбрать часовой предмет",
+        item_amount = "Количество", buy_item = "Купить предмет",
+        redeem_selected = "Активировать выбранные", redeem_all = "Активировать все", unlock_selected = "Разблокировать выбранное",
+        vote_info = "Информация о голосовании", restore_vote = "Восстановить голосование",
+        set_vote_mode = "Установить режим", auto_vote_ig = "Авто-голосование (в игре)",
+        casual_info = "Информация о Casual", set_game_mode = "Установить режим",
+        auto_game_mode_lobby = "Авто-режим (Лобби)",
+        info_update = "Обновление: 06.02.2026", info_desc = "• [Добавлено] Сброс волны...",
+        info_title = "Premium Edition", info_desc2 = "Без бэкдоров · Без пэйволов · Все функции",
+        walkspeed = "Скорость ходьбы", jumppower = "Сила прыжка",
+        lock_movement = "Зафиксировать движение", no_clip = "No Clip",
+        fly = "Полёт", fly_speed = "Скорость полёта",
+        infinite_jump = "Бесконечный прыжок", full_bright = "Полная яркость", no_fog = "Без тумана",
+        normal_mode = "Обычный режим", astro_holdout_mode = "Astro Holdout", dark_dimension_mode = "Тёмное измерение",
+        teleport = "Телепорт", tween = "Плавно", above = "Сверху", under = "Снизу",
+        clean = "Зачистка", idgf = "IDGF",
+        collect_mode = "Режим сбора", collect_movement = "Перемещение при сборе",
+        esp_options = "Настройки ESP", esp_items = "Предметы ESP", collect_items = "Предметы сбора",
+        select_language = "Выбрать язык", language_changed = "Язык изменён на",
+        all_skills = "Все",
+        highlight = "Подсветка", distance = "Дистанция", health = "Здоровье", name = "Имя",
+        spin1 = "1 вращение", spin10 = "10 вращений", spin100 = "100 вращений",
+        spin1lucky = "1 удачное", spin10lucky = "10 удачных",
+        jetpack = "Джетпак", overcharge = "Перезарядка", soundbooster = "Усилитель звука",
+        core = "Ядро", upgrade = "Улучшение",
+        shield = "Щит", blaster = "Бластер", lens = "Линза", heat = "Нагрев", armor = "Броня",
+        absorb = "Поглощение", share_overcharge = "Общая перезарядка", astro_arm = "Astro-рука",
+        titan_request = "Запрос Титана", special_titan_request = "Запрос спец. Титана", speaker_request = "Запрос Спикера",
+        headphone = "Наушники", grenade = "Граната", jetpack_item = "Джетпак", lens_item = "Линза",
+        stungun = "Электрошокер", flamethrower = "Огнемёт", harpoon_gun = "Гарпун",
+        shot_gun = "Дробовик", pulse_rifle = "Импульсная винтовка", shot_harpoon_gun = "Гарпунный дробовик",
+        epd = "EPD", small_laser_gun = "Малый лазер",
+        normal = "Нормально", veryhard = "Очень сложно", hard = "Сложно", insane = "Безумие",
+        nightmare = "Кошмар", bossrush = "Босс-раш", darkdimension = "Тёмное измерение",
+        hell = "Ад", thunderstorm = "Гроза", christmas = "Рождество",
+        zombie = "Зомби", astrov2 = "AstroV2", astro = "Astro", visit_100m = "100MVisit",
+        all = "Все", lucky_boost = "LuckyBoost", rare_lucky_boost = "RareLuckyBoost", legendary_lucky_boost = "LegendaryLuckyBoost",
+        luck_potion_I = "Зелье удачи I", luck_potion_II = "Зелье удачи II", luck_potion_III = "Зелье удачи III",
+        s_ember = "S-Ember", bsx2_30 = "BSX2:30", bsx2_60 = "BSX2:60", bsx2_360 = "BSX2:360",
+        flash_drive_1 = "Флешка #1", flash_drive_2 = "Флешка #2", flash_drive_3 = "Флешка #3",
+        flash_drive_4 = "Флешка #4", flash_drive_5 = "Флешка #5", flash_drive_6 = "Флешка #6",
+        master_card_normal = "MasterCard:Normal", master_card_normal_titan = "MasterCard:NormalTitan", master_card_special_titan = "MasterCard:SpecialTitan",
+        select_redeem_codes = "Выбрать коды", select_redeem_codes_desc = "Выберите коды для активации.",
+        select_gamepass = "Выбрать Gamepass", select_gamepass_desc = "Выберите флаги для локальной разблокировки.",
+        fly_movement = "Управление полётом", visual_utility = "Визуал и утилиты",
+        fly_desc = "Включить полёт. W/S вперёд/назад, взгляд вверх/вниз для высоты, A/D в стороны.",
+        auto_gacha = "Авто-гача", shop_upgrade = "Улучшения", shop_request = "Запрос Титана/Спикера",
+        auto_collect = "Авто-сбор", auto_collect_desc_full = "Автоматически собирать выбранные предметы на карте.",
+        language_title = "Язык",
+        tab_info = "Инфо", tab_shop = "Магазин", tab_settings = "Настройки",
+        desc_mode_farm = "Выберите режим фермы.",
+        desc_position_farm = "Выберите позицию персонажа относительно цели.",
+        desc_movement_farm = "Выберите способ перемещения к цели.",
+        desc_misc_farm = "Выберите дополнительные системы для авто-фермы.",
+        desc_sync_mode = "Доп. функции требуют авто-ферму.",
+        desc_farm_astro = "Избегать монстров, идти в центр по времени.",
+        desc_skill_keys = "Выберите клавиши для авто-скиллов.",
+        desc_skill_delay = "Задержка между нажатиями клавиш (сек).",
+        desc_height_offset = "Вертикальное смещение при фарме над/под монстрами.",
+        desc_safe_hp = "Процент HP для отступления в безопасном режиме.",
+        desc_god_hp = "Порог HP для обычного режима бога.",
+        desc_reset_wave_val = "Сброс при достижении указанной волны.",
+        desc_bypass_jeffrey = "Заставляет Джеффри сесть и не мешать.",
+        desc_anti_jeffrey = "Бесплатная функция: создаёт мягкий невидимый барьер.",
+        desc_anti_jeffrey_range = "Дистанция для Анти-Джеффри. По умолчанию 50.",
+        desc_high_hp_threshold = "Макс. HP для приоритета высокого HP.",
+        desc_reset_positions = "Очистить все сохранённые позиции монстров.",
+        desc_flush_range = "Дистанция для активации ауры смыва.",
+        desc_flush_aura = "Автоматически активировать смыв в радиусе.",
+        desc_esp_enable = "Включить все визуальные эффекты ESP.",
+        desc_esp_mob = "Подсветка и метки над врагами.",
+        desc_esp_player = "Подсветка и метки над другими игроками.",
+        desc_esp_item = "Подсветка и метки на предметах.",
+        desc_esp_options = "Выберите дополнительные метки ESP.",
+        desc_esp_items = "Выберите предметы для ESP.",
+        desc_walkspeed = "Установить скорость ходьбы.",
+        desc_jumppower = "Установить силу прыжка.",
+        desc_lock_movement = "Восстанавливать скорость и прыжок при снижении игрой.",
+        desc_no_clip = "Проходить сквозь стены и объекты.",
+        desc_fly_speed = "Настроить скорость полёта.",
+        desc_fly = "Включить полёт. W/S вперёд/назад, взгляд вверх/вниз для высоты, A/D в стороны.",
+        desc_infinite_jump = "Бесконечные прыжки в воздухе.",
+        desc_full_bright = "Полная яркость карты.",
+        desc_no_fog = "Убрать туман.",
+        desc_select_redeem_codes = "Выберите коды для активации.",
+        desc_redeem_selected = "Активировать только выбранные коды.",
+        desc_redeem_all = "Активировать все коды сразу.",
+        desc_select_gamepass = "Выберите пропуски для локальной разблокировки.",
+        desc_unlock_selected = "Разблокировать выбранные пропуски локально.",
+        desc_set_vote_mode = "Выберите режим для авто-голосования.",
+        desc_auto_vote_ig = "Автоматически голосовать за выбранный режим каждый раунд.",
+        desc_set_game_mode = "Выберите режим для автоматического создания.",
+        desc_auto_game_mode_lobby = "Автоматически создавать выбранный режим в лобби.",
+        desc_gacha_character = "Выберите тип вращения для гачи персонажей.",
+        desc_auto_gacha_character = "Авто-гача персонажей.",
+        desc_gacha_skin = "Выберите тип вращения для гачи скинов.",
+        desc_auto_gacha_skin = "Авто-гача скинов.",
+        desc_use_item = "Выберите предмет для авто-использования.",
+        desc_auto_use_item = "Автоматически использовать предмет с задержкой.",
+        desc_select_upgrade_titan = "Выберите улучшения Titan Speaker.",
+        desc_upgrade_titan = "Авто-улучшение Titan Speaker.",
+        desc_select_upgrade_utcm = "Выберите улучшения UTCM.",
+        desc_upgrade_utcm = "Авто-улучшение UTCM.",
+        desc_select_upgrade_tv = "Выберите улучшения TV.",
+        desc_upgrade_tv = "Авто-улучшение TV.",
+        desc_select_weapon = "Выберите оружие для авто-покупки.",
+        desc_buy_weapon = "Авто-покупка оружия в цикле магазина.",
+        desc_buy_weapon_once = "Разовая покупка оружия.",
+        desc_select_misc = "Выберите предмет для авто-покупки.",
+        desc_buy_misc = "Авто-покупка предмета в цикле магазина.",
+        desc_buy_misc_once = "Разовая покупка предмета.",
+        desc_select_request = "Выберите запрос Titan/Speaker.",
+        desc_auto_request = "Авто-запрос при волне 10+.",
+        desc_auto_skill_tree = "Авто-разблокировка недостающих навыков.",
+        desc_select_shop_hourly = "Выберите предметы часового магазина.",
+        desc_item_amount = "Количество для покупки.",
+        desc_buy_item = "Авто-покупка предметов часового магазина.",
+        desc_collect_items = "Выберите предметы для авто-сбора.",
+        desc_collect_mode = "Выберите режим авто-сбора.",
+        desc_collect_movement = "Выберите способ перемещения к предметам.",
+        desc_save_config = "Сохранить все настройки в файл.",
+        desc_auto_save = "Автосохранение с интервалом.",
+        desc_delay_save = "Интервал автосохранения (сек).",
+        desc_serverhop = "Перейти на другой случайный сервер.",
+        desc_rejoin = "Перезайти на текущий сервер.",
+        desc_camera_mode = "Выберите режим камеры.",
+        desc_bypass_barrier = "Попытка обойти невидимый барьер (не работает).",
+        desc_select_language = "Выберите язык интерфейса.",
+        desc_combat_debug = "Вывод отладочных логов атаки/скиллов и кэша монстров.",
+        desc_anti_afk = "Предотвращает кик за бездействие.",
+        notify_save_success = "Конфигурация сохранена!",
+        notify_selected = "Выбрано: ",
+        notify_positions_cleared = "Все позиции монстров очищены.",
+        notify_anti_afk_on = "Анти-АФК включён.",
+        notify_anti_afk_off = "Анти-АФК отключён.",
+        notify_serverhop_fail = "Смена сервера не удалась",
+        notify_no_servers = "Нет доступных серверов.",
+        notify_select_gamepass = "Сначала выберите пропуск!",
+        notify_unlocked = "Разблокировано ",
+        notify_gamepasses = " пропусков!",
+        notify_combat_debug_on = "Логи отладки боя включены.",
+        notify_combat_debug_off = "Логи отладки боя отключены.",
+        notify_farm_astro_on = "Включено. Маршрут Astro запущен.",
+        notify_farm_astro_off = "Отключено. Маршрут Astro остановлен.",
+        notify_farm_astro_conflict = "Отключите авто-ферму перед использованием Farm Astro Token.",
+        notify_astro_clean_mode = "Farm Astro Token не убивает монстров, режим Clean не может собирать предметы. Выберите IDGF.",
+        notify_restoring = "Восстановление...",
+        notify_restore_ready = "Подготовка, восстановление голосования...",
+        notify_restore_wait = "Восстановление голосования, подождите...",
+        notify_restore_complete = "Восстановлено",
+        notify_restore_done = "Голосование восстановлено! Теперь можно использовать авто-голосование.",
+        notify_auto_farm_closed_sync = "Авто-ферма отключена (Синх. режим ВКЛ, доп. функции остановлены)",
+        notify_auto_farm_closed_independent = "Авто-ферма отключена (Синх. режим ВЫКЛ, доп. функции работают)",
+        notify_misc_farm_warning = "Сначала включите авто-ферму (Синх. режим ВКЛ)",
+        notify_collect_movement_mode = "Режим перемещения сбора",
+        notify_language_restart = "Язык изменён. Перезапустите скрипт для полного применения.",
+        vote_restore_warning = "⚠️ Нажмите эту кнопку перед первым использованием авто-голосования.",
+        casual_title = "Casual: Выбор миссии",
+        casual_desc = "- [ Шаг 1 ] Оставайтесь в лобби (не в игре)\n- [ Шаг 2 ] Нажмите Play и войдите в выбор режима Classic\n- [ Шаг 3 ] Выберите Casual и завершите телепорт\n- [ Шаг 4 ] Запустите скрипт",
+        priority_title = "Порядок приоритета",
+        priority_desc = "Прерывание: если атакуется монстр с низким HP, а появляется с более высоким — немедленное переключение",
+        vote_info_desc = "- [ Шаг 1 ] Нажмите Восстановить голосование\n- [ Шаг 2 ] Оставайтесь в лобби (в игре)\n- [ Шаг 3 ] Настройте авто-голосование и ждите",
+        recent_updates_title = "Последние обновления",
+        dyhub_info_title = "Информация DYHUB",
+        serverhop_progress = "Переход на другой сервер...",
+        rejoin_progress = "Перезаход на сервер...",
+        language_notify_title = "Язык",
+    },
+    Portuguese = {
+        loading = "Carregando jogo...", loaded = "Carregado, iniciando em 2s",
+        auto_farm = "Auto Farm", auto_farm_desc = "Farm automático por prioridade",
+        farm_enabled = "Ativado", farm_disabled = "Desativado",
+        sync_mode = "Farm Sincronizado", sync_desc = "Funções auxiliares precisam do Auto Farm",
+        sync_on = "Precisa do Auto Farm", sync_off = "Funções auxiliares independentes",
+        position_above = "Acima", position_under = "Abaixo",
+        auto_attack = "Ataque Automático", auto_skill = "Habilidades Automáticas",
+        auto_ready = "Auto Iniciar", auto_skip_heli = "Pular Helicóptero",
+        auto_heal = "Auto Cura", safe_mode = "Modo Seguro",
+        god_mode = "Modo Deus", delete_map = "Deletar Mapa",
+        flush_aura = "Aura de Descarga", flush_range = "Alcance da Descarga",
+        attack_speed = "Vel. de Ataque", skill_delay = "Atraso de Habilidades",
+        height_offset = "Deslocamento de Altura", safe_hp = "HP Seguro",
+        god_hp = "HP Deus", high_hp_threshold = "Limite de HP Alto",
+        esp_enable = "Ativar ESP", esp_mob = "ESP de Monstros",
+        esp_player = "ESP de Jogadores", esp_item = "ESP de Itens",
+        esp_highlight = "Destaque", esp_distance = "Distância",
+        esp_health = "Vida", esp_name = "Nome",
+        farm_settings = "Config. de Farm", general_settings = "Config. Gerais",
+        priority_settings = "Prioridades", override_settings = "Substituições",
+        flush_settings = "Config. de Descarga",
+        esp_visual = "Visual do ESP", esp_settings = "Config. do ESP",
+        local_player = "Jogador Local", redeem_codes = "Resgatar Códigos",
+        unlock_gamepass = "Desbloquear Gamepass", shop_weapon = "Loja de Armas",
+        shop_misc = "Loja de Itens",
+        collect_section = "Coletar Itens", collect_settings = "Config. de Coleta",
+        vote_system = "Sistema de Voto", vote_mode = "Modo de Voto",
+        game_mode = "Modo de Jogo",
+        save_settings = "Salvar Config.", server_status = "Status do Servidor",
+        others = "Outros",
+        reset_wave = "Resetar Onda", reset_wave_val = "Valor de Reset",
+        bypass_jeffrey = "Burlar Jeffrey", anti_jeffrey = "Anti Jeffrey",
+        anti_jeffrey_range = "Alcance Anti Jeffrey",
+        camera_mode = "Modo de Câmera", combat_debug = "Debug de Combate",
+        anti_afk = "Anti AFK", bypass_barrier = "Burlar Barreira",
+        farm_astro = "Farm Astro", farm_astro_desc = "Evitar monstros, ir ao centro no fim do tempo",
+        mode_farm = "Modo de Farm", movement_farm = "Movimentação",
+        position_farm = "Posição", misc_farm = "Funções Aux.",
+        skill_keys = "Teclas de Habilidade",
+        serverhop = "Trocar Servidor", rejoin = "Reentrar",
+        save_config = "Salvar Config.", auto_save = "Auto Salvar", delay_save = "Intervalo de Salvamento",
+        reset_positions = "Resetar Posições",
+        padding_reduce = "Redução de Passo", padding_safe = "Margem Segura Mínima",
+        anti_clip_margin = "Margem Anti-Clip", dmg_threshold = "Limite de Dano",
+        select_weapon = "Selecionar Arma", buy_weapon = "Comprar Arma",
+        buy_weapon_once = "Comprar Arma (Uma Vez)", select_misc = "Selecionar Item",
+        buy_misc = "Comprar Item", buy_misc_once = "Comprar Item (Uma Vez)",
+        select_request = "Selecionar Solicitação", auto_request = "Solicitação Automática",
+        skill_tree = "Árvore de Habilidades", auto_skill_tree = "Auto Habilidades",
+        select_upgrade_titan = "Selecionar Upgrade Titan Speaker", upgrade_titan = "Melhorar Titan Speaker",
+        select_upgrade_utcm = "Selecionar Upgrade UTCM", upgrade_utcm = "Melhorar UTCM",
+        select_upgrade_tv = "Selecionar Upgrade TV", upgrade_tv = "Melhorar TV",
+        gacha_character = "Gacha de Personagem", gacha_skin = "Gacha de Skin",
+        auto_gacha_character = "Auto Gacha Personagem", auto_gacha_skin = "Auto Gacha Skin",
+        use_item = "Usar Item", auto_use_item = "Auto Usar Item",
+        shop_hourly = "Loja Horária", select_shop_hourly = "Selecionar Item Horário",
+        item_amount = "Quantidade", buy_item = "Comprar Item",
+        redeem_selected = "Resgatar Selecionados", redeem_all = "Resgatar Todos", unlock_selected = "Desbloquear Selecionado",
+        vote_info = "Informação de Voto", restore_vote = "Restaurar Votação",
+        set_vote_mode = "Definir Modo", auto_vote_ig = "Voto Automático (In-Game)",
+        casual_info = "Informação Casual", set_game_mode = "Definir Modo de Jogo",
+        auto_game_mode_lobby = "Modo Automático (Lobby)",
+        info_update = "Atualização: 02/06/2026", info_desc = "• [Adicionado] Reset de Onda...",
+        info_title = "Edição Premium", info_desc2 = "Sem backdoor · Sem paywall · Todas as funções",
+        walkspeed = "Velocidade", jumppower = "Força do Pulo",
+        lock_movement = "Travar Movimento", no_clip = "No Clip",
+        fly = "Voar", fly_speed = "Velocidade de Voo",
+        infinite_jump = "Pulo Infinito", full_bright = "Brilho Máximo", no_fog = "Sem Névoa",
+        normal_mode = "Modo Normal", astro_holdout_mode = "Modo Astro Holdout", dark_dimension_mode = "Modo Dimensão Sombria",
+        teleport = "Teleporte", tween = "Suave", above = "Acima", under = "Abaixo",
+        clean = "Limpar", idgf = "IDGF",
+        collect_mode = "Modo de Coleta", collect_movement = "Movimento de Coleta",
+        esp_options = "Opções ESP", esp_items = "Itens ESP", collect_items = "Itens de Coleta",
+        select_language = "Selecionar Idioma", language_changed = "Idioma alterado para",
+        all_skills = "Todas",
+        highlight = "Destaque", distance = "Distância", health = "Vida", name = "Nome",
+        spin1 = "1 Giro", spin10 = "10 Giros", spin100 = "100 Giros",
+        spin1lucky = "1 Giro da Sorte", spin10lucky = "10 Giros da Sorte",
+        jetpack = "Jetpack", overcharge = "Sobrecarga", soundbooster = "Amplificador de Som",
+        core = "Núcleo", upgrade = "Melhoria",
+        shield = "Escudo", blaster = "Blaster", lens = "Lente", heat = "Calor", armor = "Armadura",
+        absorb = "Absorver", share_overcharge = "Compartilhar Sobrecarga", astro_arm = "Braço Astro",
+        titan_request = "Solicitar Titã", special_titan_request = "Solicitar Titã Especial", speaker_request = "Solicitar Speaker",
+        headphone = "Fone de Ouvido", grenade = "Granada", jetpack_item = "Jetpack", lens_item = "Lente",
+        stungun = "Arma de Choque", flamethrower = "Lança-chamas", harpoon_gun = "Arpão",
+        shot_gun = "Escopeta", pulse_rifle = "Rifle de Pulso", shot_harpoon_gun = "Escopeta de Arpão",
+        epd = "EPD", small_laser_gun = "Laser Pequeno",
+        normal = "Normal", veryhard = "Muito Difícil", hard = "Difícil", insane = "Insano",
+        nightmare = "Pesadelo", bossrush = "Boss Rush", darkdimension = "Dimensão Sombria",
+        hell = "Inferno", thunderstorm = "Tempestade", christmas = "Natal",
+        zombie = "Zumbi", astrov2 = "AstroV2", astro = "Astro", visit_100m = "100MVisit",
+        all = "Todos", lucky_boost = "LuckyBoost", rare_lucky_boost = "RareLuckyBoost", legendary_lucky_boost = "LegendaryLuckyBoost",
+        luck_potion_I = "Poção da Sorte I", luck_potion_II = "Poção da Sorte II", luck_potion_III = "Poção da Sorte III",
+        s_ember = "S-Ember", bsx2_30 = "BSX2:30", bsx2_60 = "BSX2:60", bsx2_360 = "BSX2:360",
+        flash_drive_1 = "PenDrive #1", flash_drive_2 = "PenDrive #2", flash_drive_3 = "PenDrive #3",
+        flash_drive_4 = "PenDrive #4", flash_drive_5 = "PenDrive #5", flash_drive_6 = "PenDrive #6",
+        master_card_normal = "MasterCard:Normal", master_card_normal_titan = "MasterCard:NormalTitan", master_card_special_titan = "MasterCard:SpecialTitan",
+        select_redeem_codes = "Selecionar Códigos", select_redeem_codes_desc = "Selecione os códigos para resgatar.",
+        select_gamepass = "Selecionar Gamepass", select_gamepass_desc = "Selecione os gamepasses para desbloquear localmente.",
+        fly_movement = "Movimento de Voo", visual_utility = "Visual e Utilidades",
+        fly_desc = "Ativar voo. W/S frente/trás, olhar p/ cima/baixo controla altura, A/D laterais.",
+        auto_gacha = "Gacha Automático", shop_upgrade = "Melhorias da Loja", shop_request = "Solicitar Titã/Speaker",
+        auto_collect = "Coleta Automática", auto_collect_desc_full = "Coletar automaticamente os itens selecionados no mapa.",
+        language_title = "Idioma",
+        tab_info = "Info", tab_shop = "Loja", tab_settings = "Config.",
+        desc_mode_farm = "Selecione diferentes modos de farm.",
+        desc_position_farm = "Selecione a posição do personagem em relação ao alvo.",
+        desc_movement_farm = "Selecione como o personagem se move para cada alvo.",
+        desc_misc_farm = "Selecione sistemas extras para executar com o Auto Farm.",
+        desc_sync_mode = "Funções auxiliares precisam do Auto Farm.",
+        desc_farm_astro = "Evitar monstros, ir ao centro no fim do tempo.",
+        desc_skill_keys = "Selecione as teclas de habilidade para o auto skill pressionar.",
+        desc_skill_delay = "Defina o atraso em segundos entre cada pressionamento de tecla.",
+        desc_height_offset = "Ajuste o deslocamento vertical ao farmar acima ou abaixo dos monstros.",
+        desc_safe_hp = "Defina a porcentagem de HP usada antes do Modo Seguro recuar.",
+        desc_god_hp = "Defina o limite de porcentagem de HP para o Modo Deus normal.",
+        desc_reset_wave_val = "Resetar imediatamente se a onda especificada for atingida.",
+        desc_bypass_jeffrey = "Faz o Jeffrey sentar e parar de incomodar.",
+        desc_anti_jeffrey = "Recurso gratuito: Cria uma barreira invisível suave.",
+        desc_anti_jeffrey_range = "Defina a distância usada pelo Anti Jeffrey. Padrão 50 studs.",
+        desc_high_hp_threshold = "Defina a vida máxima necessária para um mob ser prioridade de HP alto.",
+        desc_reset_positions = "Limpar todas as posições de altura de mob salvas, redefinindo para o padrão.",
+        desc_flush_range = "Defina a distância para a Aura de Descarga ativar prompts próximos.",
+        desc_flush_aura = "Ativar automaticamente prompts de descarga dentro do raio definido.",
+        desc_esp_enable = "Ativar todos os efeitos visuais do ESP.",
+        desc_esp_mob = "Exibir destaques e rótulos de informação acima dos mobs inimigos.",
+        desc_esp_player = "Exibir destaques e rótulos de informação acima de outros jogadores.",
+        desc_esp_item = "Exibir destaques e rótulos de informação em itens coletáveis.",
+        desc_esp_options = "Selecione quais rótulos e visuais extras do ESP exibir.",
+        desc_esp_items = "Selecione quais itens coletáveis devem receber ESP de item.",
+        desc_walkspeed = "Defina seu valor de velocidade de caminhada salvo.",
+        desc_jumppower = "Defina seu valor de força de pulo salvo.",
+        desc_lock_movement = "Restaurar velocidade e pulo quando o jogo os reduzir.",
+        desc_no_clip = "Permitir que seu personagem atravesse paredes e partes.",
+        desc_fly_speed = "Ajustar a velocidade de voo enquanto voa.",
+        desc_fly = "Ativar movimento de voo. W/S frente/trás, olhar p/ cima/baixo controla altura, A/D laterais.",
+        desc_infinite_jump = "Permitir pulo contínuo no ar.",
+        desc_full_bright = "Iluminar o mapa; restaura a iluminação original quando desativado.",
+        desc_no_fog = "Remover névoa de distância; restaura as configurações originais quando desativado.",
+        desc_select_redeem_codes = "Selecione os códigos para resgatar.",
+        desc_redeem_selected = "Resgatar apenas os códigos selecionados no menu.",
+        desc_redeem_all = "Resgatar todos os códigos disponíveis de uma vez.",
+        desc_select_gamepass = "Selecione os gamepasses para desbloquear localmente.",
+        desc_unlock_selected = "Desbloquear os gamepasses selecionados localmente gratuitamente.",
+        desc_set_vote_mode = "Selecione o modo de jogo para o voto automático.",
+        desc_auto_vote_ig = "Votar automaticamente no modo selecionado a cada rodada.",
+        desc_set_game_mode = "Selecione o modo de jogo para criar automaticamente.",
+        desc_auto_game_mode_lobby = "Criar automaticamente o modo de jogo selecionado no lobby.",
+        desc_gacha_character = "Selecione o tipo de giro para o gacha de personagem.",
+        desc_auto_gacha_character = "Girar automaticamente o gacha de personagem com a opção selecionada.",
+        desc_gacha_skin = "Selecione o tipo de giro para o gacha de skin.",
+        desc_auto_gacha_skin = "Girar automaticamente o gacha de skin com a opção selecionada.",
+        desc_use_item = "Selecione o item para uso automático.",
+        desc_auto_use_item = "Usar automaticamente o item selecionado com um atraso seguro.",
+        desc_select_upgrade_titan = "Selecione melhorias do Titan Speaker para solicitar.",
+        desc_upgrade_titan = "Solicitar automaticamente as melhorias selecionadas do Titan Speaker.",
+        desc_select_upgrade_utcm = "Selecione melhorias do UTCM para solicitar.",
+        desc_upgrade_utcm = "Solicitar automaticamente as melhorias selecionadas do UTCM.",
+        desc_select_upgrade_tv = "Selecione melhorias da TV para solicitar.",
+        desc_upgrade_tv = "Solicitar automaticamente as melhorias selecionadas da TV.",
+        desc_select_weapon = "Selecione a arma para compra automática.",
+        desc_buy_weapon = "Comprar automaticamente a arma selecionada durante os ciclos da loja.",
+        desc_buy_weapon_once = "Compra única da arma selecionada.",
+        desc_select_misc = "Selecione o item para compra automática.",
+        desc_buy_misc = "Comprar automaticamente o item selecionado durante os ciclos da loja.",
+        desc_buy_misc_once = "Compra única do item selecionado.",
+        desc_select_request = "Selecione a solicitação Titan/Speaker para compra automática.",
+        desc_auto_request = "Solicitar automaticamente Titan/Speaker quando a onda for 10+.",
+        desc_auto_skill_tree = "Desbloquear automaticamente árvores de habilidades faltantes para o personagem atual.",
+        desc_select_shop_hourly = "Selecione os itens fixos da loja horária.",
+        desc_item_amount = "Defina a quantidade de compra para cada item horário selecionado.",
+        desc_buy_item = "Comprar automaticamente os itens selecionados da loja horária em um temporizador.",
+        desc_collect_items = "Selecione itens coletáveis para coleta automática.",
+        desc_collect_mode = "Selecione quando a coleta automática deve reunir itens.",
+        desc_collect_movement = "Selecione como o personagem se move para os coletáveis.",
+        desc_save_config = "Salvar imediatamente todas as configurações atuais no arquivo de configuração.",
+        desc_auto_save = "Salvar automaticamente a configuração no intervalo definido.",
+        desc_delay_save = "Defina o intervalo de salvamento automático em segundos.",
+        desc_serverhop = "Teleportar você para outro servidor aleatório deste jogo.",
+        desc_rejoin = "Reentrar no servidor atual do jogo.",
+        desc_camera_mode = "Selecione como a câmera deve seguir seu personagem.",
+        desc_bypass_barrier = "Tentar burlar a barreira invisível (quebrado).",
+        desc_select_language = "Selecione o idioma da interface.",
+        desc_combat_debug = "Exibir logs de depuração de ataque/habilidade automática e cache de mobs.",
+        desc_anti_afk = "Impedir que o Roblox o expulse por longos períodos de inatividade.",
+        notify_save_success = "Configuração salva com sucesso!",
+        notify_selected = "Selecionado: ",
+        notify_positions_cleared = "Todas as posições de mob confirmadas foram limpas.",
+        notify_anti_afk_on = "Anti-AFK ativado.",
+        notify_anti_afk_off = "Anti-AFK desativado.",
+        notify_serverhop_fail = "Falha ao Trocar Servidor",
+        notify_no_servers = "Nenhum servidor disponível encontrado.",
+        notify_select_gamepass = "Por favor, selecione um gamepass primeiro!",
+        notify_unlocked = "Desbloqueado ",
+        notify_gamepasses = " gamepasses!",
+        notify_combat_debug_on = "Logs de depuração de combate ativados.",
+        notify_combat_debug_off = "Logs de depuração de combate desativados.",
+        notify_farm_astro_on = "Ativado. Rota Astro iniciada.",
+        notify_farm_astro_off = "Desativado. Rota Astro parada.",
+        notify_farm_astro_conflict = "Desative o Auto Farm antes de usar o Farm Astro Token.",
+        notify_astro_clean_mode = "O Farm Astro Token não mata monstros, então o modo Clean não pode coletar itens. Selecione o modo IDGF.",
+        notify_restoring = "Restaurando...",
+        notify_restore_ready = "Preparando, restaurando sistema de votação...",
+        notify_restore_wait = "Restaurando sistema de votação, aguarde...",
+        notify_restore_complete = "Restauração Concluída",
+        notify_restore_done = "Sistema de votação restaurado! Agora você pode usar o modo de voto automático.",
+        notify_auto_farm_closed_sync = "Auto Farm desativado (Modo Sincronizado LIGADO, funções auxiliares paradas)",
+        notify_auto_farm_closed_independent = "Auto Farm desativado (Modo Sincronizado DESLIGADO, funções auxiliares continuam)",
+        notify_misc_farm_warning = "Por favor, ative o Auto Farm primeiro (Modo Sincronizado está LIGADO)",
+        notify_collect_movement_mode = "Modo de Movimento de Coleta",
+        notify_language_restart = "Idioma alterado. Reinicie o script para aplicar completamente.",
+        vote_restore_warning = "⚠️ Por favor, clique neste botão antes de usar o voto automático pela primeira vez.",
+        casual_title = "Casual: Seleção de Missão",
+        casual_desc = "- [ Passo 1 ] Fique no lobby (não no jogo)\n- [ Passo 2 ] Pressione Play e entre na seleção de modo Classic\n- [ Passo 3 ] Selecione Casual e complete o teleporte\n- [ Passo 4 ] Execute o script",
+        priority_title = "Ordem de Prioridade",
+        priority_desc = "Interromper: Se estiver atacando um mob de HP máximo baixo e aparecer um de HP máximo mais alto, mudará imediatamente",
+        vote_info_desc = "- [ Passo 1 ] Clique em Restaurar Sistema de Votação\n- [ Passo 2 ] Fique no lobby (no jogo)\n- [ Passo 3 ] Configure o voto automático e aguarde",
+        recent_updates_title = "Atualizações Recentes",
+        dyhub_info_title = "Informações DYHUB",
+        serverhop_progress = "Teleportando para outro servidor...",
+        rejoin_progress = "Reentrando no servidor...",
+        language_notify_title = "Idioma",
     },
 }
 
@@ -699,10 +1137,11 @@ local function GetOriginalKey(displayValue)
     return key or displayValue
 end
 
--- ====================== WINDOW ======================
+-- ====================== WINDOW 2 ======================
 Players = game:GetService("Players")
 userversion = "至尊版"
 
+-- ====================== WINDOW ======================
 Window = WindUI:CreateWindow({
     Title = "DYHUB",
     IconThemed = true,
@@ -5956,6 +6395,16 @@ LastVisualApply = 0
 FullBrightOriginal = nil
 NoFogOriginal = nil
 
+-- 飞行系统状态变量
+FlyCtrl = { f = 0, b = 0, l = 0, r = 0 }
+FlyLastCtrl = { f = 0, b = 0, l = 0, r = 0 }
+FlyMaxSpeed = 50
+FlyCurrentSpeed = 0
+FlyTpWalking = false
+FlyNowe = false
+FlySpeeds = 1
+FlyHeartbeatConnection = nil
+
 function GetLocalHumanoid()
     local char = LocalPlayer.Character
     if not char then return nil end
@@ -6023,227 +6472,87 @@ function CleanupFlyForces()
     end
 end
 
--- 新的飞行系统变量
-FlyCtrl = { f = 0, b = 0, l = 0, r = 0 }
-FlyLastCtrl = { f = 0, b = 0, l = 0, r = 0 }
-FlyMaxSpeed = 50
-FlyCurrentSpeed = 0
-FlyTpWalking = false
-FlyInputConnections = {}
-FlyHeartbeatConnection = nil
-FlyNowe = false
-FlySpeeds = 1
-
+-- 完整飞行系统：视角俯仰控制升降
 function StartFly()
     local humanoid = GetLocalHumanoid()
-    local char = LocalPlayer.Character
-    if not humanoid or not char then return end
+    local root = GetLocalRootPart()
+    if not humanoid or not root then return end
 
-    StopFly()
+    CleanupFlyForces()
 
+    FlyBodyVelocity = Instance.new("BodyVelocity")
+    FlyBodyVelocity.Name = "DYHUB_FlyVelocity"
+    FlyBodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+    FlyBodyVelocity.Velocity = Vector3.zero
+    FlyBodyVelocity.Parent = root
+
+    FlyBodyGyro = Instance.new("BodyGyro")
+    FlyBodyGyro.Name = "DYHUB_FlyGyro"
+    FlyBodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+    FlyBodyGyro.P = 10000
+    FlyBodyGyro.CFrame = root.CFrame
+    FlyBodyGyro.Parent = root
+
+    humanoid.PlatformStand = true
     FlyEnabled = true
-    FlyNowe = true
-
-    -- 禁用所有Humanoid状态
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Running, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics, false)
-    humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming, false)
-    humanoid:ChangeState(Enum.HumanoidStateType.Swimming)
-
-    -- 启动tpwalking
-    FlyTpWalking = false
-    for i = 1, FlySpeeds do
-        spawn(function()
-            local hb = game:GetService("RunService").Heartbeat
-            FlyTpWalking = true
-            local chr = game.Players.LocalPlayer.Character
-            local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-            while FlyTpWalking and hb:Wait() and chr and hum and hum.Parent and FlyEnabled do
-                if hum.MoveDirection.Magnitude > 0 then
-                    chr:TranslateBy(hum.MoveDirection)
-                end
-            end
-        end)
-    end
-    game.Players.LocalPlayer.Character.Animate.Disabled = true
-    local Char = game.Players.LocalPlayer.Character
-    local Hum = Char:FindFirstChildOfClass("Humanoid") or Char:FindFirstChildOfClass("AnimationController")
-    for i,v in next, Hum:GetPlayingAnimationTracks() do
-        v:AdjustSpeed(0)
-    end
-
-    -- 根据R6/R15启动飞行循环
-    if humanoid.RigType == Enum.HumanoidRigType.R6 then
-        StartR6FlyLoop(char)
-    else
-        StartR15FlyLoop(char)
-    end
-end
-
-function StartR6FlyLoop(char)
-    local plr = game.Players.LocalPlayer
-    local torso = char:WaitForChild("Torso")
-    local bg = Instance.new("BodyGyro", torso)
-    bg.P = 9e4
-    bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
-    bg.cframe = torso.CFrame
-    local bv = Instance.new("BodyVelocity", torso)
-    bv.velocity = Vector3.new(0, 0.1, 0)
-    bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
-    FlyBodyGyro = bg
-    FlyBodyVelocity = bv
-    plr.Character.Humanoid.PlatformStand = true
-
-    FlyHeartbeatConnection = game:GetService("RunService").RenderStepped:Connect(function()
-        if not FlyEnabled then return end
-        if game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 then return end
-
-        local ctrl = FlyCtrl
-        local lastctrl = FlyLastCtrl
-        local maxspeed = FlyMaxSpeed
-        local speed = FlyCurrentSpeed
-
-        if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
-            speed = speed + 0.5 + (speed / maxspeed)
-            if speed > maxspeed then speed = maxspeed end
-        elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then
-            speed = speed - 1
-            if speed < 0 then speed = 0 end
-        end
-        FlyCurrentSpeed = speed
-
-        if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
-            bv.velocity = ((workspace.CurrentCamera.CoordinateFrame.LookVector * (ctrl.f + ctrl.b)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l + ctrl.r, (ctrl.f + ctrl.b) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * speed
-            FlyLastCtrl = { f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r }
-        elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then
-            bv.velocity = ((workspace.CurrentCamera.CoordinateFrame.LookVector * (lastctrl.f + lastctrl.b)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l + lastctrl.r, (lastctrl.f + lastctrl.b) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * speed
-        else
-            bv.velocity = Vector3.new(0, 0, 0)
-        end
-        bg.cframe = workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f + ctrl.b) * 50 * speed / maxspeed), 0, 0)
-    end)
-end
-
-function StartR15FlyLoop(char)
-    local plr = game.Players.LocalPlayer
-    local UpperTorso = char:WaitForChild("UpperTorso")
-    local bg = Instance.new("BodyGyro", UpperTorso)
-    bg.P = 9e4
-    bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
-    bg.cframe = UpperTorso.CFrame
-    local bv = Instance.new("BodyVelocity", UpperTorso)
-    bv.velocity = Vector3.new(0, 0.1, 0)
-    bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
-    FlyBodyGyro = bg
-    FlyBodyVelocity = bv
-    plr.Character.Humanoid.PlatformStand = true
-
-    FlyHeartbeatConnection = game:GetService("RunService").RenderStepped:Connect(function()
-        if not FlyEnabled then return end
-        if game:GetService("Players").LocalPlayer.Character.Humanoid.Health == 0 then return end
-
-        local ctrl = FlyCtrl
-        local lastctrl = FlyLastCtrl
-        local maxspeed = FlyMaxSpeed
-        local speed = FlyCurrentSpeed
-
-        if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
-            speed = speed + 0.5 + (speed / maxspeed)
-            if speed > maxspeed then speed = maxspeed end
-        elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then
-            speed = speed - 1
-            if speed < 0 then speed = 0 end
-        end
-        FlyCurrentSpeed = speed
-
-        if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
-            bv.velocity = ((workspace.CurrentCamera.CoordinateFrame.LookVector * (ctrl.f + ctrl.b)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l + ctrl.r, (ctrl.f + ctrl.b) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * speed
-            FlyLastCtrl = { f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r }
-        elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then
-            bv.velocity = ((workspace.CurrentCamera.CoordinateFrame.LookVector * (lastctrl.f + lastctrl.b)) + ((workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l + lastctrl.r, (lastctrl.f + lastctrl.b) * 0.2, 0).p) - workspace.CurrentCamera.CoordinateFrame.p)) * speed
-        else
-            bv.velocity = Vector3.new(0, 0, 0)
-        end
-        bg.cframe = workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f + ctrl.b) * 50 * speed / maxspeed), 0, 0)
-    end)
 end
 
 function StopFly()
     FlyEnabled = false
-    FlyTpWalking = false
-    FlyCurrentSpeed = 0
-    FlyCtrl = { f = 0, b = 0, l = 0, r = 0 }
-    FlyLastCtrl = { f = 0, b = 0, l = 0, r = 0 }
-    FlyNowe = false
-
     CleanupFlyForces()
-
     if FlyHeartbeatConnection then
         FlyHeartbeatConnection:Disconnect()
         FlyHeartbeatConnection = nil
     end
-
     local humanoid = GetLocalHumanoid()
     if humanoid then
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Climbing, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Flying, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Freefall, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.GettingUp, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Jumping, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Landed, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Physics, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.PlatformStanding, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Running, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.RunningNoPhysics, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.StrafingNoPhysics, true)
-        humanoid:SetStateEnabled(Enum.HumanoidStateType.Swimming, true)
         humanoid.PlatformStand = false
-        humanoid:ChangeState(Enum.HumanoidStateType.RunningNoPhysics)
-    end
-
-    local char = LocalPlayer.Character
-    if char then
-        char.Animate.Disabled = false
+        pcall(function()
+            humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+        end)
     end
 end
 
-function UpdateFlySpeeds(newSpeeds)
-    FlySpeeds = newSpeeds
-    if FlyEnabled then
-        FlyTpWalking = false
-        task.wait(0.05)
-        for i = 1, FlySpeeds do
-            spawn(function()
-                local hb = game:GetService("RunService").Heartbeat
-                FlyTpWalking = true
-                local chr = game.Players.LocalPlayer.Character
-                local hum = chr and chr:FindFirstChildWhichIsA("Humanoid")
-                while FlyTpWalking and hb:Wait() and chr and hum and hum.Parent and FlyEnabled do
-                    if hum.MoveDirection.Magnitude > 0 then
-                        chr:TranslateBy(hum.MoveDirection)
-                    end
-                end
-            end)
-        end
+-- 飞行更新逻辑：基于相机朝向 + 视角俯仰
+function UpdateFly()
+    if not FlyEnabled then return end
+
+    local humanoid = GetLocalHumanoid()
+    local root = GetLocalRootPart()
+    local cam = workspace.CurrentCamera
+    if not humanoid or not root or not cam then return end
+
+    if not FlyBodyVelocity or FlyBodyVelocity.Parent ~= root or not FlyBodyGyro or FlyBodyGyro.Parent ~= root then
+        StartFly()
+        return
     end
+
+    humanoid.PlatformStand = true
+
+    -- 水平移动：基于相机朝向的 WASD
+    local camForward = cam.CFrame.LookVector
+    local camRight = cam.CFrame.RightVector
+    camForward = Vector3.new(camForward.X, 0, camForward.Z).Unit
+    camRight = Vector3.new(camRight.X, 0, camRight.Z).Unit
+
+    local moveInput = humanoid.MoveDirection
+    local moveDirection = (camForward * moveInput.Z) + (camRight * moveInput.X)
+
+    -- 垂直速度：根据视角俯仰角
+    local pitch = math.asin(cam.CFrame.LookVector.Y)
+    local verticalSpeed = pitch * 50
+    local velocity = moveDirection * (FlySpeed * 20) + Vector3.new(0, verticalSpeed, 0)
+
+    FlyBodyVelocity.Velocity = velocity
+    FlyBodyGyro.CFrame = cam.CFrame
 end
 
--- 原有的全亮/去雾等保持不变
+function EnsureFlyRenderLoop()
+    if FlyRenderConnection then return end
+    FlyRenderConnection = RunService.RenderStepped:Connect(UpdateFly)
+end
+
+-- 全亮/去雾功能
 function CaptureFullBrightOriginal()
     if FullBrightOriginal then return end
     FullBrightOriginal = {
@@ -6343,7 +6652,6 @@ end
 
 RunService.Heartbeat:Connect(function()
     ProtectMovementStats()
-
     local now = tick()
     if now - LastVisualApply >= 1 then
         LastVisualApply = now
@@ -6351,6 +6659,8 @@ RunService.Heartbeat:Connect(function()
         if NoFogEnabled then ApplyNoFog() end
     end
 end)
+
+EnsureFlyRenderLoop()
 
 UserInputService.JumpRequest:Connect(function()
     if not InfiniteJumpEnabled then return end
@@ -6430,10 +6740,8 @@ Main2:Slider({
     Step = 1,
     Callback = function(value)
         FlySpeed = value
-        FlySpeeds = value
         Config:Set("FlySpeed", value)
         Config:Save()
-        if FlyEnabled then UpdateFlySpeeds(value) end
     end
 })
 
@@ -6729,7 +7037,7 @@ GameModeDropdown = Main7:Dropdown({
     end
 })
 
--- PLAY SYSTEM（加载时自动导航至 Classic/Casual）
+-- PLAY SYSTEM
 DELAY = 1
 
 function click_btn(btn)
@@ -6754,7 +7062,6 @@ function notify(title, content, icon)
     })
 end
 
---// PLAY SYSTEM
 task.spawn(function()
     local playBtn =
         workspace:FindFirstChild("ForGui") and
@@ -6765,9 +7072,7 @@ task.spawn(function()
     if playBtn then
         notify("自动 Play", "检测到 Play 按钮，自动开始...")
         task.wait(DELAY)
-
         local playGui = pg:FindFirstChild("Play")
-
         if not (playGui and playGui.Enabled) then
             click_btn(playBtn)
             notify("自动 Play", "已按下 Play 按钮")
@@ -6777,14 +7082,9 @@ task.spawn(function()
     end
 
     task.wait(DELAY)
-
     local playGui = pg:FindFirstChild("Play")
-    if not (playGui and playGui.Enabled) then
-        return
-    end
-
+    if not (playGui and playGui.Enabled) then return end
     local classicBtn = playGui:FindFirstChild("Classic")
-
     if classicBtn then
         notify("自动 Play", "正在选择 Classic 模式...")
         task.wait(DELAY)
@@ -6792,14 +7092,9 @@ task.spawn(function()
     end
 
     task.wait(DELAY)
-
     local modeGui = pg:FindFirstChild("mode select2")
-
     if modeGui and modeGui.Enabled then
-        local diffBtn =
-            modeGui:FindFirstChild("MainFrame") and
-            modeGui.MainFrame:FindFirstChild("DiffMode")
-
+        local diffBtn = modeGui:FindFirstChild("MainFrame") and modeGui.MainFrame:FindFirstChild("DiffMode")
         if diffBtn then
             notify("自动 Play", "正在选择难度...")
             task.wait(DELAY)
@@ -6808,76 +7103,46 @@ task.spawn(function()
     end
 end)
 
---// NEW LOBBY SYSTEM
 task.spawn(function()
     while true do
         task.wait(0.5)
-
         local loadingGui = pg:FindFirstChild("LoadingScreen")
-
         if loadingGui then
             notify("大厅系统", "正在移除 LoadingScreen...")
-            pcall(function()
-                loadingGui:Destroy()
-            end)
+            pcall(function() loadingGui:Destroy() end)
         end
-
         local lobby = pg:FindFirstChild("Lobby")
-
         if lobby and lobby.Enabled then
             notify("大厅系统", "检测到大厅，准备自动设置...")
-
-            local btn =
-                lobby:FindFirstChild("MainFrame") and
-                lobby.MainFrame:FindFirstChild("Frame") and
-                lobby.MainFrame.Frame:FindFirstChild("Create") and
-                lobby.MainFrame.Frame.Create:FindFirstChild("TrackQuestButton")
-
+            local btn = lobby:FindFirstChild("MainFrame") and lobby.MainFrame:FindFirstChild("Frame") and lobby.MainFrame.Frame:FindFirstChild("Create") and lobby.MainFrame.Frame.Create:FindFirstChild("TrackQuestButton")
             if btn and btn.Visible then
                 notify("大厅系统", "正在按下 TrackQuestButton...")
                 click_btn(btn)
-
                 task.wait(0.5)
-
                 if AutoVoteEnabled then
                     notify("大厅系统", "正在创建游戏模式...")
-
-                    ReplicatedStorage.MainHandler:FireServer({
-                        [1] = "StartSolo",
-                        [2] = AutoGameValue
-                    })
-
+                    ReplicatedStorage.MainHandler:FireServer({ [1] = "StartSolo", [2] = AutoGameValue })
                     notify("大厅系统", "游戏模式创建成功！")
                 else
                     notify("大厅系统", "请配合自动游戏模式使用！")
                 end
-
                 break
             end
         end
     end
 end)
 
---// AUTO GAME MODE TOGGLE
 AutoVoteToggle = Main7:Toggle({
     Title = T("auto_game_mode_lobby"),
     Desc = T("desc_auto_game_mode_lobby"),
     Value = AutoVoteEnabled,
-
     Callback = function(enabled)
         AutoVoteEnabled = enabled
-
         Config:Set("AutoVoteEnabled", enabled)
         Config:Save()
-
-        if enabled then
-            notify("自动游戏模式", "已启用")
-        else
-            notify("自动游戏模式", "已禁用", "x")
-        end
+        if enabled then notify("自动游戏模式", "已启用") else notify("自动游戏模式", "已禁用", "x") end
     end
 })
-
 
 -- ====================== REQUEST / SKILL TREE HELPERS ======================
 RequestWaveNotifyAt = 0
@@ -6900,19 +7165,14 @@ function GetCurrentWaveText()
     local ok, result = pcall(function()
         local playerGui = LocalPlayer and LocalPlayer:FindFirstChild("PlayerGui")
         if not playerGui then return nil end
-
         local wavesGui = playerGui:FindFirstChild("WavesGui")
         if not wavesGui then return nil end
-
         local frame = wavesGui:FindFirstChild("Frame")
         if not frame then return nil end
-
         local label = frame:FindFirstChild("TextLabel")
         if not label then return nil end
-
         return tostring(label.Text or "")
     end)
-
     if ok then return result end
     return nil
 end
@@ -6920,10 +7180,8 @@ end
 function GetCurrentWaveNumber()
     local text = GetCurrentWaveText()
     if not text then return nil end
-
     local numberText = tostring(text):match("(%d+)")
     if not numberText then return nil end
-
     return tonumber(numberText)
 end
 
@@ -6936,7 +7194,6 @@ function NotifyRequestWaveNotReady()
     local now = tick()
     if now - RequestWaveNotifyAt < 4 then return end
     RequestWaveNotifyAt = now
-
     if GetCurrentWaveNumber() == nil then
         SafeWindNotify("自动请求", "暂时无法请求。波次 UI 未就绪。", 3, "triangle-alert")
     else
@@ -6948,13 +7205,10 @@ function GetCurrentCharacterValue()
     local ok, result = pcall(function()
         local playerValues = LocalPlayer and LocalPlayer:FindFirstChild("PlayerValues")
         if not playerValues then return nil end
-
         local charValue = playerValues:FindFirstChild("Character")
         if not charValue then return nil end
-
         return tostring(charValue.Value or "")
     end)
-
     if ok then return result end
     return nil
 end
@@ -6962,23 +7216,17 @@ end
 function GetSkillTreeUIFolder()
     local characterName = GetCurrentCharacterValue()
     if not characterName or characterName == "" then return nil, characterName end
-
     local ok, result = pcall(function()
         local playerGui = LocalPlayer and LocalPlayer:FindFirstChild("PlayerGui")
         if not playerGui then return nil end
-
         local skillGui = playerGui:FindFirstChild("003-A")
         if not skillGui then return nil end
-
         local main = skillGui:FindFirstChild("Main")
         if not main then return nil end
-
         local scrolling = main:FindFirstChild("ScrollingFrame")
         if not scrolling then return nil end
-
         local direct = scrolling:FindFirstChild("Skills " .. characterName)
         if direct then return direct end
-
         local loweredName = characterName:lower()
         for _, child in ipairs(scrolling:GetChildren()) do
             local childName = tostring(child.Name or ""):lower()
@@ -6986,10 +7234,8 @@ function GetSkillTreeUIFolder()
                 return child
             end
         end
-
         return nil
     end)
-
     if ok then return result, characterName end
     return nil, characterName
 end
@@ -6997,44 +7243,32 @@ end
 function HasOwnedSkillTree(skillName)
     local folder = LocalPlayer and LocalPlayer:FindFirstChild("SkillTreesFolder")
     if not folder then return false end
-
     if folder:FindFirstChild(skillName) then return true end
-
     local loweredName = tostring(skillName or ""):lower()
     for _, child in ipairs(folder:GetChildren()) do
-        if tostring(child.Name or ""):lower() == loweredName then
-            return true
-        end
+        if tostring(child.Name or ""):lower() == loweredName then return true end
     end
-
     return false
 end
 
 function IsSkillTreeBuyObject(obj)
     if not obj or not obj.Name then return false end
-
     local loweredName = tostring(obj.Name):lower()
     if loweredName == "" then return false end
     if loweredName:find("layout", 1, true) then return false end
     if loweredName:find("padding", 1, true) then return false end
     if loweredName:find("stroke", 1, true) then return false end
     if loweredName:find("corner", 1, true) then return false end
-
-    if obj:IsA("GuiObject") or obj:IsA("Folder") or obj:IsA("Model") then
-        return true
-    end
-
+    if obj:IsA("GuiObject") or obj:IsA("Folder") or obj:IsA("Model") then return true end
     return false
 end
 
 function GetSkillTreesRemote()
     local remote = GetRemote("skilltrees")
     if remote then return remote end
-
     pcall(function()
         remote = ReplicatedStorage:FindFirstChild("SkillTrees") or ReplicatedStorage:FindFirstChild("SkillTree") or ReplicatedStorage:WaitForChild("skilltrees", 2)
     end)
-
     return remote
 end
 
@@ -7051,40 +7285,27 @@ function FireAutoSkillTrees()
         NotifyAutoSkillTree("未找到技能树远程事件。")
         return false
     end
-
     local folder, characterName = GetSkillTreeUIFolder()
     if not characterName or characterName == "" then
         NotifyAutoSkillTree("无法读取你当前的角色。")
         return false
     end
-
     if not folder then
         NotifyAutoSkillTree("未找到 " .. tostring(characterName) .. " 的技能树 UI。")
         return false
     end
-
     local fired = 0
     for _, skillObj in ipairs(folder:GetChildren()) do
         if IsSkillTreeBuyObject(skillObj) and not HasOwnedSkillTree(skillObj.Name) then
             local remoteArg = tostring(skillObj.Name):lower()
-            local ok, err = pcall(function()
-                remote:FireServer(remoteArg)
-            end)
-
-            if ok then
-                fired = fired + 1
-                print("[DYHUB] 自动技能树已触发:", remoteArg)
-            else
-                warn("[DYHUB] 自动技能树失败:", remoteArg, err)
-            end
-
+            local ok, err = pcall(function() remote:FireServer(remoteArg) end)
+            if ok then fired = fired + 1; print("[DYHUB] 自动技能树已触发:", remoteArg)
+            else warn("[DYHUB] 自动技能树失败:", remoteArg, err) end
             task.wait(0.35)
         end
     end
-
     return true
 end
-
 
 -- ====================== UI: SHOP SYSTEMS ======================
 Main5:Section({ Title = T("auto_gacha"), Icon = "sparkles" })
@@ -7133,21 +7354,15 @@ _G.__DYHUB_ShopSystems = function()
     local autoSkillTreeEnabled      = Config:Get("AutoSkillTreeEnabled", false)
 
     local function EnsureList(value, fallback)
-        if type(value) == "table" then
-            return value
-        end
-        if value ~= nil then
-            return { value }
-        end
+        if type(value) == "table" then return value end
+        if value ~= nil then return { value } end
         return fallback or {}
     end
 
     local function WaitWhileEnabled(seconds, enabledFn)
         local elapsed = 0
         while elapsed < seconds do
-            if enabledFn and not enabledFn() then
-                return false
-            end
+            if enabledFn and not enabledFn() then return false end
             task.wait(0.5)
             elapsed = elapsed + 0.25
         end
@@ -7157,16 +7372,8 @@ _G.__DYHUB_ShopSystems = function()
     local function FireShopRemote(remoteName, ...)
         local remote = GetRemote(remoteName)
         if not remote then return false end
-
-        local args = { ... }
-        local ok, err = pcall(function()
-            remote:FireServer(unpack(args))
-        end)
-
-        if not ok then
-            warn("[DYHUB] 商店远程事件失败:", tostring(remoteName), err)
-        end
-
+        local ok, err = pcall(function() remote:FireServer(...) end)
+        if not ok then warn("[DYHUB] 商店远程事件失败:", tostring(remoteName), err) end
         return ok
     end
 
@@ -7203,9 +7410,7 @@ _G.__DYHUB_ShopSystems = function()
         useItemRunning = true
         task.spawn(function()
             while autoUseItemEnabled do
-                if selectedUseItem == "Presents" then
-                    FireShopRemote("GachaCapsule")
-                end
+                if selectedUseItem == "Presents" then FireShopRemote("GachaCapsule") end
                 task.wait(1.5)
             end
             useItemRunning = false
@@ -7515,11 +7720,8 @@ _G.__DYHUB_ShopSystems = function()
             autoRequestEnabled = enabled
             Config:Set("AutoRequestEnabled", enabled)
             Config:Save()
-
             if enabled then
-                if not IsRequestWaveReady() then
-                    NotifyRequestWaveNotReady()
-                end
+                if not IsRequestWaveReady() then NotifyRequestWaveNotReady() end
                 StartAutoSyncedShopLoop()
             end
         end
@@ -7535,33 +7737,22 @@ _G.__DYHUB_ShopSystems = function()
             autoSkillTreeEnabled = enabled
             Config:Set("AutoSkillTreeEnabled", enabled)
             Config:Save()
-
-            if enabled then
-                StartAutoSyncedShopLoop()
-            end
+            if enabled then StartAutoSyncedShopLoop() end
         end
     })
 
     local autoSyncedShopRunning = false
 
     local function IsHeavySyncedShopEnabled()
-        return autoBuyWeaponEnabled
-            or autoBuyMiscEnabled
-            or upgradeTitanSpeakerEnabled
-            or upgradeUTCMEnabled
-            or upgradeTVEnabled
+        return autoBuyWeaponEnabled or autoBuyMiscEnabled or upgradeTitanSpeakerEnabled or upgradeUTCMEnabled or upgradeTVEnabled
     end
 
     local function IsAnySyncedShopEnabled()
-        return IsHeavySyncedShopEnabled()
-            or autoRequestEnabled
-            or autoSkillTreeEnabled
+        return IsHeavySyncedShopEnabled() or autoRequestEnabled or autoSkillTreeEnabled
     end
 
     local function GetSyncedShopPreDelay()
-        if not IsHeavySyncedShopEnabled() and (autoRequestEnabled or autoSkillTreeEnabled) then
-            return 0
-        end
+        if not IsHeavySyncedShopEnabled() and (autoRequestEnabled or autoSkillTreeEnabled) then return 0 end
         return 30
     end
 
@@ -7574,123 +7765,58 @@ _G.__DYHUB_ShopSystems = function()
     end
 
     local function FireSyncedShopBatch()
-        if autoBuyWeaponEnabled and autoBuyWeaponValue then
-            FireShopRemote("ShopSystem", "Buy", autoBuyWeaponValue)
-            task.wait(0.35)
-        end
-
-        if autoBuyMiscEnabled and autoBuyMiscValue then
-            FireShopRemote("ShopSystem", "Buy", autoBuyMiscValue)
-            task.wait(0.35)
-        end
-
+        if autoBuyWeaponEnabled and autoBuyWeaponValue then FireShopRemote("ShopSystem", "Buy", autoBuyWeaponValue); task.wait(0.35) end
+        if autoBuyMiscEnabled and autoBuyMiscValue then FireShopRemote("ShopSystem", "Buy", autoBuyMiscValue); task.wait(0.35) end
         if autoRequestEnabled and selectedRequestItem then
-            if IsRequestWaveReady() then
-                FireShopRemote("ShopSystem", "Buy", selectedRequestItem)
-            else
-                NotifyRequestWaveNotReady()
-            end
+            if IsRequestWaveReady() then FireShopRemote("ShopSystem", "Buy", selectedRequestItem) else NotifyRequestWaveNotReady() end
             task.wait(0.35)
         end
-
-        if autoSkillTreeEnabled then
-            FireAutoSkillTrees()
-            task.wait(0.35)
-        end
-
-        if upgradeTitanSpeakerEnabled then
-            for _, upgradeName in ipairs(selectedTitanSpeakerUpgrades or {}) do
-                FireShopRemote("ChangeUpgradedTitanSpeaker", upgradeName)
-                task.wait(0.35)
-            end
-        end
-
-        if upgradeUTCMEnabled then
-            for _, upgradeName in ipairs(selectedUTCMUpgrades or {}) do
-                FireShopRemote("ForUpgradeUTCM", upgradeName)
-                task.wait(0.35)
-            end
-        end
-
-        if upgradeTVEnabled then
-            for _, upgradeName in ipairs(selectedTVUpgrades or {}) do
-                FireShopRemote("ForUpgradeTV", upgradeName)
-                task.wait(0.35)
-            end
-        end
+        if autoSkillTreeEnabled then FireAutoSkillTrees(); task.wait(0.35) end
+        if upgradeTitanSpeakerEnabled then for _, upgradeName in ipairs(selectedTitanSpeakerUpgrades or {}) do FireShopRemote("ChangeUpgradedTitanSpeaker", upgradeName); task.wait(0.35) end end
+        if upgradeUTCMEnabled then for _, upgradeName in ipairs(selectedUTCMUpgrades or {}) do FireShopRemote("ForUpgradeUTCM", upgradeName); task.wait(0.35) end end
+        if upgradeTVEnabled then for _, upgradeName in ipairs(selectedTVUpgrades or {}) do FireShopRemote("ForUpgradeTV", upgradeName); task.wait(0.35) end end
     end
 
     StartAutoSyncedShopLoop = function()
         if autoSyncedShopRunning then return end
         autoSyncedShopRunning = true
-
         task.spawn(function()
             local firstCycle = true
-
             while IsAnySyncedShopEnabled() do
-                if not firstCycle then
-                    if not WaitWhileEnabled(GetSyncedShopPreDelay(), IsAnySyncedShopEnabled) then break end
-                end
+                if not firstCycle then if not WaitWhileEnabled(GetSyncedShopPreDelay(), IsAnySyncedShopEnabled) then break end end
                 firstCycle = false
-
                 local shouldSyncHeli = ShouldShopSyncWithHeli()
-                if shouldSyncHeli then
-                    TriggerAutoSkipHeli(false)
-                    task.wait(0.5)
-                end
-
+                if shouldSyncHeli then TriggerAutoSkipHeli(false); task.wait(0.5) end
                 FireSyncedShopBatch()
-
-                if shouldSyncHeli then
-                    task.wait(0.5)
-                    TriggerAutoSkipHeli(true)
-                end
-
+                if shouldSyncHeli then task.wait(0.5); TriggerAutoSkipHeli(true) end
                 if not WaitWhileEnabled(GetSyncedShopPostDelay(), IsAnySyncedShopEnabled) then break end
             end
-
             autoSyncedShopRunning = false
         end)
     end
+
     -- ====================== 商店每小时系统 ======================
     Main5:Section({ Title = T("shop_hourly"), Icon = "clock" })
 
     local ShopHourlyFixedItems = {
-        "LuckPotionI",
-        "LuckPotionII",
-        "LuckPotionIII",
-        "S-Ember",
-        "BSX2:30",
-        "BSX2:60",
-        "BSX2:360",
-        "FlashDrive#1",
-        "FlashDrive#2",
-        "FlashDrive#3",
-        "FlashDrive#4",
-        "FlashDrive#5",
-        "FlashDrive#6",
-        "MasterCard:Normal",
-        "MasterCard:NormalTitan",
-        "MasterCard:SpecialTitan",
+        "LuckPotionI", "LuckPotionII", "LuckPotionIII", "S-Ember",
+        "BSX2:30", "BSX2:60", "BSX2:360",
+        "FlashDrive#1", "FlashDrive#2", "FlashDrive#3", "FlashDrive#4", "FlashDrive#5", "FlashDrive#6",
+        "MasterCard:Normal", "MasterCard:NormalTitan", "MasterCard:SpecialTitan",
     }
 
     local function GetShopHourlyItems()
         local results = {}
-        for _, itemName in ipairs(ShopHourlyFixedItems) do
-            table.insert(results, itemName)
-        end
+        for _, itemName in ipairs(ShopHourlyFixedItems) do table.insert(results, itemName) end
         return results
     end
 
     local ShopHourlyAllowed = {}
-    for _, itemName in ipairs(ShopHourlyFixedItems) do
-        ShopHourlyAllowed[itemName] = true
-    end
+    for _, itemName in ipairs(ShopHourlyFixedItems) do ShopHourlyAllowed[itemName] = true end
 
     local function SanitizeShopHourlySelection(values, fallback)
         local clean = {}
         local seen = {}
-
         for _, itemName in ipairs(EnsureList(values, fallback or {})) do
             itemName = tostring(itemName or "")
             if ShopHourlyAllowed[itemName] and not seen[itemName] then
@@ -7698,7 +7824,6 @@ _G.__DYHUB_ShopSystems = function()
                 table.insert(clean, itemName)
             end
         end
-
         if #clean == 0 and type(fallback) == "table" then
             for _, itemName in ipairs(fallback) do
                 itemName = tostring(itemName or "")
@@ -7709,7 +7834,6 @@ _G.__DYHUB_ShopSystems = function()
                 end
             end
         end
-
         return clean
     end
 
@@ -7719,14 +7843,11 @@ _G.__DYHUB_ShopSystems = function()
     local buyItemHourlyEnabled      = Config:Get("BuyItemHourlyEnabled", false)
     local buyItemHourlyRunning      = false
 
-    local function IsBuyItemHourlyEnabled()
-        return buyItemHourlyEnabled
-    end
+    local function IsBuyItemHourlyEnabled() return buyItemHourlyEnabled end
 
     local function FireShopHourlyBatch()
         local amount = tonumber(shopHourlyItemAmount) or 1
         amount = math.max(1, math.floor(amount))
-
         for _, itemName in ipairs(selectedShopHourlyItems or {}) do
             if itemName and itemName ~= "" then
                 FireShopRemote("BuyItemFromShopHourly", itemName, amount)
@@ -7738,21 +7859,14 @@ _G.__DYHUB_ShopSystems = function()
     local function StartBuyItemHourlyLoop()
         if buyItemHourlyRunning then return end
         buyItemHourlyRunning = true
-
         task.spawn(function()
             local firstCycle = true
-
             while buyItemHourlyEnabled do
-                if not firstCycle then
-                    if not WaitWhileEnabled(30, IsBuyItemHourlyEnabled) then break end
-                end
+                if not firstCycle then if not WaitWhileEnabled(30, IsBuyItemHourlyEnabled) then break end end
                 firstCycle = false
-
                 FireShopHourlyBatch()
-
                 if not WaitWhileEnabled(10, IsBuyItemHourlyEnabled) then break end
             end
-
             buyItemHourlyRunning = false
         end)
     end
@@ -8005,7 +8119,7 @@ Main3:Section({ Title = T("language_title"), Icon = "globe" })
 Main3:Dropdown({
     Title = T("select_language"),
     Desc = T("desc_select_language"),
-    Values = { "Chinese", "English" },
+    Values = { "Chinese", "English", "Russian", "Portuguese" },
     Multi = false,
     Value = currentLanguage,
     Callback = function(value)
@@ -8013,7 +8127,19 @@ Main3:Dropdown({
         Config:Set("Language", value)
         Config:Save()
         BuildReverseTranslation()
-        WindUI:Notify({ Title = T("language_notify_title"), Content = T("language_changed") .. " " .. value, Duration = 2 })
+        WindUI:Notify({
+            Title = T("language_notify_title"),
+            Content = T("language_changed") .. " " .. value,
+            Duration = 2
+        })
+        task.delay(2.5, function()
+            WindUI:Notify({
+                Title = T("language_notify_title"),
+                Content = T("notify_language_restart"),
+                Duration = 5,
+                Icon = "alert-triangle"
+            })
+        end)
     end
 })
 
@@ -8039,44 +8165,23 @@ AntiAFKDisabledConnections = false
 
 function StartAntiAFK()
     AntiAFK = true
-
     if getconnections and not AntiAFKDisabledConnections then
         pcall(function()
             for _, connection in pairs(getconnections(LocalPlayer.Idled)) do
-                if connection.Disable then
-                    connection:Disable()
-                elseif connection.Disconnect then
-                    connection:Disconnect()
-                end
+                if connection.Disable then connection:Disable() elseif connection.Disconnect then connection:Disconnect() end
             end
         end)
         AntiAFKDisabledConnections = true
     end
-
-    if AntiAFKConnection then
-        AntiAFKConnection:Disconnect()
-        AntiAFKConnection = nil
-    end
-
+    if AntiAFKConnection then AntiAFKConnection:Disconnect(); AntiAFKConnection = nil end
     AntiAFKConnection = LocalPlayer.Idled:Connect(function()
         if not AntiAFK then return end
-        pcall(function()
-            VirtualUser:CaptureController()
-            VirtualUser:ClickButton2(Vector2.new())
-        end)
+        pcall(function() VirtualUser:CaptureController(); VirtualUser:ClickButton2(Vector2.new()) end)
     end)
-
-    if AntiAFKThread then
-        pcall(function() task.cancel(AntiAFKThread) end)
-        AntiAFKThread = nil
-    end
-
+    if AntiAFKThread then pcall(function() task.cancel(AntiAFKThread) end); AntiAFKThread = nil end
     AntiAFKThread = task.spawn(function()
         while AntiAFK do
-            pcall(function()
-                VirtualUser:CaptureController()
-                VirtualUser:ClickButton2(Vector2.new())
-            end)
+            pcall(function() VirtualUser:CaptureController(); VirtualUser:ClickButton2(Vector2.new()) end)
             task.wait(60)
         end
         AntiAFKThread = nil
@@ -8085,16 +8190,8 @@ end
 
 function StopAntiAFK()
     AntiAFK = false
-
-    if AntiAFKConnection then
-        AntiAFKConnection:Disconnect()
-        AntiAFKConnection = nil
-    end
-
-    if AntiAFKThread then
-        pcall(function() task.cancel(AntiAFKThread) end)
-        AntiAFKThread = nil
-    end
+    if AntiAFKConnection then AntiAFKConnection:Disconnect(); AntiAFKConnection = nil end
+    if AntiAFKThread then pcall(function() task.cancel(AntiAFKThread) end); AntiAFKThread = nil end
 end
 
 antiafk = Main3:Toggle({
@@ -8146,9 +8243,7 @@ function ApplySavedConfigOnStartup()
 
     if noBarrierActive then startNoBarrier() end
 
-    if ESP.Enabled then
-        StartESPLoop()
-    end
+    if ESP.Enabled then StartESPLoop() end
 
     if AutoCollectEnabled then
         KnownCollectItems = {}
