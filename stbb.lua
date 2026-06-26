@@ -228,6 +228,51 @@ end
 
 Config = CustomConfig.new()
 
+-- ====================== UI DISPLAY NAME MAPPING ======================
+-- 武器映射（显示中文，实际发送英文）
+WeaponDisplayNames = { "电击枪", "火焰喷射器", "鱼叉枪", "霰弹枪", "脉冲步枪", "鱼叉霰弹枪", "EPD", "小型激光枪" }
+WeaponMap = {
+    ["电击枪"] = "Stungun",
+    ["火焰喷射器"] = "Flamethrower",
+    ["鱼叉枪"] = "Harpoon Gun",
+    ["霰弹枪"] = "Shot Gun",
+    ["脉冲步枪"] = "Pulse Rifle",
+    ["鱼叉霰弹枪"] = "Shot Harpoon Gun",
+    ["EPD"] = "EPD",
+    ["小型激光枪"] = "Small Laser Gun",
+}
+
+-- 杂项映射
+MiscDisplayNames = { "头戴式耳机", "手雷", "喷气背包", "透镜" }
+MiscMap = {
+    ["头戴式耳机"] = "HeadPhone",
+    ["手雷"] = "Grenade",
+    ["喷气背包"] = "Jetpack",
+    ["透镜"] = "Lens",
+}
+
+-- 请求映射
+RequestDisplayNames = { "泰坦请求", "特殊泰坦请求", "扬声器请求" }
+RequestMap = {
+    ["泰坦请求"] = "Titan-Request",
+    ["特殊泰坦请求"] = "SpecialTitan-Request",
+    ["扬声器请求"] = "Speaker-Request",
+}
+
+-- 通行证映射
+GamepassDisplayNames = { "全部", "幸运加成", "稀有幸运加成", "传奇幸运加成" }
+GamepassMap = {
+    ["全部"] = "All",
+    ["幸运加成"] = "LuckyBoost",
+    ["稀有幸运加成"] = "RareLuckyBoost",
+    ["传奇幸运加成"] = "LegendaryLuckyBoost",
+}
+
+-- 映射工具函数
+function GetEnglishValue(map, displayName)
+    return map[displayName] or displayName
+end
+
 -- ====================== WINDOW 2 ======================
 Players = game:GetService("Players")
 
@@ -343,8 +388,8 @@ skillDropdownValues = { "全部", "Q", "E", "R", "T", "Y", "G", "H", "Z", "X", "
 
 -- ====================== FARM HELPERS ======================
 function NormalizeFarmMode(mode)
-    mode = tostring(mode or "Tween")
-    if mode == "tp" or mode == "Tp" or mode == "tp1" then return "传送" end
+    mode = tostring(mode or "补间")
+    if mode == "传送" then return "传送" end
     if mode ~= "传送" and mode ~= "补间" then return "补间" end
     return mode
 end
@@ -367,6 +412,7 @@ function NormalizeCameraMode(mode)
     if mode:lower() == "classic" or mode == "经典" then return "经典" end
     return "手动"
 end
+
 -- ====================== STATE VARIABLES ======================
 AutoFarmEnabled        = Config:Get("AutoFarmEnabled", false)
 FarmPosition           = Config:Get("FarmPosition", "上方")
@@ -1479,6 +1525,7 @@ function StartJeffreyGuardLoop()
         AntiJeffreyGuardLoopRunning = false
     end)
 end
+
 -- ============================================================
 -- ====================== BYPASS JEFFREY ======================
 -- ============================================================
@@ -2687,6 +2734,7 @@ function IsLivingDescendant(obj)
     end
     return false
 end
+
 -- ====================== Delete Map (Delete Map) SYSTEM ======================
 BoostFPS_OriginalData = {}
 BoostFPS_Active = false
@@ -3197,7 +3245,7 @@ CollectGroupMap = {
 
 AutoCollectEnabled   = Config:Get("AutoCollectEnabled", false)
 SelectedCollectItems = Config:Get("SelectedCollectItems", {})
-CollectMode          = Config:Get("CollectMode", "Clean")
+CollectMode          = Config:Get("CollectMode", "清洁")
 CollectMovementMode  = NormalizeCollectMovement(Config:Get("CollectMovementMode", "补间"))
 
 KnownCollectItems = {}
@@ -3247,7 +3295,7 @@ function NotifyFarmAstroCleanMode()
 end
 
 function CheckFarmAstroCollectMode()
-    if FarmAstroTokenEnabled and AutoCollectEnabled and CollectMode == "Clean" then
+    if FarmAstroTokenEnabled and AutoCollectEnabled and CollectMode == "清洁" then
         NotifyFarmAstroCleanMode()
         return false
     end
@@ -4034,7 +4082,7 @@ function StartAutoCollectLoop()
     CollectRunning = true
     task.spawn(function()
         while AutoCollectEnabled do
-            if FarmAstroTokenEnabled and CollectMode == "Clean" then
+            if FarmAstroTokenEnabled and CollectMode == "清洁" then
                 NotifyFarmAstroCleanMode()
                 task.wait(1)
                 continue
@@ -4051,7 +4099,7 @@ function StartAutoCollectLoop()
                         end
                         EndCollectPause()
 
-                    elseif CollectMode == "Clean" then
+                    elseif CollectMode == "清洁" then
                         local waitedClean = 0
                         while not AllMobsDead() and AutoCollectEnabled do
                             task.wait(0.5)
@@ -4097,6 +4145,7 @@ workspace.DescendantAdded:Connect(function(obj)
         CombatDebug("CollectItem", "新物品已缓存: " .. tostring(obj.Name), 3)
     end
 end)
+
 -- ============================================================
 -- ====================== MAIN FARM LOOP (NEW SYSTEM) =========
 -- ============================================================
@@ -4867,7 +4916,7 @@ Main:Section({ Title = "通用设置", Icon = "zap" })
 SkillDropdown = Main:Dropdown({
     Title = "自动技能（按键）",
     Desc = "选择自动技能将按下的键盘技能键。",
-    Values = skillDropdownValues,
+    Values = { "全部", "Q", "E", "R", "T", "Y", "G", "H", "Z", "X", "C", "V", "B", "U" },
     Multi = true,
     Value = SelectedSkills,
     Callback = function(values) SelectedSkills = values; Config:Set("SelectedSkills", values); Config:Save() end
@@ -5467,6 +5516,7 @@ EspItemDropdown = Main4:Dropdown({
         if ESP.Enabled and ESP.ItemEnabled then pcall(ScanItems) end
     end,
 })
+
 -- ====================== UI: PLAYER TAB ======================
 Main2:Section({ Title = "玩家", Icon = "user" })
 
@@ -5885,7 +5935,8 @@ CodeDropdown = Main2:Dropdown({
     Title = "选择兑换码",
     Desc = "选择将要兑换的代码。",
     Multi = true,
-    Values = GlobalTables.redeemCodes, Value = SelectedCodes,
+    Values = { "100MVisit2", "100MVisit1", "CamArmada", "CCTVBase", "ADelayedGameIsEventuallyGoodButRushedGameIsForeverBad" },
+    Value = SelectedCodes,
     Callback = function(value) SelectedCodes = value or {}; Config:Set("SelectedCodes", value); Config:Save() end,
 })
 
@@ -5903,7 +5954,7 @@ Main2:Button({
     Title = "兑换全部代码",
     Desc = "一次性兑换所有可用代码。",
     Callback = function()
-        for _, code in ipairs(GlobalTables.redeemCodes or {}) do
+        for _, code in ipairs({ "100MVisit2", "100MVisit1", "CamArmada", "CCTVBase", "ADelayedGameIsEventuallyGoodButRushedGameIsForeverBad" }) do
             pcall(function() local remote = GetRemote("RedeemCode"); if remote then remote:FireServer(code) end; task.wait(0.5) end)
         end
     end,
@@ -5913,16 +5964,14 @@ Main2:Button({
 Main2:Section({ Title = "解锁通行证", Icon = "badge-dollar-sign" })
 
 SelectedGamepass = Config:Get("SelectedGamepass", {})
-GlobalTables.Gamepassts = SelectedGamepass
 
 GamepassDropdown = Main2:Dropdown({
     Title = "选择通行证",
     Desc = "选择要本地解锁的通行证。",
     Multi = true,
-    Values = GlobalTables.Gamepasst,
+    Values = { "全部", "幸运加成", "稀有幸运加成", "传奇幸运加成" },
     Value = SelectedGamepass,
     Callback = function(value)
-        GlobalTables.Gamepassts = value or {}
         SelectedGamepass = value or {}
         Config:Set("SelectedGamepass", value)
         Config:Save()
@@ -5940,12 +5989,13 @@ Main2:Button({
             gachaData.Parent = LocalPlayer
         end
         local toUnlock = {}
-        for _, v in ipairs(GlobalTables.Gamepassts) do
-            if v == "All" then
-                toUnlock = {"LuckyBoost", "RareLuckyBoost", "LegendaryLuckyBoost"}
+        for _, v in ipairs(SelectedGamepass or {}) do
+            if v == "全部" then
+                toUnlock = { "LuckyBoost", "RareLuckyBoost", "LegendaryLuckyBoost" }
                 break
             else
-                table.insert(toUnlock, v)
+                local english = GamepassMap[v] or v
+                table.insert(toUnlock, english)
             end
         end
         if #toUnlock == 0 then
@@ -6722,18 +6772,19 @@ _G.__DYHUB_ShopSystems = function()
 
     Main5:Section({ Title = "商店武器", Icon = "helicopter" })
 
-    local autoBuyWeaponValue   = Config:Get("AutoBuyWeaponValue", "Stungun")
+    local autoBuyWeaponValue   = Config:Get("AutoBuyWeaponValue", "电击枪")
     local autoBuyWeaponEnabled = Config:Get("AutoBuyWeaponEnabled", false)
 
     WeaponDropdown = Main5:Dropdown({
         Title = "选择武器",
         Desc = "选择将自动购买的武器。",
-        Values = GlobalTables.Weapon,
+        Values = { "电击枪", "火焰喷射器", "鱼叉枪", "霰弹枪", "脉冲步枪", "鱼叉霰弹枪", "EPD", "小型激光枪" },
         Multi = false,
         Value = autoBuyWeaponValue,
         Callback = function(value)
             autoBuyWeaponValue = value
-            Config:Set("AutoBuyWeaponValue", value)
+            local english = WeaponMap[value] or value
+            Config:Set("AutoBuyWeaponValue", english)
             Config:Save()
         end
     })
@@ -6755,37 +6806,27 @@ _G.__DYHUB_ShopSystems = function()
         Desc = "购买所选武器一次。",
         Callback = function()
             if autoBuyWeaponValue then
-                FireShopRemote("ShopSystem", "Buy", autoBuyWeaponValue)
+                local english = WeaponMap[autoBuyWeaponValue] or autoBuyWeaponValue
+                FireShopRemote("ShopSystem", "Buy", english)
             end
         end
     })
 
     Main5:Section({ Title = "商店杂项", Icon = "package" })
 
-    local autoBuyMiscValue   = Config:Get("AutoBuyMiscValue", "HeadPhone")
+    local autoBuyMiscValue   = Config:Get("AutoBuyMiscValue", "头戴式耳机")
     local autoBuyMiscEnabled = Config:Get("AutoBuyMiscEnabled", false)
-
-    if table.find(GlobalTables.RequestTitanSpeaker, autoBuyMiscValue) or not table.find(GlobalTables.MiscShop, autoBuyMiscValue) then
-        autoBuyMiscValue = "HeadPhone"
-        Config:Set("AutoBuyMiscValue", autoBuyMiscValue)
-        Config:Save()
-    end
-
-    if not table.find(GlobalTables.RequestTitanSpeaker, selectedRequestItem) then
-        selectedRequestItem = "Titan-Request"
-        Config:Set("SelectedRequestItem", selectedRequestItem)
-        Config:Save()
-    end
 
     MiscShopDropdown = Main5:Dropdown({
         Title = "选择杂项",
         Desc = "选择将自动购买的杂项物品。",
-        Values = GlobalTables.MiscShop,
+        Values = { "头戴式耳机", "手雷", "喷气背包", "透镜" },
         Multi = false,
         Value = autoBuyMiscValue,
         Callback = function(value)
             autoBuyMiscValue = value
-            Config:Set("AutoBuyMiscValue", value)
+            local english = MiscMap[value] or value
+            Config:Set("AutoBuyMiscValue", english)
             Config:Save()
         end
     })
@@ -6807,22 +6848,27 @@ _G.__DYHUB_ShopSystems = function()
         Desc = "购买所选杂项物品一次。",
         Callback = function()
             if autoBuyMiscValue then
-                FireShopRemote("ShopSystem", "Buy", autoBuyMiscValue)
+                local english = MiscMap[autoBuyMiscValue] or autoBuyMiscValue
+                FireShopRemote("ShopSystem", "Buy", english)
             end
         end
     })
 
     Main5:Section({ Title = "请求泰坦/扬声器", Icon = "send" })
 
+    local selectedRequestItem = Config:Get("SelectedRequestItem", "泰坦请求")
+    local autoRequestEnabled = Config:Get("AutoRequestEnabled", false)
+
     RequestTitanSpeakerDropdown = Main5:Dropdown({
         Title = "选择请求",
         Desc = "选择将自动购买的泰坦/扬声器请求。",
-        Values = GlobalTables.RequestTitanSpeaker,
+        Values = { "泰坦请求", "特殊泰坦请求", "扬声器请求" },
         Multi = false,
         Value = selectedRequestItem,
         Callback = function(value)
-            selectedRequestItem = value or "Titan-Request"
-            Config:Set("SelectedRequestItem", selectedRequestItem)
+            selectedRequestItem = value
+            local english = RequestMap[value] or value
+            Config:Set("SelectedRequestItem", english)
             Config:Save()
         end
     })
@@ -6883,18 +6929,21 @@ _G.__DYHUB_ShopSystems = function()
 
     local function FireSyncedShopBatch()
         if autoBuyWeaponEnabled and autoBuyWeaponValue then
-            FireShopRemote("ShopSystem", "Buy", autoBuyWeaponValue)
+            local english = WeaponMap[autoBuyWeaponValue] or autoBuyWeaponValue
+            FireShopRemote("ShopSystem", "Buy", english)
             task.wait(0.35)
         end
 
         if autoBuyMiscEnabled and autoBuyMiscValue then
-            FireShopRemote("ShopSystem", "Buy", autoBuyMiscValue)
+            local english = MiscMap[autoBuyMiscValue] or autoBuyMiscValue
+            FireShopRemote("ShopSystem", "Buy", english)
             task.wait(0.35)
         end
 
         if autoRequestEnabled and selectedRequestItem then
             if IsRequestWaveReady() then
-                FireShopRemote("ShopSystem", "Buy", selectedRequestItem)
+                local english = RequestMap[selectedRequestItem] or selectedRequestItem
+                FireShopRemote("ShopSystem", "Buy", english)
             else
                 NotifyRequestWaveNotReady()
             end
@@ -7123,7 +7172,9 @@ Main6:Section({ Title = "收集设置", Icon = "settings" })
 CollectItemDropdown = Main6:Dropdown({
     Title = "收集物品",
     Desc = "选择自动收集将目标的收集物品。",
-    Values = CollectItems, Multi = true, Value = SelectedCollectItems,
+    Values = CollectItems,
+    Multi = true,
+    Value = SelectedCollectItems,
     Callback = function(values)
         SelectedCollectItems = values or {}
         CollectCandidateCache = {}
@@ -7137,7 +7188,9 @@ CollectItemDropdown = Main6:Dropdown({
 CollectModeDropdown = Main6:Dropdown({
     Title = "收集模式",
     Desc = "选择自动收集何时收集物品。",
-    Values = { "清洁", "IDGF" }, Multi = false, Value = CollectMode,
+    Values = { "清洁", "IDGF" },
+    Multi = false,
+    Value = CollectMode,
     Callback = function(value)
         CollectMode = value
         Config:Set("CollectMode", value)
@@ -7198,7 +7251,8 @@ Main3:Toggle({
 Main3:Input({
     Title = "配置保存延迟",
     Desc = "设置自动保存间隔（秒）。",
-    Default = tostring(AutoSaveDelay), Placeholder = "默认: 15",
+    Default = tostring(AutoSaveDelay),
+    Placeholder = "默认: 15",
     Callback = function(text)
         local num = tonumber(text)
         if num and num >= 1 then AutoSaveDelay = num; Config:Set("AutoSaveDelay", num); Config:Save(); RestartAutoSave()
