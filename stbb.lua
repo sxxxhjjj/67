@@ -229,9 +229,9 @@ end
 Config = CustomConfig.new()
 
 -- ====================== UI DISPLAY NAME MAPPING ======================
--- 这些映射表让 UI 显示中文，但实际发送给服务器的仍是英文
+-- 所有映射表：UI显示中文，实际发送英文
 
--- Gacha 映射
+-- Gacha 映射（扭蛋）
 GachaDisplayNames = { "1次抽奖", "10次抽奖", "100次抽奖", "1次幸运抽奖", "10次幸运抽奖" }
 GachaMap = {
     ["1次抽奖"] = "1Spin",
@@ -295,9 +295,152 @@ GamepassMap = {
     ["传奇幸运加成"] = "LegendaryLuckyBoost",
 }
 
--- 映射工具函数
+-- 刷怪模式映射
+FarmModeDisplayNames = { "普通模式", "Astro 坚守模式", "黑暗维度模式" }
+FarmModeMap = {
+    ["普通模式"] = "Normal Mode",
+    ["Astro 坚守模式"] = "Astro Holdout Mode",
+    ["黑暗维度模式"] = "Dark Dimension Mode",
+}
+
+-- 刷怪位置映射
+FarmPositionDisplayNames = { "上方", "下方" }
+FarmPositionMap = {
+    ["上方"] = "Above",
+    ["下方"] = "Under",
+}
+
+-- 移动方式映射
+MovementDisplayNames = { "传送", "补间" }
+MovementMap = {
+    ["传送"] = "Teleport",
+    ["补间"] = "Tween",
+}
+
+-- 收集模式映射
+CollectModeDisplayNames = { "清洁", "IDGF" }
+CollectModeMap = {
+    ["清洁"] = "Clean",
+    ["IDGF"] = "IDGF",
+}
+
+-- 相机模式映射
+CameraModeDisplayNames = { "经典", "手动" }
+CameraModeMap = {
+    ["经典"] = "Classic",
+    ["手动"] = "Manual",
+}
+
+-- 投票模式映射（显示中文，发送英文）
+VoteDisplayNames = { "普通", "非常困难", "困难", "疯狂", "噩梦", "Boss Rush", "黑暗维度", "地狱", "雷暴", "圣诞节", "僵尸", "Astro V2", "Astro", "1亿访问" }
+VoteMap = {
+    ["普通"] = "Normal",
+    ["非常困难"] = "VeryHard",
+    ["困难"] = "Hard",
+    ["疯狂"] = "Insane",
+    ["噩梦"] = "Nightmare",
+    ["Boss Rush"] = "BossRush",
+    ["黑暗维度"] = "DarkDimension",
+    ["地狱"] = "Hell",
+    ["雷暴"] = "ThunderStorm",
+    ["圣诞节"] = "Christmas",
+    ["僵尸"] = "Zombie",
+    ["Astro V2"] = "AstroV2",
+    ["Astro"] = "Astro",
+    ["1亿访问"] = "100MVisit",
+}
+
+-- 游戏模式映射（显示中文，发送英文）
+GameModeDisplayNames = { "普通", "困难", "非常困难", "疯狂", "噩梦", "Boss Rush", "黑暗维度", "地狱", "雷暴", "圣诞节", "僵尸", "Astro V2", "Astro", "1亿访问" }
+GameModeMap = {
+    ["普通"] = "Normal",
+    ["困难"] = "Hard",
+    ["非常困难"] = "VeryHard",
+    ["疯狂"] = "Insane",
+    ["噩梦"] = "Nightmare",
+    ["Boss Rush"] = "BossRush",
+    ["黑暗维度"] = "DarkDimension",
+    ["地狱"] = "Hell",
+    ["雷暴"] = "ThunderStorm",
+    ["圣诞节"] = "Christmas",
+    ["僵尸"] = "Zombie",
+    ["Astro V2"] = "AstroV2",
+    ["Astro"] = "Astro",
+    ["1亿访问"] = "100MVisit",
+}
+
+-- ====================== SHOP UPGRADE MAPS ======================
+TitanSpeakerUpgradeDisplayNames = { "喷气背包", "过载", "音波增幅器", "核心", "升级" }
+TitanSpeakerUpgradeMap = {
+    ["喷气背包"] = "Jetpack",
+    ["过载"] = "OverCharge",
+    ["音波增幅器"] = "SoundBooster",
+    ["核心"] = "Core",
+    ["升级"] = "Upgrade",
+}
+
+UTCMUpgradeDisplayNames = { "护盾", "冲击波", "透镜", "热度", "护甲" }
+UTCMUpgradeMap = {
+    ["护盾"] = "Shield",
+    ["冲击波"] = "Blaster",
+    ["透镜"] = "Lens",
+    ["热度"] = "Heat",
+    ["护甲"] = "Armor",
+}
+
+TVUpgradeDisplayNames = { "吸收", "共享过载", "护盾", "Astro 臂" }
+TVUpgradeMap = {
+    ["吸收"] = "Absorb",
+    ["共享过载"] = "ShareOverCharge",
+    ["护盾"] = "Shield",
+    ["Astro 臂"] = "AstroArm",
+}
+
+-- ====================== SHOP HOURLY MAP ======================
+ShopHourlyDisplayNames = {
+    "幸运药水 I", "幸运药水 II", "幸运药水 III", "S-余烬",
+    "BSX2:30", "BSX2:60", "BSX2:360",
+    "闪存驱动器#1", "闪存驱动器#2", "闪存驱动器#3", "闪存驱动器#4", "闪存驱动器#5", "闪存驱动器#6",
+    "大师卡：普通", "大师卡：普通泰坦", "大师卡：特殊泰坦",
+}
+ShopHourlyMap = {
+    ["幸运药水 I"] = "LuckPotionI",
+    ["幸运药水 II"] = "LuckPotionII",
+    ["幸运药水 III"] = "LuckPotionIII",
+    ["S-余烬"] = "S-Ember",
+    ["BSX2:30"] = "BSX2:30",
+    ["BSX2:60"] = "BSX2:60",
+    ["BSX2:360"] = "BSX2:360",
+    ["闪存驱动器#1"] = "FlashDrive#1",
+    ["闪存驱动器#2"] = "FlashDrive#2",
+    ["闪存驱动器#3"] = "FlashDrive#3",
+    ["闪存驱动器#4"] = "FlashDrive#4",
+    ["闪存驱动器#5"] = "FlashDrive#5",
+    ["闪存驱动器#6"] = "FlashDrive#6",
+    ["大师卡：普通"] = "MasterCard:Normal",
+    ["大师卡：普通泰坦"] = "MasterCard:NormalTitan",
+    ["大师卡：特殊泰坦"] = "MasterCard:SpecialTitan",
+}
+
+-- ====================== USE ITEM MAP ======================
+UseItemDisplayNames = { "礼物" }
+UseItemMap = {
+    ["礼物"] = "Presents",
+}
+
+-- 工具函数：根据显示名称获取英文值
 function GetEnglishValue(map, displayName)
     return map[displayName] or displayName
+end
+
+-- 工具函数：根据英文值获取显示名称（反向查找）
+function GetDisplayName(map, englishValue)
+    for k, v in pairs(map) do
+        if v == englishValue then
+            return k
+        end
+    end
+    return englishValue
 end
 
 -- ====================== WINDOW 2 ======================
@@ -510,7 +653,7 @@ AutoSkipHeliEnabled    = false
 BoostFPS_Active_dummy  = false
 AutoStartEnabled       = Config:Get("AutoStartEnabled", table.find(MiscOptions, "自动开始") ~= nil)
 AutoVoteinGameEnabled = Config:Get("AutoVoteinGameEnabled", false)
-AutoVoteValue         = Config:Get("AutoVoteValue", "Christmas")
+AutoVoteValue         = Config:Get("AutoVoteValue", "普通")
 AutoVoteLoopRunning   = false
 AutoVoteLastFireAt    = 0
 AutoStartLastReadyAt  = 0
@@ -754,11 +897,16 @@ function FireAutoVote(force)
     if not remote then pcall(function() remote = ReplicatedStorage:WaitForChild("Vote", 3) end) end
     if not remote then return false end
 
-    local ok, err = pcall(function() remote:FireServer(AutoVoteValue) end)
+    -- 将显示名称转换为英文值
+    local englishValue = VoteMap[AutoVoteValue] or AutoVoteValue
+
+    local ok, err = pcall(function()
+        remote:FireServer(englishValue)
+    end)
 
     if ok then
         HideVoteUI()
-        print("[DYHUB] 自动投票已触发:", tostring(AutoVoteValue))
+        print("[DYHUB] 自动投票已触发:", AutoVoteValue, "->", englishValue)
         return true
     else
         warn("[DYHUB] 自动投票失败:", err)
@@ -4806,12 +4954,13 @@ if IsPaidUserVersion() then
     FarmTargetModeDropdown = Main:Dropdown({
         Title = "刷怪模式",
         Desc = "不同的刷怪模式。",
-        Values = { "普通模式", "Astro 坚守模式", "黑暗维度模式" },
+        Values = FarmModeDisplayNames,
         Multi = false,
-        Value = FarmTargetMode,
+        Value = GetDisplayName(FarmModeMap, FarmTargetMode) or FarmTargetMode,
         Callback = function(value)
-            FarmTargetMode = value
-            Config:Set("FarmTargetMode", value)
+            local english = FarmModeMap[value] or value
+            FarmTargetMode = english
+            Config:Set("FarmTargetMode", english)
             Config:Save()
             InvalidateMobCache("刷怪模式已更改")
             FarmForceRetarget = true
@@ -4834,12 +4983,13 @@ Main:Section({ Title = "刷怪设置", Icon = "settings" })
 PositionDropdown = Main:Dropdown({
     Title = "刷怪位置",
     Desc = "选择角色在目标周围的站位。",
-    Values = { "上方", "下方" },
+    Values = FarmPositionDisplayNames,
     Multi = false,
-    Value = FarmPosition,
+    Value = GetDisplayName(FarmPositionMap, FarmPosition) or FarmPosition,
     Callback = function(value)
-        FarmPosition = value
-        Config:Set("FarmPosition", value)
+        local english = FarmPositionMap[value] or value
+        FarmPosition = english
+        Config:Set("FarmPosition", english)
         Config:Save()
     end
 })
@@ -4847,12 +4997,13 @@ PositionDropdown = Main:Dropdown({
 ModeDropdown = Main:Dropdown({
     Title = "移动方式",
     Desc = "选择角色移动到每个目标的方式。",
-    Values = { "传送", "补间" },
+    Values = MovementDisplayNames,
     Multi = false,
-    Value = FarmMode,
+    Value = GetDisplayName(MovementMap, FarmMode) or FarmMode,
     Callback = function(value)
-        FarmMode = value
-        Config:Set("FarmMode", value)
+        local english = MovementMap[value] or value
+        FarmMode = english
+        Config:Set("FarmMode", english)
         Config:Save()
         WindUI:Notify({ Title = "移动方式", Content = "已选择: " .. tostring(value), Duration = 2, Icon = "mouse-pointer-click" })
     end
@@ -5229,25 +5380,19 @@ ESP = {
     _playerHighlights = {},
     _itemHighlights   = {},
     ItemList = {
-        "Clock Spider","X-18 Core","Green Energy Core","Weird Transmitter",
-        "Presents","Weird Prism","Key Card","Zombie Core","Flash Drives","Astro Samples",
+        "时钟蜘蛛","X-18 核心","绿色能量核心","奇怪发射器",
+        "礼物","奇怪棱镜","钥匙卡","僵尸核心","闪存驱动器","Astro 样本",
     },
 }
 
 function IsESPItemTarget(objectName, selectedList)
     for _, pattern in ipairs(selectedList) do
-        if objectName:lower() == pattern:lower() then return true end
-        if #objectName > #pattern then
-            if objectName:lower():sub(1, #pattern) == pattern:lower() then
-                local nc = objectName:lower():sub(#pattern + 1, #pattern + 1)
-                if nc == " " or nc == "#" or nc == "_" or nc == "-" then return true end
-            end
-        end
-        if CollectGroupMap[pattern] then
-            for _, gName in ipairs(CollectGroupMap[pattern]) do
-                if objectName:lower() == gName:lower() then return true end
-            end
-        end
+        if objectName == pattern then return true end
+    end
+    -- 也检查英文名
+    for _, pattern in ipairs(selectedList) do
+        local english = CollectMap[pattern] or pattern
+        if objectName == english then return true end
     end
     return false
 end
@@ -5654,7 +5799,7 @@ EspItemDropdown = Main4:Dropdown({
     Title = "透视物品",
     Desc = "选择哪些可收集物品名称应接收物品透视。",
     Multi = true,
-    Values = ESP.ItemList,
+    Values = { "时钟蜘蛛", "X-18 核心", "绿色能量核心", "奇怪发射器", "Astro 样本", "奇怪棱镜", "钥匙卡", "僵尸核心", "闪存驱动器", "礼物" },
     Value = ESP.SelectedItems,
     Callback = function(value)
         ESP.SelectedItems = value or {}
@@ -5675,147 +5820,18 @@ NoClip  = Config:Get("NoClip", false)
 LockMovementStats = Config:Get("LockMovementStats", true)
 
 -- ============================================================
--- ============== FLY SYSTEM (替换为 Fly GUI V3) =============
+-- ============== 飞行系统（整合到 Player Tab，无独立UI）==========
 -- ============================================================
 FlyEnabled = Config:Get("FlyEnabled", false)
 FlySpeed = Config:Get("FlySpeed", 1)
+FlyHeight = Config:Get("FlyHeight", 10)  -- 飞行高度（垂直速度倍率）
 FlyBodyVelocity = nil
 FlyBodyGyro = nil
 FlyRenderConnection = nil
-FlyNowe = false  -- 飞行开关状态
-FlySpeeds = 1    -- 速度倍率
+FlyNowe = false
+FlySpeeds = 1
 
--- 创建飞行UI（独立于主窗口，可拖动）
-local FlyMain = Instance.new("ScreenGui")
-FlyMain.Name = "DYHUB_FlyGUI"
-FlyMain.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-FlyMain.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-FlyMain.ResetOnSpawn = false
-
-local FlyFrame = Instance.new("Frame")
-FlyFrame.Parent = FlyMain
-FlyFrame.BackgroundColor3 = Color3.fromRGB(163, 255, 137)
-FlyFrame.BorderColor3 = Color3.fromRGB(103, 221, 213)
-FlyFrame.Position = UDim2.new(0.100320168, 0, 0.379746825, 0)
-FlyFrame.Size = UDim2.new(0, 190, 0, 57)
-FlyFrame.Active = true
-FlyFrame.Draggable = true
-
-local FlyUp = Instance.new("TextButton")
-FlyUp.Name = "up"
-FlyUp.Parent = FlyFrame
-FlyUp.BackgroundColor3 = Color3.fromRGB(79, 255, 152)
-FlyUp.Size = UDim2.new(0, 44, 0, 28)
-FlyUp.Font = Enum.Font.SourceSans
-FlyUp.Text = "上升"
-FlyUp.TextColor3 = Color3.fromRGB(0, 0, 0)
-FlyUp.TextSize = 14
-
-local FlyDown = Instance.new("TextButton")
-FlyDown.Name = "down"
-FlyDown.Parent = FlyFrame
-FlyDown.BackgroundColor3 = Color3.fromRGB(215, 255, 121)
-FlyDown.Position = UDim2.new(0, 0, 0.491228074, 0)
-FlyDown.Size = UDim2.new(0, 44, 0, 28)
-FlyDown.Font = Enum.Font.SourceSans
-FlyDown.Text = "下降"
-FlyDown.TextColor3 = Color3.fromRGB(0, 0, 0)
-FlyDown.TextSize = 14
-
-local FlyOnOff = Instance.new("TextButton")
-FlyOnOff.Name = "onof"
-FlyOnOff.Parent = FlyFrame
-FlyOnOff.BackgroundColor3 = Color3.fromRGB(255, 249, 74)
-FlyOnOff.Position = UDim2.new(0.702823281, 0, 0.491228074, 0)
-FlyOnOff.Size = UDim2.new(0, 56, 0, 28)
-FlyOnOff.Font = Enum.Font.SourceSans
-FlyOnOff.Text = "飞行"
-FlyOnOff.TextColor3 = Color3.fromRGB(0, 0, 0)
-FlyOnOff.TextSize = 14
-
-local FlyTitle = Instance.new("TextLabel")
-FlyTitle.Parent = FlyFrame
-FlyTitle.BackgroundColor3 = Color3.fromRGB(242, 60, 255)
-FlyTitle.Position = UDim2.new(0.469327301, 0, 0, 0)
-FlyTitle.Size = UDim2.new(0, 100, 0, 28)
-FlyTitle.Font = Enum.Font.SourceSans
-FlyTitle.Text = "飞行 GUI V3"
-FlyTitle.TextColor3 = Color3.fromRGB(0, 0, 0)
-FlyTitle.TextScaled = true
-FlyTitle.TextSize = 14
-FlyTitle.TextWrapped = true
-
-local FlyPlus = Instance.new("TextButton")
-FlyPlus.Name = "plus"
-FlyPlus.Parent = FlyFrame
-FlyPlus.BackgroundColor3 = Color3.fromRGB(133, 145, 255)
-FlyPlus.Position = UDim2.new(0.231578946, 0, 0, 0)
-FlyPlus.Size = UDim2.new(0, 45, 0, 28)
-FlyPlus.Font = Enum.Font.SourceSans
-FlyPlus.Text = "+"
-FlyPlus.TextColor3 = Color3.fromRGB(0, 0, 0)
-FlyPlus.TextScaled = true
-FlyPlus.TextSize = 14
-FlyPlus.TextWrapped = true
-
-local FlySpeedLabel = Instance.new("TextLabel")
-FlySpeedLabel.Name = "speed"
-FlySpeedLabel.Parent = FlyFrame
-FlySpeedLabel.BackgroundColor3 = Color3.fromRGB(255, 85, 0)
-FlySpeedLabel.Position = UDim2.new(0.468421042, 0, 0.491228074, 0)
-FlySpeedLabel.Size = UDim2.new(0, 44, 0, 28)
-FlySpeedLabel.Font = Enum.Font.SourceSans
-FlySpeedLabel.Text = "1"
-FlySpeedLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
-FlySpeedLabel.TextScaled = true
-FlySpeedLabel.TextSize = 14
-FlySpeedLabel.TextWrapped = true
-
-local FlyMinus = Instance.new("TextButton")
-FlyMinus.Name = "mine"
-FlyMinus.Parent = FlyFrame
-FlyMinus.BackgroundColor3 = Color3.fromRGB(123, 255, 247)
-FlyMinus.Position = UDim2.new(0.231578946, 0, 0.491228074, 0)
-FlyMinus.Size = UDim2.new(0, 45, 0, 29)
-FlyMinus.Font = Enum.Font.SourceSans
-FlyMinus.Text = "-"
-FlyMinus.TextColor3 = Color3.fromRGB(0, 0, 0)
-FlyMinus.TextScaled = true
-FlyMinus.TextSize = 14
-FlyMinus.TextWrapped = true
-
-local FlyClose = Instance.new("TextButton")
-FlyClose.Name = "Close"
-FlyClose.Parent = FlyFrame
-FlyClose.BackgroundColor3 = Color3.fromRGB(225, 25, 0)
-FlyClose.Font = Enum.Font.SourceSans
-FlyClose.Size = UDim2.new(0, 45, 0, 28)
-FlyClose.Text = "X"
-FlyClose.TextSize = 30
-FlyClose.Position = UDim2.new(0, 0, -1, 27)
-
-local FlyMinimize = Instance.new("TextButton")
-FlyMinimize.Name = "minimize"
-FlyMinimize.Parent = FlyFrame
-FlyMinimize.BackgroundColor3 = Color3.fromRGB(192, 150, 230)
-FlyMinimize.Font = Enum.Font.SourceSans
-FlyMinimize.Size = UDim2.new(0, 45, 0, 28)
-FlyMinimize.Text = "T"
-FlyMinimize.TextSize = 30
-FlyMinimize.Position = UDim2.new(0, 44, -1, 27)
-
-local FlyMinimize2 = Instance.new("TextButton")
-FlyMinimize2.Name = "minimize2"
-FlyMinimize2.Parent = FlyFrame
-FlyMinimize2.BackgroundColor3 = Color3.fromRGB(192, 150, 230)
-FlyMinimize2.Font = Enum.Font.SourceSans
-FlyMinimize2.Size = UDim2.new(0, 45, 0, 28)
-FlyMinimize2.Text = "T"
-FlyMinimize2.TextSize = 30
-FlyMinimize2.Position = UDim2.new(0, 44, -1, 57)
-FlyMinimize2.Visible = false
-
--- Fly核心函数
+-- 飞行核心函数
 function FlyCleanupForces()
     if FlyBodyVelocity then
         pcall(function() FlyBodyVelocity:Destroy() end)
@@ -5860,7 +5876,6 @@ function FlyStart()
     local hum = char:FindFirstChildOfClass("Humanoid") or char:FindFirstChild("Humanoid")
     if not hum then return end
 
-    -- 禁用所有Humanoid状态
     for _, state in pairs(Enum.HumanoidStateType:GetEnumItems()) do
         pcall(function() hum:SetStateEnabled(state, false) end)
     end
@@ -5869,7 +5884,6 @@ function FlyStart()
     local animate = char:FindFirstChild("Animate")
     if animate then animate.Disabled = true end
 
-    -- 判断R6/R15
     local torso = char:FindFirstChild("Torso") or char:FindFirstChild("UpperTorso")
     if not torso then return end
 
@@ -5886,7 +5900,6 @@ function FlyStart()
 
     hum.PlatformStand = true
 
-    -- 飞行更新循环
     if FlyRenderConnection then FlyRenderConnection:Disconnect() end
     FlyRenderConnection = RunService.RenderStepped:Connect(function()
         if not FlyNowe or not char or not char.Parent then
@@ -5908,7 +5921,7 @@ function FlyStart()
             end
         end)
 
-        local velocity = moveDir + Vector3.new(0, vertical, 0)
+        local velocity = moveDir + Vector3.new(0, vertical * (FlyHeight or 10), 0)
         if velocity.Magnitude > 0 then
             velocity = velocity.Unit
         end
@@ -5919,127 +5932,7 @@ function FlyStart()
     end)
 end
 
--- Fly GUI 事件绑定
-FlyOnOff.MouseButton1Down:Connect(function()
-    if FlyNowe then
-        FlyStopAll()
-        FlyOnOff.Text = "飞行"
-        FlyOnOff.BackgroundColor3 = Color3.fromRGB(255, 249, 74)
-        WindUI:Notify({ Title = "飞行", Content = "飞行已关闭", Duration = 2, Icon = "plane" })
-    else
-        FlyStart()
-        FlyOnOff.Text = "停止"
-        FlyOnOff.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
-        WindUI:Notify({ Title = "飞行", Content = "飞行已开启", Duration = 2, Icon = "plane" })
-    end
-end)
-
-local flyUpHold = nil
-FlyUp.MouseButton1Down:Connect(function()
-    flyUpHold = RunService.RenderStepped:Connect(function()
-        if FlyNowe then
-            local char = game.Players.LocalPlayer.Character
-            if char and char:FindFirstChild("HumanoidRootPart") then
-                char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame * CFrame.new(0, 1, 0)
-            end
-        end
-    end)
-end)
-FlyUp.MouseLeave:Connect(function()
-    if flyUpHold then flyUpHold:Disconnect(); flyUpHold = nil end
-end)
-FlyUp.MouseButton1Up:Connect(function()
-    if flyUpHold then flyUpHold:Disconnect(); flyUpHold = nil end
-end)
-
-local flyDownHold = nil
-FlyDown.MouseButton1Down:Connect(function()
-    flyDownHold = RunService.RenderStepped:Connect(function()
-        if FlyNowe then
-            local char = game.Players.LocalPlayer.Character
-            if char and char:FindFirstChild("HumanoidRootPart") then
-                char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame * CFrame.new(0, -1, 0)
-            end
-        end
-    end)
-end)
-FlyDown.MouseLeave:Connect(function()
-    if flyDownHold then flyDownHold:Disconnect(); flyDownHold = nil end
-end)
-FlyDown.MouseButton1Up:Connect(function()
-    if flyDownHold then flyDownHold:Disconnect(); flyDownHold = nil end
-end)
-
-FlyPlus.MouseButton1Down:Connect(function()
-    FlySpeeds = FlySpeeds + 1
-    FlySpeedLabel.Text = tostring(FlySpeeds)
-end)
-
-FlyMinus.MouseButton1Down:Connect(function()
-    if FlySpeeds > 1 then
-        FlySpeeds = FlySpeeds - 1
-        FlySpeedLabel.Text = tostring(FlySpeeds)
-    else
-        FlySpeedLabel.Text = "1"
-    end
-end)
-
-FlyClose.MouseButton1Click:Connect(function()
-    FlyStopAll()
-    FlyMain:Destroy()
-end)
-
-FlyMinimize.MouseButton1Click:Connect(function()
-    FlyUp.Visible = false
-    FlyDown.Visible = false
-    FlyOnOff.Visible = false
-    FlyPlus.Visible = false
-    FlySpeedLabel.Visible = false
-    FlyMinus.Visible = false
-    FlyMinimize.Visible = false
-    FlyMinimize2.Visible = true
-    FlyFrame.BackgroundTransparency = 1
-    FlyClose.Position = UDim2.new(0, 0, -1, 57)
-end)
-
-FlyMinimize2.MouseButton1Click:Connect(function()
-    FlyUp.Visible = true
-    FlyDown.Visible = true
-    FlyOnOff.Visible = true
-    FlyPlus.Visible = true
-    FlySpeedLabel.Visible = true
-    FlyMinus.Visible = true
-    FlyMinimize.Visible = true
-    FlyMinimize2.Visible = false
-    FlyFrame.BackgroundTransparency = 0
-    FlyClose.Position = UDim2.new(0, 0, -1, 27)
-end)
-
--- 角色重生时重置飞行状态
-game.Players.LocalPlayer.CharacterAdded:Connect(function(char)
-    task.wait(0.7)
-    if FlyNowe then
-        FlyStopAll()
-        FlyNowe = false
-        FlyOnOff.Text = "飞行"
-        FlyOnOff.BackgroundColor3 = Color3.fromRGB(255, 249, 74)
-    end
-    local hum = char:FindFirstChildOfClass("Humanoid")
-    if hum then hum.PlatformStand = false end
-    local animate = char:FindFirstChild("Animate")
-    if animate then animate.Disabled = false end
-end)
-
--- 同步 Config
-function SyncFlyConfig()
-    Config:Set("FlyEnabled", FlyNowe)
-    Config:Set("FlySpeed", FlySpeeds)
-    Config:Save()
-end
-
--- ============================================================
--- ============== 玩家UI（不含飞行，已独立为Fly GUI）==========
--- ============================================================
+-- Player Tab UI：移动速度、跳跃力、锁定、无碰撞
 Main2:Slider({
     Title = "设置移动速度",
     Desc = "设置你保存的移动速度值。",
@@ -6089,6 +5982,60 @@ nocliptoggle = Main2:Toggle({
     end
 })
 
+-- ============================================================
+-- ============== 飞行控制（整合在 Player Tab）===============
+-- ============================================================
+Main2:Section({ Title = "飞行控制", Icon = "plane" })
+
+-- 飞行开关
+FlyToggle = Main2:Toggle({
+    Title = "飞行",
+    Desc = "启用飞行。按 Space/E 上升，Ctrl/Q 下降。",
+    Value = FlyEnabled,
+    Callback = function(state)
+        FlyEnabled = state
+        Config:Set("FlyEnabled", state)
+        Config:Save()
+        if state then
+            FlyStart()
+            WindUI:Notify({ Title = "飞行", Content = "飞行已开启", Duration = 2, Icon = "plane" })
+        else
+            FlyStopAll()
+            WindUI:Notify({ Title = "飞行", Content = "飞行已关闭", Duration = 2, Icon = "plane" })
+        end
+    end
+})
+
+-- 飞行速度
+Main2:Slider({
+    Title = "飞行速度",
+    Desc = "调整飞行移动速度（数值越大越快）。",
+    Value = { Min = 1, Max = 20, Default = FlySpeed },
+    Step = 1,
+    Callback = function(value)
+        FlySpeed = value
+        FlySpeeds = value
+        Config:Set("FlySpeed", value)
+        Config:Save()
+    end
+})
+
+-- 飞行高度（新增）
+Main2:Slider({
+    Title = "飞行高度",
+    Desc = "调整飞行时垂直上升/下降的速度倍率（数值越大升降越快）。",
+    Value = { Min = 1, Max = 50, Default = FlyHeight },
+    Step = 1,
+    Callback = function(value)
+        FlyHeight = value
+        Config:Set("FlyHeight", value)
+        Config:Save()
+    end
+})
+
+-- ============================================================
+-- ============== 玩家其他功能 ================================
+-- ============================================================
 Main2:Section({ Title = "无限跳跃", Icon = "sun" })
 
 Main2:Toggle({
@@ -6126,6 +6073,9 @@ Main2:Toggle({
     end
 })
 
+-- ============================================================
+-- ============== 兑换码 ======================================
+-- ============================================================
 Main2:Section({ Title = "兑换码", Icon = "bird" })
 
 SelectedCodes = Config:Get("SelectedCodes", {})
@@ -6192,7 +6142,7 @@ GamepassDropdown = Main2:Dropdown({
     Title = "选择通行证",
     Desc = "选择要本地解锁的通行证。",
     Multi = true,
-    Values = { "全部", "幸运加成", "稀有幸运加成", "传奇幸运加成" },
+    Values = GamepassDisplayNames,
     Value = SelectedGamepass,
     Callback = function(value)
         SelectedGamepass = value or {}
@@ -6253,27 +6203,35 @@ Main2:Button({
     end,
 })
 
+-- ============================================================
+-- ============== 角色重生时重置飞行状态 ======================
+-- ============================================================
+LocalPlayer.CharacterAdded:Connect(function(char)
+    task.wait(0.7)
+    if FlyNowe then
+        FlyStopAll()
+        FlyNowe = false
+        FlyEnabled = false
+        pcall(function()
+            if FlyToggle and FlyToggle.Set then FlyToggle:Set(false) end
+        end)
+    end
+    local hum = char:FindFirstChildOfClass("Humanoid")
+    if hum then hum.PlatformStand = false end
+    local animate = char:FindFirstChild("Animate")
+    if animate then animate.Disabled = false end
+    updatePlayerStats(true)
+end)
+
+-- ============================================================
+-- ============== 以下为 Shop Tab、Collect Tab、Gamemode Tab、Setting Tab ==============
+-- ============================================================
+
 -- ====================== UI: SHOP TAB ======================
 Main5:Section({ Title = "角色扭蛋", Icon = "sparkles" })
 
 _G.__DYHUB_ShopSystems = function()
-    local gachaValues = { "1次抽奖", "10次抽奖", "100次抽奖", "1次幸运抽奖", "10次幸运抽奖" }
-
-    local autoGachaCharacterEnabled = Config:Get("AutoGachaCharacterEnabled", false)
-    local autoGachaSkinEnabled      = Config:Get("AutoGachaSkinEnabled", false)
-    local selectedGachaCharacterArg = Config:Get("SelectedGachaCharacterArg", "1次抽奖")
-    local selectedGachaSkinArg      = Config:Get("SelectedGachaSkinArg", "1次抽奖")
-    local characterGachaRunning     = false
-    local skinGachaRunning          = false
-
-    local autoUseItemEnabled        = Config:Get("AutoUseItemEnabled", false)
-    local selectedUseItem           = Config:Get("SelectedUseItem", "Presents")
-    local useItemRunning            = false
-
-    local selectedRequestItem       = Config:Get("SelectedRequestItem", "泰坦请求")
-    local autoRequestEnabled        = Config:Get("AutoRequestEnabled", false)
-    local autoSkillTreeEnabled      = Config:Get("AutoSkillTreeEnabled", false)
-
+    -- ====================== 辅助工具 ======================
     local function EnsureList(value, fallback)
         if type(value) == "table" then return value end
         if value ~= nil then return { value } end
@@ -6293,16 +6251,9 @@ _G.__DYHUB_ShopSystems = function()
     local function FireShopRemote(remoteName, ...)
         local remote = GetRemote(remoteName)
         if not remote then return false end
-
         local args = { ... }
-        local ok, err = pcall(function()
-            remote:FireServer(unpack(args))
-        end)
-
-        if not ok then
-            warn("[DYHUB] 商店远程失败:", tostring(remoteName), err)
-        end
-
+        local ok, err = pcall(function() remote:FireServer(unpack(args)) end)
+        if not ok then warn("[DYHUB] 商店远程失败:", tostring(remoteName), err) end
         return ok
     end
 
@@ -6310,6 +6261,61 @@ _G.__DYHUB_ShopSystems = function()
         return AutoSkipHeliEnabled and IsMiscFarmAllowed()
     end
 
+    -- ====================== 扭蛋系统 ======================
+    local gachaValues = { "1次抽奖", "10次抽奖", "100次抽奖", "1次幸运抽奖", "10次幸运抽奖" }
+
+    local autoGachaCharacterEnabled = Config:Get("AutoGachaCharacterEnabled", false)
+    local autoGachaSkinEnabled      = Config:Get("AutoGachaSkinEnabled", false)
+    local selectedGachaCharacterArg = Config:Get("SelectedGachaCharacterArg", "1次抽奖")
+    local selectedGachaSkinArg      = Config:Get("SelectedGachaSkinArg", "1次抽奖")
+    local characterGachaRunning     = false
+    local skinGachaRunning          = false
+
+    local autoUseItemEnabled        = Config:Get("AutoUseItemEnabled", false)
+    local selectedUseItem           = Config:Get("SelectedUseItem", "Presents")
+    local useItemRunning            = false
+
+    local selectedRequestItem       = Config:Get("SelectedRequestItem", "泰坦请求")
+    local autoRequestEnabled        = Config:Get("AutoRequestEnabled", false)
+    local autoSkillTreeEnabled      = Config:Get("AutoSkillTreeEnabled", false)
+
+    -- 将存储的英文转换为中文显示（使用物品）
+    local function GetUseItemDisplay(english)
+        for k, v in pairs(UseItemMap) do
+            if v == english then return k end
+        end
+        return english
+    end
+
+    local function GetTitanSpeakerDisplay(english)
+        for k, v in pairs(TitanSpeakerUpgradeMap) do
+            if v == english then return k end
+        end
+        return english
+    end
+
+    local function GetUTCMDisplay(english)
+        for k, v in pairs(UTCMUpgradeMap) do
+            if v == english then return k end
+        end
+        return english
+    end
+
+    local function GetTVDisplay(english)
+        for k, v in pairs(TVUpgradeMap) do
+            if v == english then return k end
+        end
+        return english
+    end
+
+    local function GetShopHourlyDisplay(english)
+        for k, v in pairs(ShopHourlyMap) do
+            if v == english then return k end
+        end
+        return english
+    end
+
+    -- ====================== 自动扭蛋循环 ======================
     local function StartAutoGachaCharacter()
         if characterGachaRunning then return end
         characterGachaRunning = true
@@ -6341,7 +6347,8 @@ _G.__DYHUB_ShopSystems = function()
         useItemRunning = true
         task.spawn(function()
             while autoUseItemEnabled do
-                if selectedUseItem == "Presents" then
+                local english = UseItemMap[selectedUseItem] or selectedUseItem
+                if english == "Presents" then
                     FireShopRemote("GachaCapsule")
                 end
                 task.wait(1.5)
@@ -6350,6 +6357,7 @@ _G.__DYHUB_ShopSystems = function()
         end)
     end
 
+    -- ====================== UI：角色扭蛋 ======================
     Main5:Dropdown({
         Title = "角色扭蛋",
         Desc = "选择角色扭蛋使用的抽奖类型。",
@@ -6400,17 +6408,22 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
+    -- ====================== 自动使用物品 ======================
     Main5:Section({ Title = "自动使用物品", Icon = "package-open" })
+
+    -- 获取存储英文对应的中文显示
+    local useItemDisplayValue = GetUseItemDisplay(selectedUseItem)
 
     Main5:Dropdown({
         Title = "使用物品",
         Desc = "选择自动使用物品将激活的物品。",
-        Values = { "Presents" },
+        Values = UseItemDisplayNames,
         Multi = false,
-        Value = selectedUseItem,
+        Value = useItemDisplayValue,
         Callback = function(value)
-            selectedUseItem = value or "Presents"
-            Config:Set("SelectedUseItem", value)
+            local english = UseItemMap[value] or value
+            selectedUseItem = english
+            Config:Set("SelectedUseItem", english)
             Config:Save()
         end
     })
@@ -6427,32 +6440,45 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
-    -- ====================== SYNC SHOP BUY / UPGRADE SYSTEM ======================
+    -- ====================== 商店升级系统 ======================
     Main5:Section({ Title = "商店升级", Icon = "arrow-big-up-dash" })
-
-    local titanSpeakerUpgradeValues = { "Jetpack", "OverCharge", "SoundBooster", "Core", "Upgrade" }
-    local utcmUpgradeValues         = { "Shield", "Blaster", "Lens", "Heat", "Armor" }
-    local tvUpgradeValues           = { "Absorb", "ShareOverCharge", "Shield", "AstroArm" }
 
     local selectedTitanSpeakerUpgrades = EnsureList(Config:Get("SelectedTitanSpeakerUpgrades", { "Jetpack" }), { "Jetpack" })
     local selectedUTCMUpgrades         = EnsureList(Config:Get("SelectedUTCMUpgrades", { "Shield" }), { "Shield" })
     local selectedTVUpgrades           = EnsureList(Config:Get("SelectedTVUpgrades", { "Absorb" }), { "Absorb" })
 
+    -- 转换为中文显示
+    local titanDisplay = {}
+    for _, v in ipairs(selectedTitanSpeakerUpgrades) do
+        table.insert(titanDisplay, GetTitanSpeakerDisplay(v))
+    end
+    local utcmDisplay = {}
+    for _, v in ipairs(selectedUTCMUpgrades) do
+        table.insert(utcmDisplay, GetUTCMDisplay(v))
+    end
+    local tvDisplay = {}
+    for _, v in ipairs(selectedTVUpgrades) do
+        table.insert(tvDisplay, GetTVDisplay(v))
+    end
+
     local upgradeTitanSpeakerEnabled = Config:Get("UpgradeTitanSpeakerEnabled", false)
     local upgradeUTCMEnabled         = Config:Get("UpgradeUTCMEnabled", false)
     local upgradeTVEnabled           = Config:Get("UpgradeTVEnabled", false)
 
-    local StartAutoSyncedShopLoop = function() end
-
     Main5:Dropdown({
         Title = "选择泰坦扬声器升级",
         Desc = "选择将请求的泰坦扬声器升级。",
-        Values = titanSpeakerUpgradeValues,
+        Values = TitanSpeakerUpgradeDisplayNames,
         Multi = true,
-        Value = selectedTitanSpeakerUpgrades,
+        Value = titanDisplay,
         Callback = function(values)
-            selectedTitanSpeakerUpgrades = values or {}
-            Config:Set("SelectedTitanSpeakerUpgrades", selectedTitanSpeakerUpgrades)
+            local englishValues = {}
+            for _, v in ipairs(values or {}) do
+                local eng = TitanSpeakerUpgradeMap[v] or v
+                table.insert(englishValues, eng)
+            end
+            selectedTitanSpeakerUpgrades = englishValues
+            Config:Set("SelectedTitanSpeakerUpgrades", englishValues)
             Config:Save()
         end
     })
@@ -6472,12 +6498,17 @@ _G.__DYHUB_ShopSystems = function()
     Main5:Dropdown({
         Title = "选择 UTCM 升级",
         Desc = "选择将请求的 UTCM 升级。",
-        Values = utcmUpgradeValues,
+        Values = UTCMUpgradeDisplayNames,
         Multi = true,
-        Value = selectedUTCMUpgrades,
+        Value = utcmDisplay,
         Callback = function(values)
-            selectedUTCMUpgrades = values or {}
-            Config:Set("SelectedUTCMUpgrades", selectedUTCMUpgrades)
+            local englishValues = {}
+            for _, v in ipairs(values or {}) do
+                local eng = UTCMUpgradeMap[v] or v
+                table.insert(englishValues, eng)
+            end
+            selectedUTCMUpgrades = englishValues
+            Config:Set("SelectedUTCMUpgrades", englishValues)
             Config:Save()
         end
     })
@@ -6497,12 +6528,17 @@ _G.__DYHUB_ShopSystems = function()
     Main5:Dropdown({
         Title = "选择 TV 升级",
         Desc = "选择将请求的 TV 升级。",
-        Values = tvUpgradeValues,
+        Values = TVUpgradeDisplayNames,
         Multi = true,
-        Value = selectedTVUpgrades,
+        Value = tvDisplay,
         Callback = function(values)
-            selectedTVUpgrades = values or {}
-            Config:Set("SelectedTVUpgrades", selectedTVUpgrades)
+            local englishValues = {}
+            for _, v in ipairs(values or {}) do
+                local eng = TVUpgradeMap[v] or v
+                table.insert(englishValues, eng)
+            end
+            selectedTVUpgrades = englishValues
+            Config:Set("SelectedTVUpgrades", englishValues)
             Config:Save()
         end
     })
@@ -6519,15 +6555,16 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
+    -- ====================== 商店武器 ======================
     Main5:Section({ Title = "商店武器", Icon = "helicopter" })
 
     local autoBuyWeaponValue   = Config:Get("AutoBuyWeaponValue", "电击枪")
     local autoBuyWeaponEnabled = Config:Get("AutoBuyWeaponEnabled", false)
 
-    WeaponDropdown = Main5:Dropdown({
+    Main5:Dropdown({
         Title = "选择武器",
         Desc = "选择将自动购买的武器。",
-        Values = { "电击枪", "火焰喷射器", "鱼叉枪", "霰弹枪", "脉冲步枪", "鱼叉霰弹枪", "EPD", "小型激光枪" },
+        Values = WeaponDisplayNames,
         Multi = false,
         Value = autoBuyWeaponValue,
         Callback = function(value)
@@ -6538,7 +6575,7 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
-    AutoBuyWeaponToggle = Main5:Toggle({
+    Main5:Toggle({
         Title = "购买武器",
         Desc = "在商店循环期间自动购买所选武器。",
         Value = autoBuyWeaponEnabled,
@@ -6561,15 +6598,16 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
+    -- ====================== 商店杂项 ======================
     Main5:Section({ Title = "商店杂项", Icon = "package" })
 
     local autoBuyMiscValue   = Config:Get("AutoBuyMiscValue", "头戴式耳机")
     local autoBuyMiscEnabled = Config:Get("AutoBuyMiscEnabled", false)
 
-    MiscShopDropdown = Main5:Dropdown({
+    Main5:Dropdown({
         Title = "选择杂项",
         Desc = "选择将自动购买的杂项物品。",
-        Values = { "头戴式耳机", "手雷", "喷气背包", "透镜" },
+        Values = MiscDisplayNames,
         Multi = false,
         Value = autoBuyMiscValue,
         Callback = function(value)
@@ -6580,7 +6618,7 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
-    AutoBuyMiscToggle = Main5:Toggle({
+    Main5:Toggle({
         Title = "购买杂项",
         Value = autoBuyMiscEnabled,
         Desc = "在商店循环期间自动购买所选杂项物品。",
@@ -6603,12 +6641,13 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
+    -- ====================== 请求泰坦/扬声器 ======================
     Main5:Section({ Title = "请求泰坦/扬声器", Icon = "send" })
 
-    RequestTitanSpeakerDropdown = Main5:Dropdown({
+    Main5:Dropdown({
         Title = "选择请求",
         Desc = "选择将自动购买的泰坦/扬声器请求。",
-        Values = { "泰坦请求", "特殊泰坦请求", "扬声器请求" },
+        Values = RequestDisplayNames,
         Multi = false,
         Value = selectedRequestItem,
         Callback = function(value)
@@ -6619,7 +6658,7 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
-    AutoRequestToggle = Main5:Toggle({
+    Main5:Toggle({
         Title = "自动请求",
         Desc = "波次 10+ 时自动请求选中的泰坦/扬声器。",
         Value = autoRequestEnabled,
@@ -6627,7 +6666,6 @@ _G.__DYHUB_ShopSystems = function()
             autoRequestEnabled = enabled
             Config:Set("AutoRequestEnabled", enabled)
             Config:Save()
-
             if enabled then
                 if not IsRequestWaveReady() then NotifyRequestWaveNotReady() end
                 StartAutoSyncedShopLoop()
@@ -6635,9 +6673,10 @@ _G.__DYHUB_ShopSystems = function()
         end
     })
 
+    -- ====================== 技能树 ======================
     Main5:Section({ Title = "技能树", Icon = "git-branch-plus" })
 
-    AutoSkillTreeToggle = Main5:Toggle({
+    Main5:Toggle({
         Title = "自动技能树",
         Desc = "自动为你当前角色解锁缺失的技能树。",
         Value = autoSkillTreeEnabled,
@@ -6645,11 +6684,67 @@ _G.__DYHUB_ShopSystems = function()
             autoSkillTreeEnabled = enabled
             Config:Set("AutoSkillTreeEnabled", enabled)
             Config:Save()
-
             if enabled then StartAutoSyncedShopLoop() end
         end
     })
 
+    -- ====================== 商店小时购 ======================
+    Main5:Section({ Title = "商店小时购", Icon = "clock" })
+
+    local selectedShopHourlyItems   = Config:Get("SelectedShopHourlyItems", { "LuckPotionI" })
+    -- 转换为中文显示
+    local hourlyDisplay = {}
+    for _, v in ipairs(selectedShopHourlyItems) do
+        table.insert(hourlyDisplay, GetShopHourlyDisplay(v))
+    end
+
+    local shopHourlyItemAmount      = Config:Get("ShopHourlyItemAmount", 1)
+    local buyItemHourlyEnabled      = Config:Get("BuyItemHourlyEnabled", false)
+    local buyItemHourlyRunning      = false
+
+    Main5:Dropdown({
+        Title = "选择商店小时购",
+        Desc = "选择固定的小时购商店物品。",
+        Values = ShopHourlyDisplayNames,
+        Multi = true,
+        Value = hourlyDisplay,
+        Callback = function(values)
+            local englishValues = {}
+            for _, v in ipairs(values or {}) do
+                local eng = ShopHourlyMap[v] or v
+                table.insert(englishValues, eng)
+            end
+            selectedShopHourlyItems = englishValues
+            Config:Set("SelectedShopHourlyItems", englishValues)
+            Config:Save()
+        end
+    })
+
+    Main5:Slider({
+        Title = "物品数量",
+        Desc = "设置每种选中小时购物品的购买数量。",
+        Value = { Min = 1, Max = 100, Default = shopHourlyItemAmount },
+        Step = 1,
+        Callback = function(value)
+            shopHourlyItemAmount = value
+            Config:Set("ShopHourlyItemAmount", value)
+            Config:Save()
+        end
+    })
+
+    Main5:Toggle({
+        Title = "购买物品",
+        Desc = "在定时循环中自动购买选中的小时购商店物品。",
+        Value = buyItemHourlyEnabled,
+        Callback = function(enabled)
+            buyItemHourlyEnabled = enabled
+            Config:Set("BuyItemHourlyEnabled", enabled)
+            Config:Save()
+            if enabled then StartBuyItemHourlyLoop() end
+        end
+    })
+
+    -- ====================== 同步商店循环 ======================
     local autoSyncedShopRunning = false
 
     local function IsHeavySyncedShopEnabled()
@@ -6757,57 +6852,7 @@ _G.__DYHUB_ShopSystems = function()
         end)
     end
 
-    -- ====================== SHOP HOURLY SYSTEM ======================
-    Main5:Section({ Title = "商店小时购", Icon = "clock" })
-
-    local ShopHourlyFixedItems = {
-        "LuckPotionI", "LuckPotionII", "LuckPotionIII", "S-Ember",
-        "BSX2:30", "BSX2:60", "BSX2:360",
-        "FlashDrive#1", "FlashDrive#2", "FlashDrive#3", "FlashDrive#4", "FlashDrive#5", "FlashDrive#6",
-        "MasterCard:Normal", "MasterCard:NormalTitan", "MasterCard:SpecialTitan",
-    }
-
-    local function GetShopHourlyItems()
-        local results = {}
-        for _, itemName in ipairs(ShopHourlyFixedItems) do table.insert(results, itemName) end
-        return results
-    end
-
-    local ShopHourlyAllowed = {}
-    for _, itemName in ipairs(ShopHourlyFixedItems) do ShopHourlyAllowed[itemName] = true end
-
-    local function SanitizeShopHourlySelection(values, fallback)
-        local clean = {}
-        local seen = {}
-
-        for _, itemName in ipairs(EnsureList(values, fallback or {})) do
-            itemName = tostring(itemName or "")
-            if ShopHourlyAllowed[itemName] and not seen[itemName] then
-                seen[itemName] = true
-                table.insert(clean, itemName)
-            end
-        end
-
-        if #clean == 0 and type(fallback) == "table" then
-            for _, itemName in ipairs(fallback) do
-                itemName = tostring(itemName or "")
-                if ShopHourlyAllowed[itemName] and not seen[itemName] then
-                    seen[itemName] = true
-                    table.insert(clean, itemName)
-                    break
-                end
-            end
-        end
-
-        return clean
-    end
-
-    local shopHourlyValues          = GetShopHourlyItems()
-    local selectedShopHourlyItems   = SanitizeShopHourlySelection(Config:Get("SelectedShopHourlyItems", { shopHourlyValues[1] }), { shopHourlyValues[1] })
-    local shopHourlyItemAmount      = Config:Get("ShopHourlyItemAmount", 1)
-    local buyItemHourlyEnabled      = Config:Get("BuyItemHourlyEnabled", false)
-    local buyItemHourlyRunning      = false
-
+    -- ====================== 小时购循环 ======================
     local function IsBuyItemHourlyEnabled()
         return buyItemHourlyEnabled
     end
@@ -6846,43 +6891,7 @@ _G.__DYHUB_ShopSystems = function()
         end)
     end
 
-    Main5:Dropdown({
-        Title = "选择商店小时购",
-        Desc = "选择固定的小时购商店物品。",
-        Values = shopHourlyValues,
-        Multi = true,
-        Value = selectedShopHourlyItems,
-        Callback = function(values)
-            selectedShopHourlyItems = SanitizeShopHourlySelection(values or {}, {})
-            Config:Set("SelectedShopHourlyItems", selectedShopHourlyItems)
-            Config:Save()
-        end
-    })
-
-    Main5:Slider({
-        Title = "物品数量",
-        Desc = "设置每种选中小时购物品的购买数量。",
-        Value = { Min = 1, Max = 100, Default = shopHourlyItemAmount },
-        Step = 1,
-        Callback = function(value)
-            shopHourlyItemAmount = value
-            Config:Set("ShopHourlyItemAmount", value)
-            Config:Save()
-        end
-    })
-
-    Main5:Toggle({
-        Title = "购买物品",
-        Desc = "在定时循环中自动购买选中的小时购商店物品。",
-        Value = buyItemHourlyEnabled,
-        Callback = function(enabled)
-            buyItemHourlyEnabled = enabled
-            Config:Set("BuyItemHourlyEnabled", enabled)
-            Config:Save()
-            if enabled then StartBuyItemHourlyLoop() end
-        end
-    })
-
+    -- ====================== 启动已启用的循环 ======================
     if autoGachaCharacterEnabled then StartAutoGachaCharacter() end
     if autoGachaSkinEnabled then StartAutoGachaSkin() end
     if autoUseItemEnabled then StartAutoUseItem() end
@@ -6921,7 +6930,7 @@ Main6:Section({ Title = "收集设置", Icon = "settings" })
 CollectItemDropdown = Main6:Dropdown({
     Title = "收集物品",
     Desc = "选择自动收集将目标的收集物品。",
-    Values = { "时钟蜘蛛", "X-18 核心", "绿色能量核心", "奇怪发射器", "Astro 样本", "奇怪棱镜", "钥匙卡", "僵尸核心", "闪存驱动器", "礼物" },
+    Values = CollectDisplayNames,
     Multi = true,
     Value = SelectedCollectItems,
     Callback = function(values)
@@ -6942,12 +6951,13 @@ CollectItemDropdown = Main6:Dropdown({
 CollectModeDropdown = Main6:Dropdown({
     Title = "收集模式",
     Desc = "选择自动收集何时收集物品。",
-    Values = { "清洁", "IDGF" },
+    Values = CollectModeDisplayNames,
     Multi = false,
-    Value = CollectMode,
+    Value = GetDisplayName(CollectModeMap, CollectMode) or CollectMode,
     Callback = function(value)
-        CollectMode = value
-        Config:Set("CollectMode", value)
+        local english = CollectModeMap[value] or value
+        CollectMode = english
+        Config:Set("CollectMode", english)
         Config:Save()
         CheckFarmAstroCollectMode()
     end
@@ -6956,12 +6966,13 @@ CollectModeDropdown = Main6:Dropdown({
 CollectMovementDropdown = Main6:Dropdown({
     Title = "收集移动方式",
     Desc = "选择角色移动到可收集物品的方式。",
-    Values = { "传送", "补间" },
+    Values = MovementDisplayNames,
     Multi = false,
-    Value = CollectMovementMode,
+    Value = GetDisplayName(MovementMap, CollectMovementMode) or CollectMovementMode,
     Callback = function(value)
-        CollectMovementMode = value
-        Config:Set("CollectMovementMode", value)
+        local english = MovementMap[value] or value
+        CollectMovementMode = english
+        Config:Set("CollectMovementMode", english)
         Config:Save()
         WindUI:Notify({
             Title = "收集移动方式",
@@ -6973,14 +6984,6 @@ CollectMovementDropdown = Main6:Dropdown({
 })
 
 -- ====================== UI: GAMEMODE TAB ======================
-GlobalTables2 = {
-    Votes2 = {
-        "Normal", "VeryHard", "Hard", "Insane", "Nightmare", "BossRush",
-        "DarkDimension", "Hell", "ThunderStorm", "Christmas", "Zombie",
-        "AstroV2", "Astro", "100MVisit"
-    }
-}
-
 Main7:Section({ Title = "投票信息", TextXAlignment = "Center", TextSize = 17 })
 Main7:Divider()
 Main7:Paragraph({
@@ -7036,29 +7039,36 @@ Main7:Button({
     end
 })
 
+-- ============================================================
+-- ============== 投票模式下拉（显示中文，发送英文）===========
+-- ============================================================
 GameModeDropdown2 = Main7:Dropdown({
     Title = "设置投票模式",
     Desc = "选择自动投票将投选的游戏模式。",
-    Values = GlobalTables2.Votes2,
+    Values = VoteDisplayNames,
     Multi = false,
-    Value = AutoVoteValue,
+    Value = GetDisplayName(VoteMap, AutoVoteValue) or AutoVoteValue,
     Callback = function(value)
-        AutoVoteValue = value
-        Config:Set("AutoVoteValue", value)
+        local english = VoteMap[value] or value
+        AutoVoteValue = english
+        Config:Set("AutoVoteValue", english)
         Config:Save()
-        print("[DYHUB] 投票模式已选择:", tostring(value))
+        print("[DYHUB] 投票模式已选择:", value, "->", english)
     end
 })
 
 -- ============================================================
--- ============== 改进的自动投票模式（每轮投票+准备）==========
+-- ============== 改进的自动投票+准备系统 ======================
 -- ============================================================
 AutoVoteReadyEnabled = Config:Get("AutoVoteReadyEnabled", false)
 AutoVoteReadyLoading = false
 AutoVoteReadyLastFire = 0
+AutoVoteReadyLoopRunning = false
+AutoVoteLoadingNotified = false
 
 function FireAutoVoteReady()
-    if AutoVoteValue == nil or AutoVoteValue == "" then
+    local englishValue = AutoVoteValue
+    if englishValue == nil or englishValue == "" then
         WindUI:Notify({
             Title = "自动投票",
             Content = "⚠️ 你未选择投票模式！请先在设置投票模式中选择一个模式。",
@@ -7075,7 +7085,7 @@ function FireAutoVoteReady()
     -- 先投票
     local voteRemote = GetRemote("Vote")
     if voteRemote then
-        pcall(function() voteRemote:FireServer(AutoVoteValue) end)
+        pcall(function() voteRemote:FireServer(englishValue) end)
     end
 
     -- 再准备
@@ -7095,11 +7105,9 @@ function FireAutoVoteReady()
         end)
     end
 
-    print("[DYHUB] 自动投票+准备已触发，模式:", AutoVoteValue)
+    print("[DYHUB] 自动投票+准备已触发，模式:", englishValue)
     return true
 end
-
-AutoVoteReadyLoopRunning = false
 
 function StartAutoVoteReadyLoop()
     if AutoVoteReadyLoopRunning then return end
@@ -7128,15 +7136,14 @@ function StartAutoVoteReadyLoop()
     end)
 end
 
-AutoVoteLoadingNotified = false
-
 AutoVoteReadyToggle = Main7:Toggle({
     Title = "自动投票+准备（每轮）",
     Desc = "每轮游戏自动投票并自动准备。开启前请先选择投票模式！",
     Value = AutoVoteReadyEnabled,
     Callback = function(enabled)
         if enabled then
-            if AutoVoteValue == nil or AutoVoteValue == "" then
+            local englishValue = AutoVoteValue
+            if englishValue == nil or englishValue == "" then
                 WindUI:Notify({
                     Title = "自动投票",
                     Content = "⚠️ 你未选择投票模式！请先在设置投票模式中选择一个模式。",
@@ -7152,7 +7159,7 @@ AutoVoteReadyToggle = Main7:Toggle({
             StartAutoVoteReadyLoop()
             WindUI:Notify({
                 Title = "自动投票",
-                Content = "✅ 自动投票+准备已启用，模式: " .. tostring(AutoVoteValue),
+                Content = "✅ 自动投票+准备已启用，模式: " .. tostring(GetDisplayName(VoteMap, AutoVoteValue) or AutoVoteValue),
                 Duration = 3,
                 Icon = "check"
             })
@@ -7190,23 +7197,16 @@ Main7:Paragraph({
 Main7:Divider()
 Main7:Section({ Title = "设置游戏模式", Icon = "gamepad-2" })
 
-GlobalTables.Mode = {
-    "Normal", "Hard", "VeryHard", "Insane", "Nightmare", "BossRush",
-    "DarkDimension", "Hell", "ThunderStorm", "Christmas", "Zombie",
-    "AstroV2", "Astro", "100MVisit"
-}
-
-AutoGameValue = Config:Get("AutoGameValue", "Normal")
-
 GameModeDropdown = Main7:Dropdown({
     Title = "设置游戏模式",
     Desc = "选择自动创建将创建的游戏模式。",
-    Values = GlobalTables.Mode,
+    Values = GameModeDisplayNames,
     Multi = false,
-    Value = AutoGameValue,
+    Value = GetDisplayName(GameModeMap, AutoGameValue) or AutoGameValue,
     Callback = function(value)
-        AutoGameValue = value
-        Config:Set("AutoGameValue", value)
+        local english = GameModeMap[value] or value
+        AutoGameValue = english
+        Config:Set("AutoGameValue", english)
         Config:Save()
         print("[DYHUB] 游戏模式已选择: " .. tostring(value))
     end
@@ -7687,12 +7687,13 @@ Main3:Section({ Title = "杂项", Icon = "settings" })
 CameraDropdown = Main3:Dropdown({
     Title = "相机模式",
     Desc = "选择相机应如何跟随角色。",
-    Values = { "经典", "手动" },
+    Values = CameraModeDisplayNames,
     Multi = false,
-    Value = CameraMode,
+    Value = GetDisplayName(CameraModeMap, CameraMode) or CameraMode,
     Callback = function(value)
-        CameraMode = value
-        Config:Set("CameraMode", value)
+        local english = CameraModeMap[value] or value
+        CameraMode = english
+        Config:Set("CameraMode", english)
         Config:Save()
         ApplyCameraMode(true)
         WindUI:Notify({
@@ -7844,8 +7845,8 @@ function ApplySavedConfigOnStartup()
     UpdateDYHUBWaitingPartCollision()
     if FullBrightEnabled then ApplyFullBright() end
     if NoFogEnabled then ApplyNoFog() end
-    -- 飞行由独立UI控制，不需要在这里启动
 
+    -- 飞行状态由FlyToggle控制，不自动启动
     if FarmAstroTokenEnabled and AutoFarmEnabled then
         FarmAstroTokenEnabled = false
         Config:Set("FarmAstroTokenEnabled", false)
